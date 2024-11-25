@@ -1,15 +1,26 @@
+"use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react"; // Icons from lucide-react
-import { ModeToggle } from "@/components/ui/mode-toggle"; // Import ModeToggle component
+import { usePathname } from "next/navigation"; // For detecting active page
+import { Menu, X } from "lucide-react";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get current active route
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const pages = [
+    { name: "Home", href: "/" },
+    { name: "Tournaments", href: "/tournaments" },
+    { name: "News", href: "/news" },
+    { name: "Family", href: "/family" },
+  ];
 
   return (
     <header className="bg-background border-b border-border sticky top-0 z-50">
@@ -23,18 +34,24 @@ const Navbar = () => {
             height={40}
             className="rounded-full"
           />
-          <span className="text-xl font-bold text-primary">Mairala Family</span>
+          <span className="text-xl font-extrabold text-primary transition-colors hover:text-primary-foreground">
+            Mairala Family
+          </span>
         </Link>
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center space-x-6">
-          {["Home", "Tournaments", "News", "Family"].map((page) => (
+          {pages.map((page) => (
             <Link
-              key={page}
-              href={`/${page.toLowerCase()}`}
-              className="text-foreground hover:text-primary transition-colors"
+              key={page.name}
+              href={page.href}
+              className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 ${
+                pathname === page.href
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-foreground hover:text-primary hover:bg-muted"
+              }`}
             >
-              {page}
+              {page.name}
             </Link>
           ))}
 
@@ -61,14 +78,18 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-card border-t border-border">
           <nav className="flex flex-col items-center py-4 space-y-2">
-            {["Home", "Tournaments", "News", "Family"].map((page) => (
+            {pages.map((page) => (
               <Link
-                key={page}
-                href={`/${page.toLowerCase()}`}
-                className="text-foreground hover:text-primary block transition-colors"
+                key={page.name}
+                href={page.href}
+                className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 ${
+                  pathname === page.href
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "text-foreground hover:text-primary hover:bg-muted"
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)} // Close menu on link click
               >
-                {page}
+                {page.name}
               </Link>
             ))}
 
