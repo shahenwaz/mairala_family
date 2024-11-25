@@ -31,13 +31,13 @@ const TournamentsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-center text-sm text-muted uppercase mb-2">
+      <h2 className="text-center text-sm text-muted uppercase mb-2 animate-fadeIn">
         OUR TOURNAMENTS
       </h2>
-      <h1 className="text-center text-3xl font-bold text-primary mb-6">
+      <h1 className="text-center text-3xl font-bold text-primary mb-6 animate-fadeIn">
         CALL OF DUTY MOBILE
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
         {tournaments.map((tournament, index) => (
           <TournamentCard key={index} {...tournament} />
         ))}
