@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // For detecting active page
 import { Menu, X } from "lucide-react";
-import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -54,11 +53,6 @@ const Navbar = () => {
               {page.name}
             </Link>
           ))}
-
-          {/* Mode Toggle Button */}
-          <div className="ml-6">
-            <ModeToggle />
-          </div>
         </nav>
 
         {/* Mobile Hamburger Menu */}
@@ -92,11 +86,6 @@ const Navbar = () => {
                 {page.name}
               </Link>
             ))}
-
-            {/* Mode Toggle for Mobile */}
-            <div className="pt-4">
-              <ModeToggle />
-            </div>
           </nav>
         </div>
       )}
