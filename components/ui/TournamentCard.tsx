@@ -9,19 +9,19 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 interface Team {
-  logo: string; // Path to team logo
+  logo: string;
   name: string;
-  prize: string; // Prize amount
+  prize: string;
 }
 
 interface TournamentCardProps {
   title: string;
   prizePool: string;
-  status: string; // Example: "Ongoing", "Finalized", etc.
-  startDate?: string; // Start date (optional)
-  endDate?: string; // End date (optional)
-  mvp?: string; // MVP name
-  topTeams: Team[]; // List of top teams
+  status: string;
+  startDate?: string;
+  endDate?: string;
+  mvp?: string;
+  topTeams: Team[];
 }
 
 const TournamentCard: React.FC<TournamentCardProps> = ({
@@ -34,7 +34,7 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
   topTeams,
 }) => {
   return (
-    <Card className="rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+    <Card className="rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105">
       <CardHeader className="pb-4 flex justify-between items-center">
         <Badge variant="outline" className="text-sm capitalize">
           {status}
@@ -65,9 +65,11 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
                   <img
                     src={team.logo}
                     alt={team.name}
-                    className="w-6 h-6 rounded-full"
+                    className="w-8 h-8 rounded-full border border-border"
                   />
-                  <span className="text-foreground">{team.name}</span>
+                  <span className="text-foreground font-medium">
+                    {team.name}
+                  </span>
                 </div>
                 <span className="text-primary font-bold">{team.prize}</span>
               </li>
@@ -78,7 +80,7 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
       <CardFooter className="pt-4">
         <a
           href={`/tournaments/${title.toLowerCase().replace(/\s+/g, "-")}`}
-          className="text-primary hover:underline"
+          className="text-primary font-medium hover:underline transition-colors"
         >
           View Details
         </a>
