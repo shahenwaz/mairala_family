@@ -9,28 +9,28 @@ body {
 @layer base {
   .dark {
     --background: 0 0% 9%; /* Neutral-900 */
-    --foreground: 60 9.1% 97.8%; /* Stone-50 */
-    --secondary-foreground: 24 5.4% 63.9%; /* Stone-400 */
-    --card: 0 0% 14%; /* Brighter card background */
-    --card-foreground: 60 9.1% 97.8%; /* Stone-50 */
-    --primary: 215 27.9% 16.9%; /* Gray-800 */
-    --primary-foreground: 60 9.1% 97.8%; /* Stone-50 */
-    --secondary: 258.3 89.5% 66.3%; /* Violet-500 */
-    --secondary-foreground: 60 9.1% 97.8%; /* Stone-50 */
-    --muted: 24 5.4% 63.9%; /* Stone-400 */
-    --muted-foreground: 60 9.1% 97.8%; /* Stone-50 */
-    --accent: 37.7 92.1% 50.2%; /* Amber-500 */
-    --accent-foreground: 60 9.1% 97.8%; /* Stone-50 */
-    --destructive: 0 73.7% 41.8%; /* Red-700 */
-    --destructive-foreground: 60 9.1% 97.8%; /* Stone-50 */
-    --border: 215 27.9% 16.9%; /* Gray-800 */
-    --input: 215 27.9% 16.9%; /* Gray-800 */
-    --ring: 258.3 89.5% 66.3%; /* Violet-500 */
-    --violet: 258.3 89.5% 66.3%; /* Violet-500 */
-    --amber: 37.7 92.1% 50.2%; /* Amber-500 */
-    --green: 141.9 69.2% 58%; /* Green-400 */
-    --red: 0 73.7% 41.8%; /* Red-700 */
-    --cyan: 187.9 85.7% 53.3%; /* Cyan-400 */
+    --foreground: 240 12% 92%; /* Light Violet for main text */
+    --secondary-foreground: 210 15% 80%; /* Muted text */
+    --card: 210 15% 11%; /* Slightly brighter card background */
+    --card-foreground: 240 12% 92%; /* Light Violet */
+    --primary: 260 72% 50%; /* Light Violet for accents */
+    --primary-foreground: 0 0% 100%; /* Pure white for contrast */
+    --secondary: 210 14% 25%; /* Muted dark background for borders or sections */
+    --muted: 210 8% 15%; /* Muted section background */
+    --muted-foreground: 240 12% 92%; /* Light Violet for muted text */
+    --accent: 260 72% 50%; /* Light Violet */
+    --accent-foreground: 0 0% 100%; /* Pure white */
+    --destructive: 0 70% 50%; /* Red for warnings or errors */
+    --destructive-foreground: 0 0% 100%; /* Pure white */
+    --border: 210 15% 15%; /* Subtle borders */
+    --input: 210 15% 15%; /* Input field background */
+    --ring: 260 72% 50%; /* Light Violet */
+    --success: 140 65% 50%; /* Green for positive states */
+    --success-foreground: 0 0% 100%; /* Pure white */
+    --neutral: 0 0% 15%; /* Neutral dark for sections */
+    --light-gray: 0 0% 50%; /* For secondary text or muted elements */
+    --white: 0 0% 100%; /* Pure white */
+    --transparent: 0 0% 0% / 0%; /* Fully transparent */
   }
 }
 
