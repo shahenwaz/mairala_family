@@ -9,26 +9,26 @@ body {
 @layer base {
   .dark {
     --background: 0 0% 9%; /* Neutral-900 */
-    --foreground: 240 12% 92%; /* Light Violet for main text */
-    --secondary-foreground: 210 15% 80%; /* Muted text */
-    --card: 210 15% 11%; /* Slightly brighter card background */
-    --card-foreground: 240 12% 92%; /* Light Violet */
-    --primary: 260 72% 50%; /* Light Violet for accents */
-    --primary-foreground: 0 0% 100%; /* Pure white for contrast */
-    --secondary: 210 14% 25%; /* Muted dark background for borders or sections */
-    --muted: 210 8% 15%; /* Muted section background */
-    --muted-foreground: 240 12% 92%; /* Light Violet for muted text */
-    --accent: 260 72% 50%; /* Light Violet */
-    --accent-foreground: 0 0% 100%; /* Pure white */
+    --foreground: 0 0% 100%; /* Pure white for main text */
+    --secondary-foreground: 210 10% 80%; /* Muted text */
+    --card: 0 0% 11%; /* Slightly brighter card background */
+    --card-foreground: 0 0% 100%; /* Pure white */
+    --primary: 134 91% 62%; /* Light Green for accents */
+    --primary-foreground: 0 0% 10%; /* Very dark gray for contrast */
+    --secondary: 134 25% 22%; /* Dark muted green for sections */
+    --muted: 134 15% 15%; /* Muted green for section background */
+    --muted-foreground: 134 91% 62%; /* Light Green for muted text */
+    --accent: 134 91% 62%; /* Light Green */
+    --accent-foreground: 0 0% 10%; /* Very dark gray for contrast */
     --destructive: 0 70% 50%; /* Red for warnings or errors */
     --destructive-foreground: 0 0% 100%; /* Pure white */
-    --border: 210 15% 15%; /* Subtle borders */
-    --input: 210 15% 15%; /* Input field background */
-    --ring: 260 72% 50%; /* Light Violet */
-    --success: 140 65% 50%; /* Green for positive states */
-    --success-foreground: 0 0% 100%; /* Pure white */
+    --border: 134 25% 15%; /* Subtle greenish borders */
+    --input: 134 15% 15%; /* Input field background */
+    --ring: 134 91% 62%; /* Light Green */
+    --success: 134 91% 62%; /* Green for positive states */
+    --success-foreground: 0 0% 10%; /* Very dark gray */
     --neutral: 0 0% 15%; /* Neutral dark for sections */
-    --light-gray: 0 0% 50%; /* For secondary text or muted elements */
+    --light-gray: 0 0% 50%; /* Mid gray for muted text */
     --white: 0 0% 100%; /* Pure white */
     --transparent: 0 0% 0% / 0%; /* Fully transparent */
   }
@@ -40,5 +40,28 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Ensure the menu stays visible after animation */
+  .mobile-menu {
+    opacity: 1; /* Keep menu visible */
+    transform: translateY(0); /* Prevent menu from resetting its position */
   }
 }

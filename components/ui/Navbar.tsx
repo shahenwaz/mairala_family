@@ -22,7 +22,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50">
+    <header className="bg-card shadow-md border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo Section */}
         <Link href="/" className="flex items-center space-x-2">
@@ -33,7 +33,7 @@ const Navbar = () => {
             height={40}
             className="rounded-full"
           />
-          <span className="text-xl font-extrabold text-primary transition-colors hover:text-primary-foreground">
+          <span className="text-xl font-extrabold text-primary hover:text-primary transition-colors">
             Mairala Family
           </span>
         </Link>
@@ -44,7 +44,7 @@ const Navbar = () => {
             <Link
               key={page.name}
               href={page.href}
-              className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 ${
+              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
                 pathname === page.href
                   ? "bg-primary text-primary-foreground shadow-md"
                   : "text-foreground hover:text-primary hover:bg-muted"
@@ -61,34 +61,36 @@ const Navbar = () => {
           className="md:hidden p-2 rounded-lg hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring"
         >
           {isMobileMenuOpen ? (
-            <X className="w-6 h-6" />
+            <X className="w-6 h-6 text-primary" />
           ) : (
-            <Menu className="w-6 h-6" />
+            <Menu className="w-6 h-6 text-primary" />
           )}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-card border-t border-border">
-          <nav className="flex flex-col items-center py-4 space-y-2">
-            {pages.map((page) => (
-              <Link
-                key={page.name}
-                href={page.href}
-                className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 ${
-                  pathname === page.href
-                    ? "bg-primary text-primary-foreground shadow-md"
-                    : "text-foreground hover:text-primary hover:bg-muted"
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)} // Close menu on link click
-              >
-                {page.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+      <div
+        className={`md:hidden bg-card border-t border-border ${
+          isMobileMenuOpen ? "block animate-fadeIn" : "hidden"
+        }`}
+      >
+        <nav className="flex flex-col items-center py-4 space-y-2">
+          {pages.map((page) => (
+            <Link
+              key={page.name}
+              href={page.href}
+              className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
+                pathname === page.href
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "text-foreground hover:text-primary hover:bg-muted"
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)} // Close menu on link click
+            >
+              {page.name}
+            </Link>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 };
