@@ -12,18 +12,9 @@ const TournamentsPage = () => {
       mvp: "TO BE DECIDED",
       mvpKills: 0,
       teams: [
-        {
-          name: "CHAMPION",
-          prize: "7000 TK",
-        },
-        {
-          name: "RUNNER-UP",
-          prize: "3000 TK",
-        },
-        {
-          name: "MVP",
-          prize: "500 TK",
-        },
+        { name: "CHAMPION", prize: "7000 TK" },
+        { name: "RUNNER-UP", prize: "3000 TK" },
+        { name: "MVP", prize: "500 TK" }, // This object will be used for MVP
       ],
       colorScheme: "yellow" as const,
     },
@@ -34,19 +25,9 @@ const TournamentsPage = () => {
       mvp: "MF | SID",
       mvpKills: 55,
       teams: [
-        {
-          name: "BITCHES",
-          prize: "1000 TK",
-        },
-        {
-          name: "AVENGERS",
-          prize: "0 TK",
-        },
-        // This object will be used for MVP
-        {
-          name: "MF | SID (MVP)",
-          prize: "0 TK",
-        },
+        { name: "BITCHES", prize: "1000 TK" },
+        { name: "AVENGERS", prize: "0 TK" },
+        { name: "MF | SID (MVP)", prize: "0 TK" }, // This object will be used for MVP
       ],
       colorScheme: "green" as const,
     },
@@ -57,18 +38,9 @@ const TournamentsPage = () => {
       mvp: "ADEUS",
       mvpKills: 107,
       teams: [
-        {
-          name: "DISCIPLES OF MAYHEM",
-          prize: "3500 TK",
-        },
-        {
-          name: "QUITE ONE ELITE",
-          prize: "1500 TK",
-        },
-        {
-          name: "ADEUS",
-          prize: "500 TK",
-        },
+        { name: "DISCIPLES OF MAYHEM", prize: "3500 TK" },
+        { name: "QUITE ONE ELITE", prize: "1500 TK" },
+        { name: "ADEUS (MVP)", prize: "500 TK" }, // This object will be used for MVP
       ],
       colorScheme: "green" as const,
     },

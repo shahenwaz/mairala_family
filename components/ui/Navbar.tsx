@@ -15,10 +15,10 @@ const Navbar = () => {
   };
 
   const pages = [
-    { name: "Home", href: "/" },
-    { name: "Tournaments", href: "/tournaments" },
-    { name: "News", href: "/news" },
-    { name: "Family", href: "/family" },
+    { name: "HOME", href: "/" },
+    { name: "TOURNAMENTS", href: "/tournaments" },
+    { name: "NEWS", href: "/news" },
+    { name: "FAMILY", href: "/family" },
   ];
 
   return (

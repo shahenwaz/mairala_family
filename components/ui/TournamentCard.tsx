@@ -20,12 +20,6 @@ interface TournamentCardProps {
   onViewDetails: () => void;
 }
 
-const defaultLogos = [
-  "/images/CHAMP.png",
-  "/images/RUNNER-UP.png",
-  "/images/MVP.png",
-];
-
 const TournamentCard: React.FC<TournamentCardProps> = ({
   prizePool,
   status,
@@ -36,6 +30,12 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
   colorScheme,
   onViewDetails,
 }) => {
+  const defaultLogos = [
+    "/images/CHAMP.png",
+    "/images/RUNNER-UP.png",
+    "/images/MVP.png",
+  ];
+
   const badgeColor =
     colorScheme === "green"
       ? "bg-primary text-primary-foreground"
