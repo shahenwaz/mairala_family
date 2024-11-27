@@ -50,11 +50,6 @@ export default {
         white: "hsl(var(--white))" /* Pure white */,
         transparent: "hsl(var(--transparent))" /* Transparent */,
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
       keyframes: {
         fadeIn: {
           "0%": { opacity: "0", transform: "translateY(10px)" },

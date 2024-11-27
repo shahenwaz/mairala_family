@@ -1,91 +1,107 @@
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Trophy } from "lucide-react";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 interface Team {
-  logo: string;
   name: string;
   prize: string;
 }
 
 interface TournamentCardProps {
-  title: string;
   prizePool: string;
-  status: string;
-  startDate?: string;
-  endDate?: string;
-  mvp?: string;
-  topTeams: Team[];
+  status: "Finalized" | "In Progress";
+  title: string;
+  mvp: string;
+  mvpKills: number;
+  teams: Team[];
+  colorScheme: "green" | "yellow";
+  onViewDetails: () => void;
 }
 
+const defaultLogos = [
+  "/images/CHAMP.png",
+  "/images/RUNNER-UP.png",
+  "/images/MVP.png",
+];
+
 const TournamentCard: React.FC<TournamentCardProps> = ({
-  title,
   prizePool,
   status,
-  startDate,
-  endDate,
-  mvp = "TBD",
-  topTeams,
+  title,
+  mvp,
+  mvpKills,
+  teams,
+  colorScheme,
+  onViewDetails,
 }) => {
+  const badgeColor =
+    colorScheme === "green"
+      ? "bg-primary text-primary-foreground"
+      : "bg-yellow-400 text-neutral";
+
+  const titleColor =
+    colorScheme === "green" ? "text-primary" : "text-yellow-400";
+
   return (
-    <Card className="rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-      <CardHeader className="pb-4 flex justify-between items-center">
-        <Badge variant="outline" className="text-sm capitalize">
+    <div className="bg-card shadow-md rounded-md p-6 space-y-6 w-full max-w-sm animate-fadeIn transition-transform hover:scale-[1.02]">
+      {/* Prize Pool */}
+      <div className="flex justify-center items-center space-x-2">
+        <Trophy className="text-primary w-5 h-5" />
+        <span className="text-sm font-bold text-primary">{prizePool}</span>
+        <Trophy className="text-primary w-5 h-5" />
+      </div>
+
+      {/* Title */}
+      <h3 className={`text-xl font-extrabold ${titleColor} text-center`}>
+        {title}
+      </h3>
+
+      {/* Badge */}
+      <div className="flex justify-center">
+        <Badge className={`rounded-md font-bold px-3 py-1 ${badgeColor}`}>
           {status}
         </Badge>
-        <span className="font-bold text-lg text-primary">
-          {prizePool} Coins
-        </span>
-      </CardHeader>
-      <CardContent>
-        <CardTitle className="text-xl font-bold text-foreground mb-2">
-          {title}
-        </CardTitle>
-        {status === "Finalized" && (
-          <p className="text-muted text-sm">
-            {startDate} - {endDate}
-          </p>
-        )}
-        <div className="mt-4">
-          <h4 className="text-sm text-muted">MVP:</h4>
-          <div className="text-md font-bold text-primary">{mvp}</div>
-        </div>
-        <div className="mt-4">
-          <h4 className="text-sm text-muted">Top Teams:</h4>
-          <ul className="mt-2 space-y-2">
-            {topTeams.map((team, index) => (
-              <li key={index} className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <img
-                    src={team.logo}
-                    alt={team.name}
-                    className="w-8 h-8 rounded-full border border-border"
-                  />
-                  <span className="text-foreground font-medium">
-                    {team.name}
-                  </span>
-                </div>
-                <span className="text-primary font-bold">{team.prize}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </CardContent>
-      <CardFooter className="pt-4">
-        <a
-          href={`/tournaments/${title.toLowerCase().replace(/\s+/g, "-")}`}
-          className="text-primary font-medium hover:underline transition-colors"
+      </div>
+
+      {/* MVP */}
+      <div className="bg-background rounded-md p-4 text-center">
+        <p className="text-sm font-bold text-muted-foreground">
+          MVP: <span className="text-foreground">{mvp}</span> ({mvpKills} kills)
+        </p>
+      </div>
+
+      {/* Top Teams */}
+      <div className="space-y-2">
+        {teams.map((team, index) => (
+          <div
+            key={index}
+            className="flex justify-between items-center text-sm"
+          >
+            <div className="flex items-center space-x-3">
+              <Avatar>
+                <AvatarImage src={defaultLogos[index]} alt={team.name} />
+              </Avatar>
+              <span className="text-foreground font-bold">{team.name}</span>
+            </div>
+            <span className="text-muted-foreground font-bold">
+              {team.prize}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* View Details Button */}
+      <div className="flex justify-center">
+        <Button
+          onClick={onViewDetails}
+          className="font-bold w-2/3 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md transition-all duration-300 hover:scale-105"
         >
           View Details
-        </a>
-      </CardFooter>
-    </Card>
+        </Button>
+      </div>
+    </div>
   );
 };
 

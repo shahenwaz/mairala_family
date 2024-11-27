@@ -11,7 +11,7 @@ body {
     --background: 0 0% 9%; /* Neutral-900 */
     --foreground: 0 0% 100%; /* Pure white for main text */
     --secondary-foreground: 210 10% 80%; /* Muted text */
-    --card: 0 0% 11%; /* Slightly brighter card background */
+    --card: 0 0% 14%; /* Slightly brighter card background */
     --card-foreground: 0 0% 100%; /* Pure white */
     --primary: 134 91% 62%; /* Light Green for accents */
     --primary-foreground: 0 0% 10%; /* Very dark gray for contrast */
@@ -32,12 +32,11 @@ body {
     --white: 0 0% 100%; /* Pure white */
     --transparent: 0 0% 0% / 0%; /* Fully transparent */
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

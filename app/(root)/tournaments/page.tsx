@@ -1,45 +1,103 @@
+"use client";
+
 import React from "react";
 import TournamentCard from "@/components/ui/TournamentCard";
 
 const TournamentsPage = () => {
   const tournaments = [
     {
-      title: "Weekly Tournament",
-      prizePool: "25,000",
-      status: "Ongoing",
-      mvp: "TBD",
-      topTeams: [
-        { logo: "/images/team1.png", name: "Black Ninja", prize: "$7500" },
-        { logo: "/images/team2.png", name: "White Max", prize: "$6500" },
-        { logo: "/images/team3.png", name: "Violet Gamers", prize: "$5500" },
+      prizePool: "10000 TK",
+      status: "In Progress" as const,
+      title: "STRIKER LEAGUE 2.0",
+      mvp: "TO BE DECIDED",
+      mvpKills: 0,
+      teams: [
+        {
+          name: "CHAMPION",
+          prize: "7000 TK",
+        },
+        {
+          name: "RUNNER-UP",
+          prize: "3000 TK",
+        },
+        {
+          name: "MVP",
+          prize: "500 TK",
+        },
       ],
+      colorScheme: "yellow" as const,
     },
     {
-      title: "Lucky Card",
-      prizePool: "50,000",
-      status: "Finalized",
-      startDate: "2024-01-01",
-      endDate: "2024-01-07",
-      mvp: "Black Ninja",
-      topTeams: [
-        { logo: "/images/team1.png", name: "Black Ninja", prize: "$7500" },
-        { logo: "/images/team2.png", name: "White Max", prize: "$6500" },
-        { logo: "/images/team3.png", name: "Violet Gamers", prize: "$5500" },
+      prizePool: "1000 TK",
+      status: "Finalized" as const,
+      title: "FRIENDLY TOUR 1.0",
+      mvp: "MF | SID",
+      mvpKills: 55,
+      teams: [
+        {
+          name: "BITCHES",
+          prize: "1000 TK",
+        },
+        {
+          name: "AVENGERS",
+          prize: "0 TK",
+        },
+        // This object will be used for MVP
+        {
+          name: "MF | SID (MVP)",
+          prize: "0 TK",
+        },
       ],
+      colorScheme: "green" as const,
+    },
+    {
+      prizePool: "5000 TK",
+      status: "Finalized" as const,
+      title: "STRIKER LEAGUE 1.0",
+      mvp: "ADEUS",
+      mvpKills: 107,
+      teams: [
+        {
+          name: "DISCIPLES OF MAYHEM",
+          prize: "3500 TK",
+        },
+        {
+          name: "QUITE ONE ELITE",
+          prize: "1500 TK",
+        },
+        {
+          name: "ADEUS",
+          prize: "500 TK",
+        },
+      ],
+      colorScheme: "green" as const,
     },
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-center text-sm text-muted uppercase mb-2 animate-fadeIn">
-        OUR TOURNAMENTS
-      </h2>
-      <h1 className="text-center text-3xl font-bold text-primary mb-6 animate-fadeIn">
-        CALL OF DUTY MOBILE
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
+    <div className="container mx-auto px-4 py-10 space-y-8">
+      <div>
+        {/* Subtitle */}
+        <h2 className="text-center text-sm font-bold text-muted-foreground mb-2">
+          OUR TOURNAMENTS
+        </h2>
+
+        {/* Title */}
+        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground">
+          CALL OF DUTY MOBILE
+        </h1>
+      </div>
+
+      {/* Tournament Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-4 justify-center items-center place-items-center">
         {tournaments.map((tournament, index) => (
-          <TournamentCard key={index} {...tournament} />
+          <TournamentCard
+            key={index}
+            {...tournament}
+            onViewDetails={() =>
+              alert(`Viewing details for ${tournament.title}`)
+            }
+          />
         ))}
       </div>
     </div>
