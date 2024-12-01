@@ -19,6 +19,12 @@ const TournamentDetails: React.FC<TournamentDetailsProps> = ({
   status,
   background,
 }) => {
+  // Determine the color scheme based on the tournament status
+  const badgeColor =
+    status === "Ongoing"
+      ? "bg-yellow-400 text-primary-foreground"
+      : "bg-primary text-primary-foreground";
+
   return (
     <div className="relative">
       {/* Background Section */}
@@ -44,7 +50,7 @@ const TournamentDetails: React.FC<TournamentDetailsProps> = ({
           {/* Dates and Status */}
           <div className="flex flex-wrap justify-center items-center gap-2 text-secondary-foreground text-xs md:text-sm">
             <span>Start: {startDate}</span>
-            <Badge className="bg-primary text-primary-foreground font-bold px-3 py-1 rounded-md">
+            <Badge className={`font-bold px-3 py-1 rounded-md ${badgeColor}`}>
               {status}
             </Badge>
             <span>End: {endDate}</span>

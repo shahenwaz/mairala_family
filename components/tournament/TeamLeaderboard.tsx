@@ -18,20 +18,24 @@ import {
 interface Team {
   rank: number;
   name: string;
-  logo: string;
   rw: number;
   kills: number;
 }
 
 interface TeamLeaderboardProps {
   teams: Team[];
+  status: "Ongoing" | "Finalized";
 }
 
-const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams }) => {
+const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
   const [sortBy, setSortBy] = useState<"rw" | "kills">("kills");
   const [sortedTeams, setSortedTeams] = useState<Team[]>(
     [...teams].sort((a, b) => b.kills - a.kills) // Initial sort by kills
   );
+
+  // Determine the table header color based on the status
+  const tableHeaderColor =
+    status === "Ongoing" ? "bg-yellow-400" : "bg-primary";
 
   // Sort teams dynamically based on the selected criteria
   useEffect(() => {
@@ -61,7 +65,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams }) => {
         {/* Filter */}
         <div className="relative z-10">
           <Select onValueChange={(value) => setSortBy(value as "kills" | "rw")}>
-            <SelectTrigger className="w-[180px] border border-primary rounded-lg font-bold text-sm md:text-base hover:bg-muted/80 focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+            <SelectTrigger className="w-[120px] md:w-[180px] border border-primary rounded-lg font-bold text-xs md:text-base hover:bg-muted/80 focus:ring-2 focus:ring-offset-2 focus:ring-primary">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent className="bg-card text-foreground shadow-lg rounded-md">
@@ -75,7 +79,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams }) => {
       {/* Table */}
       <Table className="w-full border border-muted rounded-lg overflow-hidden">
         <TableHeader>
-          <TableRow className="bg-primary text-primary-foreground">
+          <TableRow className={`${tableHeaderColor} text-primary-foreground`}>
             <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base text-center">
               #
             </TableCell>
@@ -102,14 +106,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams }) => {
                 {team.rank}
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base">
-                <div className="flex items-center gap-3">
-                  <img
-                    src={team.logo}
-                    alt={team.name}
-                    className="h-8 w-8 object-contain rounded-full"
-                  />
-                  <span>{team.name}</span>
-                </div>
+                <div className="flex items-center gap-3">{team.name}</div>
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
                 {team.rw}

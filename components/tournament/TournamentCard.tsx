@@ -39,7 +39,7 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
   const badgeColor =
     colorScheme === "green"
       ? "bg-primary text-primary-foreground"
-      : "bg-yellow-400 text-neutral";
+      : "bg-yellow-400 text-primary-foreground";
 
   const titleColor =
     colorScheme === "green" ? "text-primary" : "text-yellow-400";

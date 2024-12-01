@@ -8,7 +8,7 @@ export default function StrikerLeague1() {
     logo: "/images/SND_SLS1_LOGO.png",
     startDate: "01/12/2024",
     endDate: "15/12/2024",
-    status: "Ongoing",
+    status: "Finalized" as "Ongoing" | "Finalized", // Ensure the status matches the required type
     background: "/images/CODM_BG1.jpg",
   };
 
@@ -178,7 +178,7 @@ export default function StrikerLeague1() {
               </p>
             </TabsContent>
             <TabsContent value="leaderboards">
-              <TeamLeaderboard teams={teams} />
+              <TeamLeaderboard teams={teams} status={tournament.status} />
             </TabsContent>
           </Tabs>
         </div>
