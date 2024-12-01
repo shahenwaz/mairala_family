@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import TournamentCard from "@/components/ui/TournamentCard";
+import TournamentCard from "@/components/tournament/TournamentCard";
 import { useRouter } from "next/navigation";
 
 const TournamentsPage = () => {
