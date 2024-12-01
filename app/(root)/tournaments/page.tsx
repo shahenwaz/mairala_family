@@ -10,7 +10,7 @@ const TournamentsPage = () => {
   const tournaments = [
     {
       prizePool: "10000 TK",
-      status: "In Progress" as const,
+      status: "Ongoing" as const,
       title: "STRIKER LEAGUE 2.0",
       mvp: "TO BE DECIDED",
       mvpKills: 0,

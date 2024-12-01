@@ -11,7 +11,7 @@ interface Team {
 
 interface TournamentCardProps {
   prizePool: string;
-  status: "Finalized" | "In Progress";
+  status: "Finalized" | "Ongoing";
   title: string;
   mvp: string;
   mvpKills: number;
