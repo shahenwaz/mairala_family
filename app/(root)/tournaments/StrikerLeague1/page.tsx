@@ -1,4 +1,5 @@
 import TournamentDetails from "@/components/tournament/TournamentDetails";
+import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export default function StrikerLeague1() {
@@ -10,6 +11,121 @@ export default function StrikerLeague1() {
     status: "Ongoing",
     background: "/images/CODM_BG1.jpg",
   };
+
+  const teams = [
+    {
+      rank: 1,
+      name: "DISCIPLES OF MAYHEM",
+      logo: "/images/CODM_LOGO.png",
+      rw: 67,
+      kills: 393,
+    },
+    {
+      rank: 2,
+      name: "QUITE ONE ELITE",
+      logo: "/images/CODM_LOGO.png",
+      rw: 73,
+      kills: 356,
+    },
+    {
+      rank: 3,
+      name: "VENGEANCE SEEKERS",
+      logo: "/images/CODM_LOGO.png",
+      rw: 43,
+      kills: 306,
+    },
+    {
+      rank: 4,
+      name: "GRUMBLING GANGSTERS",
+      logo: "/images/CODM_LOGO.png",
+      rw: 48,
+      kills: 296,
+    },
+    {
+      rank: 5,
+      name: "GRUMBLING GANGSTERS 2.0",
+      logo: "/images/CODM_LOGO.png",
+      rw: 28,
+      kills: 162,
+    },
+    {
+      rank: 6,
+      name: "TOXIQUE GIRLS",
+      logo: "/images/CODM_LOGO.png",
+      rw: 25,
+      kills: 147,
+    },
+    {
+      rank: 7,
+      name: "BTV",
+      logo: "/images/CODM_LOGO.png",
+      rw: 23,
+      kills: 139,
+    },
+    {
+      rank: 8,
+      name: "TEAM MAIRALA",
+      logo: "/images/CODM_LOGO.png",
+      rw: 27,
+      kills: 104,
+    },
+    {
+      rank: 9,
+      name: "THE MIGHTY FORCE",
+      logo: "/images/CODM_LOGO.png",
+      rw: 12,
+      kills: 81,
+    },
+    {
+      rank: 10,
+      name: "ASTRAL LEGIONS",
+      logo: "/images/CODM_LOGO.png",
+      rw: 4,
+      kills: 47,
+    },
+    {
+      rank: 11,
+      name: "TEAM OMEGA",
+      logo: "/images/CODM_LOGO.png",
+      rw: 3,
+      kills: 45,
+    },
+    {
+      rank: 12,
+      name: "LIONS ROAR",
+      logo: "/images/CODM_LOGO.png",
+      rw: 9,
+      kills: 43,
+    },
+    {
+      rank: 13,
+      name: "TEAM EPSILON",
+      logo: "/images/CODM_LOGO.png",
+      rw: 0,
+      kills: 43,
+    },
+    {
+      rank: 14,
+      name: "GANGS OF COD",
+      logo: "/images/CODM_LOGO.png",
+      rw: 0,
+      kills: 18,
+    },
+    {
+      rank: 15,
+      name: "BLOOD CULT",
+      logo: "/images/CODM_LOGO.png",
+      rw: 7,
+      kills: 10,
+    },
+    {
+      rank: 16,
+      name: "TEAM ALPHA",
+      logo: "/images/CODM_LOGO.png",
+      rw: 0,
+      kills: 0,
+    },
+  ];
 
   return (
     <div>
@@ -62,9 +178,7 @@ export default function StrikerLeague1() {
               </p>
             </TabsContent>
             <TabsContent value="leaderboards">
-              <p className="text-secondary-foreground text-center mt-4">
-                Leaderboards content goes here...
-              </p>
+              <TeamLeaderboard teams={teams} />
             </TabsContent>
           </Tabs>
         </div>
