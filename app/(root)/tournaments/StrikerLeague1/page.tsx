@@ -1,4 +1,5 @@
 import TournamentDetails from "@/components/tournament/TournamentDetails";
+import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
 import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
@@ -6,11 +7,29 @@ export default function StrikerLeague1() {
   const tournament = {
     title: "STRIKER LEAGUE 1.0",
     logo: "/images/SND_SLS1_LOGO.png",
-    startDate: "01/12/2024",
-    endDate: "15/12/2024",
+    startDate: "15/03/2024",
+    endDate: "01/04/2024",
     status: "Finalized" as "Ongoing" | "Finalized", // Ensure the status matches the required type
     background: "/images/CODM_BG1.jpg",
   };
+
+  const players = [
+    { name: "Adeus", team: "Disciples of Mayhem", kills: 107 },
+    { name: "BATMAN_on_DRUG", team: "Grumbling Gangsters", kills: 92 },
+    { name: "U_SO_CUTE", team: "Quite One Elite", kills: 79 },
+    { name: "Purinz", team: "Disciples of Mayhem", kills: 76 },
+    { name: "NanosecYT", team: "Quite One Elite", kills: 75 },
+    { name: "Carnage", team: "Quite One Elite", kills: 74 },
+    { name: "GG✯NOOB", team: "Grumbling Gangsters", kills: 73 },
+    { name: "Hate", team: "Disciples of Mayhem", kills: 72 },
+    { name: "COFFIN6IX9INE", team: "Vengeance Seekers", kills: 64 },
+    { name: "QΞ卩tomi匚", team: "Quite One Elite", kills: 64 },
+    { name: "QΞLordX", team: "Quite One Elite", kills: 62 },
+    { name: "No.skil.No.win", team: "Vengeance Seekers", kills: 60 },
+    { name: "WaHiD彡", team: "Vengeance Seekers", kills: 60 },
+    { name: "Haru.op<3", team: "Vengeance Seekers", kills: 53 },
+    { name: "MEMBO×BRAND", team: "Vengeance Seekers", kills: 53 },
+  ];
 
   const teams = [
     {
@@ -179,6 +198,7 @@ export default function StrikerLeague1() {
             </TabsContent>
             <TabsContent value="leaderboards">
               <TeamLeaderboard teams={teams} status={tournament.status} />
+              <PlayerLeaderboard players={players} status={tournament.status} />
             </TabsContent>
           </Tabs>
         </div>
