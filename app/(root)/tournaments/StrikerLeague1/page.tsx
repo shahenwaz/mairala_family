@@ -151,15 +151,9 @@ export default function StrikerLeague1() {
       <TournamentDetails {...tournament} />
       <div className="w-full bg-background py-3">
         <div className="max-w-4xl mx-auto px-4">
-          <Tabs defaultValue="dashboard" className="w-full">
+          <Tabs defaultValue="matches" className="w-full">
             {/* Tabs List */}
-            <TabsList className="flex justify-center gap-2 md:gap-6 bg-card rounded-lg shadow-md p-2 md:p-3">
-              <TabsTrigger
-                value="dashboard"
-                className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
-              >
-                DASHBOARD
-              </TabsTrigger>
+            <TabsList className="flex justify-center gap-2 md:gap-6 bg-card rounded-lg shadow-md sm:p-3 md:p-4">
               <TabsTrigger
                 value="matches"
                 className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
