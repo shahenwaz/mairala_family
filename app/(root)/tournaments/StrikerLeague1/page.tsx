@@ -1,6 +1,9 @@
+"use client";
+import React, { useState } from "react";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
-import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
+import MatchCard from "@/components/tournament/MatchCard";
 import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
+import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export default function StrikerLeague1() {
@@ -13,23 +16,47 @@ export default function StrikerLeague1() {
     background: "/images/CODM_BG1.jpg",
   };
 
-  const players = [
-    { name: "Adeus", team: "Disciples of Mayhem", kills: 107 },
-    { name: "BATMAN_on_DRUG", team: "Grumbling Gangsters", kills: 92 },
-    { name: "U_SO_CUTE", team: "Quite One Elite", kills: 79 },
-    { name: "Purinz", team: "Disciples of Mayhem", kills: 76 },
-    { name: "NanosecYT", team: "Quite One Elite", kills: 75 },
-    { name: "Carnage", team: "Quite One Elite", kills: 74 },
-    { name: "GG✯NOOB", team: "Grumbling Gangsters", kills: 73 },
-    { name: "Hate", team: "Disciples of Mayhem", kills: 72 },
-    { name: "COFFIN6IX9INE", team: "Vengeance Seekers", kills: 64 },
-    { name: "QΞ卩tomi匚", team: "Quite One Elite", kills: 64 },
-    { name: "QΞLordX", team: "Quite One Elite", kills: 62 },
-    { name: "No.skil.No.win", team: "Vengeance Seekers", kills: 60 },
-    { name: "WaHiD彡", team: "Vengeance Seekers", kills: 60 },
-    { name: "Haru.op<3", team: "Vengeance Seekers", kills: 53 },
-    { name: "MEMBO×BRAND", team: "Vengeance Seekers", kills: 53 },
+  // Add dummy matches data
+  const matches = [
+    {
+      team1: "SKY HUNTER",
+      team2: "THE TOUGHER",
+      team1Logo: "/images/CODM_LOGO.png",
+      team2Logo: "/images/CODM_LOGO.png",
+      score: "0 : 0",
+      round: "ROUND ROBIN",
+      date: "3 DECEMBER 2024, 8:30 PM BST",
+      status: "Upcoming" as const, // Ensure the status matches the MatchProps type
+    },
+    {
+      team1: "KILLER 7 ULTIMATE",
+      team2: "BLACK MAX",
+      team1Logo: "/images/CODM_LOGO.png",
+      team2Logo: "/images/CODM_LOGO.png",
+      score: "5 : 3",
+      round: "QUARTER-FINAL",
+      date: "2 DECEMBER 2024, 6:00 PM BST",
+      status: "Finished" as const, // Ensure the status matches the MatchProps type
+    },
+    {
+      team1: "RACCOONS",
+      team2: "HUMBLE GUYS",
+      team1Logo: "/images/CODM_LOGO.png",
+      team2Logo: "/images/CODM_LOGO.png",
+      score: "4 : 5",
+      round: "GRAND FINALE",
+      date: "1 DECEMBER 2024, 7:30 PM BST",
+      status: "Finished" as const, // Ensure the status matches the MatchProps type
+    },
   ];
+
+  // Add state for filtering
+  const [filter, setFilter] = useState<"All" | "Upcoming" | "Finished">("All");
+
+  const filteredMatches = matches.filter((match) => {
+    if (filter === "All") return true;
+    return match.status === filter;
+  });
 
   const teams = [
     {
@@ -146,6 +173,24 @@ export default function StrikerLeague1() {
     },
   ];
 
+  const players = [
+    { name: "Adeus", team: "Disciples of Mayhem", kills: 107 },
+    { name: "BATMAN_on_DRUG", team: "Grumbling Gangsters", kills: 92 },
+    { name: "U_SO_CUTE", team: "Quite One Elite", kills: 79 },
+    { name: "Purinz", team: "Disciples of Mayhem", kills: 76 },
+    { name: "NanosecYT", team: "Quite One Elite", kills: 75 },
+    { name: "Carnage", team: "Quite One Elite", kills: 74 },
+    { name: "GG✯NOOB", team: "Grumbling Gangsters", kills: 73 },
+    { name: "Hate", team: "Disciples of Mayhem", kills: 72 },
+    { name: "COFFIN6IX9INE", team: "Vengeance Seekers", kills: 64 },
+    { name: "QΞ卩tomi匚", team: "Quite One Elite", kills: 64 },
+    { name: "QΞLordX", team: "Quite One Elite", kills: 62 },
+    { name: "No.skil.No.win", team: "Vengeance Seekers", kills: 60 },
+    { name: "WaHiD彡", team: "Vengeance Seekers", kills: 60 },
+    { name: "Haru.op<3", team: "Vengeance Seekers", kills: 53 },
+    { name: "MEMBO×BRAND", team: "Vengeance Seekers", kills: 53 },
+  ];
+
   return (
     <div>
       <TournamentDetails {...tournament} />
@@ -180,11 +225,55 @@ export default function StrikerLeague1() {
                 Dashboard content goes here...
               </p>
             </TabsContent>
+
             <TabsContent value="matches">
-              <p className="text-secondary-foreground text-center mt-4">
-                Matches content goes here...
-              </p>
+              <div className="flex justify-center gap-2 mb-10 mt-8">
+                <button
+                  className={`sm:text-xs lg:text-base px-4 py-2 rounded-md font-bold ${
+                    filter === "All"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted"
+                  }`}
+                  onClick={() => setFilter("All")}
+                >
+                  All
+                </button>
+                <br />
+                <button
+                  className={`sm:text-xs lg:text-base px-4 py-2 rounded-md font-semibold ${
+                    filter === "Upcoming"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted"
+                  }`}
+                  onClick={() => setFilter("Upcoming")}
+                >
+                  Upcoming
+                </button>
+                <br />
+                <button
+                  className={`sm:text-xs lg:text-base px-4 py-2 rounded-md font-semibold ${
+                    filter === "Finished"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted"
+                  }`}
+                  onClick={() => setFilter("Finished")}
+                >
+                  Finished
+                </button>
+              </div>
+              <div className="flex flex-col gap-6 mt-4">
+                {filteredMatches.length > 0 ? (
+                  filteredMatches.map((match, index) => (
+                    <MatchCard key={index} {...match} />
+                  ))
+                ) : (
+                  <p className="text-center text-muted-foreground">
+                    No matches available for this filter.
+                  </p>
+                )}
+              </div>
             </TabsContent>
+
             <TabsContent value="teams">
               <p className="text-secondary-foreground text-center mt-4">
                 Teams content goes here...

@@ -47,6 +47,7 @@ export default {
         },
         neutral: "hsl(var(--neutral))" /* Neutral dark */,
         lightGray: "hsl(var(--light-gray))" /* Mid gray for muted text */,
+        darkGray: "hsl(var(--dark-gray))" /* Dark gray for muted text */,
         white: "hsl(var(--white))" /* Pure white */,
         transparent: "hsl(var(--transparent))" /* Transparent */,
       },
