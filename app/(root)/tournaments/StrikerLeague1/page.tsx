@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
-import MatchCard from "@/components/tournament/MatchCard";
+import MatchesFilter from "@/components/tournament/MatchesFilter";
+import MatchesList from "@/components/tournament/MatchesList";
 import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
 import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -26,7 +27,7 @@ export default function StrikerLeague1() {
       score: "0 : 0",
       round: "ROUND ROBIN",
       date: "3 DECEMBER 2024, 8:30 PM BST",
-      status: "Upcoming" as const, // Ensure the status matches the MatchProps type
+      status: "UPCOMING" as const, // Ensure the status matches the MatchProps type
     },
     {
       team1: "KILLER 7 ULTIMATE",
@@ -36,7 +37,7 @@ export default function StrikerLeague1() {
       score: "5 : 3",
       round: "QUARTER-FINAL",
       date: "2 DECEMBER 2024, 6:00 PM BST",
-      status: "Finished" as const, // Ensure the status matches the MatchProps type
+      status: "FINISHED" as const, // Ensure the status matches the MatchProps type
     },
     {
       team1: "RACCOONS",
@@ -46,15 +47,17 @@ export default function StrikerLeague1() {
       score: "4 : 5",
       round: "GRAND FINALE",
       date: "1 DECEMBER 2024, 7:30 PM BST",
-      status: "Finished" as const, // Ensure the status matches the MatchProps type
+      status: "FINISHED" as const, // Ensure the status matches the MatchProps type
     },
   ];
 
-  // Add state for filtering
-  const [filter, setFilter] = useState<"All" | "Upcoming" | "Finished">("All");
+  // State for Filter
+  const [filter, setFilter] = useState<"ALL MATCHES" | "UPCOMING" | "FINISHED">(
+    "ALL MATCHES"
+  );
 
   const filteredMatches = matches.filter((match) => {
-    if (filter === "All") return true;
+    if (filter === "ALL MATCHES") return true;
     return match.status === filter;
   });
 
@@ -227,51 +230,15 @@ export default function StrikerLeague1() {
             </TabsContent>
 
             <TabsContent value="matches">
-              <div className="flex justify-center gap-2 mb-10 mt-8">
-                <button
-                  className={`sm:text-xs lg:text-base px-4 py-2 rounded-md font-bold ${
-                    filter === "All"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
-                  onClick={() => setFilter("All")}
-                >
-                  All
-                </button>
-                <br />
-                <button
-                  className={`sm:text-xs lg:text-base px-4 py-2 rounded-md font-semibold ${
-                    filter === "Upcoming"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
-                  onClick={() => setFilter("Upcoming")}
-                >
-                  Upcoming
-                </button>
-                <br />
-                <button
-                  className={`sm:text-xs lg:text-base px-4 py-2 rounded-md font-semibold ${
-                    filter === "Finished"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
-                  onClick={() => setFilter("Finished")}
-                >
-                  Finished
-                </button>
-              </div>
-              <div className="flex flex-col gap-6 mt-4">
-                {filteredMatches.length > 0 ? (
-                  filteredMatches.map((match, index) => (
-                    <MatchCard key={index} {...match} />
-                  ))
-                ) : (
-                  <p className="text-center text-muted-foreground">
-                    No matches available for this filter.
-                  </p>
-                )}
-              </div>
+              {/* Matches Filter */}
+              <MatchesFilter
+                options={["ALL MATCHES", "UPCOMING", "FINISHED"]}
+                defaultFilter="ALL MATCHES"
+                onFilterChange={setFilter} // No type conflict anymore
+              />
+
+              {/* Matches List */}
+              <MatchesList matches={filteredMatches} />
             </TabsContent>
 
             <TabsContent value="teams">

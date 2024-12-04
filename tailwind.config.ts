@@ -49,6 +49,7 @@ export default {
         lightGray: "hsl(var(--light-gray))" /* Mid gray for muted text */,
         darkGray: "hsl(var(--dark-gray))" /* Dark gray for muted text */,
         white: "hsl(var(--white))" /* Pure white */,
+        purple: "hsl(var(--purple))" /* Purple - 400 */,
         transparent: "hsl(var(--transparent))" /* Transparent */,
       },
       keyframes: {

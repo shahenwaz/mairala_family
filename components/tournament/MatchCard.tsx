@@ -55,10 +55,10 @@ const MatchCard: React.FC<MatchProps> = ({
 
         {/* Team Names */}
         <div className="flex justify-between items-center mt-1 mb-3">
-          <h3 className="text-sm font-bold text-left text-foreground">
+          <h3 className="text-xs font-semibold text-left text-foreground">
             {team1}
           </h3>
-          <h3 className="text-sm font-bold text-right text-foreground">
+          <h3 className="text-xs font-semibold text-right text-foreground">
             {team2}
           </h3>
         </div>
