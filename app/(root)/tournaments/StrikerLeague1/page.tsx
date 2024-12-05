@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import MatchesFilter from "@/components/tournament/MatchesFilter";
 import MatchesList from "@/components/tournament/MatchesList";
+import TeamList from "@/components/tournament/TeamList";
 import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
 import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -227,12 +228,6 @@ export default function StrikerLeague1() {
             </TabsList>
 
             {/* Tabs Content */}
-            <TabsContent value="dashboard">
-              <p className="text-secondary-foreground text-center mt-4">
-                Dashboard content goes here...
-              </p>
-            </TabsContent>
-
             <TabsContent value="matches">
               {/* Matches Filter */}
               <MatchesFilter
@@ -246,9 +241,27 @@ export default function StrikerLeague1() {
             </TabsContent>
 
             <TabsContent value="teams">
-              <p className="text-secondary-foreground text-center mt-4">
-                Teams content goes here...
-              </p>
+              <TeamList
+                teams={[
+                  {
+                    name: "DISCIPLES OF MAYHEM",
+                    logo: "/images/CODM_LOGO.png",
+                    playerCount: 6,
+                  },
+                  {
+                    name: "QUITE ONE ELITE",
+                    logo: "/images/CODM_LOGO.png",
+                    playerCount: 6,
+                  },
+                  {
+                    name: "VENGEANCE SEEKERS",
+                    logo: "/images/CODM_LOGO.png",
+                    playerCount: 6,
+                  },
+                  // Add more teams here
+                ]}
+                tournament="StrikerLeague1"
+              />
             </TabsContent>
             <TabsContent value="leaderboards">
               <TeamLeaderboard teams={teams} status={tournament.status} />
