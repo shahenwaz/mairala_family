@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface TeamCardProps {
   name: string;
@@ -16,6 +17,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
   tournament,
 }) => {
   const encodedName = encodeURIComponent(name);
+
   return (
     <Link
       href={`/tournaments/${tournament}/${encodedName}`}
@@ -28,10 +30,12 @@ const TeamCard: React.FC<TeamCardProps> = ({
       <div className="relative z-10 flex flex-col items-center space-y-3">
         {/* Team Logo */}
         <div className="w-20 h-20 rounded-full bg-gradient-to-r from-muted to-secondary flex items-center justify-center">
-          <img
+          <Image
             src={logo}
             alt={`${name} logo`}
-            className="h-16 w-16 rounded-full object-cover border-2 border-primary"
+            width={64} // Explicit width
+            height={64} // Explicit height
+            className="rounded-full object-cover border-2 border-primary"
           />
         </div>
 

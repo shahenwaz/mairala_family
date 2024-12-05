@@ -29,6 +29,7 @@ const TournamentDetails: React.FC<TournamentDetailsProps> = ({
     <div className="relative">
       {/* Background Section */}
       <div className="relative h-[15rem] bg-black border-b border-muted">
+        {/* Background Image */}
         <Image
           src={background}
           alt="Tournament Background"
@@ -40,7 +41,13 @@ const TournamentDetails: React.FC<TournamentDetailsProps> = ({
         {/* Tournament Details */}
         <div className="absolute inset-0 flex flex-col justify-center items-center space-y-3 px-4 text-center">
           {/* Logo */}
-          <img src={logo} alt={title} className="h-24 w-24 object-contain" />
+          <Image
+            src={logo}
+            alt={title}
+            width={96} // Explicitly set width (adjust as necessary)
+            height={96} // Explicitly set height (adjust as necessary)
+            className="object-contain rounded-md"
+          />
 
           {/* Title */}
           <h1 className="text-2xl md:text-3xl font-bold text-foreground">

@@ -43,7 +43,7 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
   return (
     <div className="mt-8 space-y-6">
       {/* Heading */}
-      <h2 className="text-xl md:text-2xl font-bold text-purple-400 text-center">
+      <h2 className="text-xl md:text-2xl font-bold text-purple text-center">
         PLAYER LEADERBOARD
       </h2>
 
@@ -97,7 +97,7 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
       {/* Toggle Section */}
       <div className="flex justify-center transition-all duration-1000">
         <div
-          className="text-xs md:text-sm text-purple-500 font-semibold cursor-pointer hover:text-purple-300 transition-all duration-1000"
+          className="text-xs md:text-sm text-purple font-semibold cursor-pointer hover:text-lightGray transition-all duration-300"
           onClick={() => setShowAll(!showAll)}
         >
           {showAll ? (

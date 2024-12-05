@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
+import TournamentTabs from "@/components/tournament/TournamentTabs";
 import MatchesFilter from "@/components/tournament/MatchesFilter";
 import MatchesList from "@/components/tournament/MatchesList";
 import TeamList from "@/components/tournament/TeamList";
 import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
 import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Gamepad2, Users, Trophy } from "lucide-react";
+import { TabsContent } from "@/components/ui/tabs";
+import { Team } from "@/types/Team";
 
 export default function StrikerLeague1() {
   const tournament = {
@@ -63,120 +64,120 @@ export default function StrikerLeague1() {
     return match.status === filter;
   });
 
-  const teams = [
+  const [teams] = useState<Team[]>([
     {
-      rank: 1,
       name: "DISCIPLES OF MAYHEM",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 67,
       kills: 393,
     },
     {
-      rank: 2,
       name: "QUITE ONE ELITE",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 73,
       kills: 356,
     },
     {
-      rank: 3,
       name: "VENGEANCE SEEKERS",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 43,
       kills: 306,
     },
     {
-      rank: 4,
       name: "GRUMBLING GANGSTERS",
+      playerCount: 5,
       logo: "/images/CODM_LOGO.png",
       rw: 48,
       kills: 296,
     },
     {
-      rank: 5,
       name: "GRUMBLING GANGSTERS 2.0",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 28,
       kills: 162,
     },
     {
-      rank: 6,
       name: "TOXIQUE GIRLS",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 25,
       kills: 147,
     },
     {
-      rank: 7,
       name: "BTV",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 23,
       kills: 139,
     },
     {
-      rank: 8,
       name: "TEAM MAIRALA",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 27,
       kills: 104,
     },
     {
-      rank: 9,
       name: "THE MIGHTY FORCE",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 12,
       kills: 81,
     },
     {
-      rank: 10,
       name: "ASTRAL LEGIONS",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 4,
       kills: 47,
     },
     {
-      rank: 11,
       name: "TEAM OMEGA",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 3,
       kills: 45,
     },
     {
-      rank: 12,
       name: "LIONS ROAR",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 9,
       kills: 43,
     },
     {
-      rank: 13,
       name: "TEAM EPSILON",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 0,
       kills: 43,
     },
     {
-      rank: 14,
       name: "GANGS OF COD",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 0,
       kills: 18,
     },
     {
-      rank: 15,
       name: "BLOOD CULT",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 7,
       kills: 10,
     },
     {
-      rank: 16,
       name: "TEAM ALPHA",
       logo: "/images/CODM_LOGO.png",
+      playerCount: 5,
       rw: 0,
       kills: 0,
     },
-  ];
+  ]);
 
   const players = [
     { name: "Adeus", team: "Disciples of Mayhem", kills: 107 },
@@ -201,74 +202,23 @@ export default function StrikerLeague1() {
       <TournamentDetails {...tournament} />
       <div className="w-full bg-background py-3">
         <div className="max-w-4xl mx-auto px-4">
-          <Tabs defaultValue="matches" className="w-full">
-            {/* Tabs List */}
-            <TabsList className="flex justify-center gap-2 md:gap-6 bg-card rounded-lg shadow-md sm:p-3 md:p-4">
-              <TabsTrigger
-                value="matches"
-                className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
-              >
-                <Gamepad2 className="w-3 h-3 md:w-5 md:h-5 mr-1" />
-                MATCHES
-              </TabsTrigger>
-              <TabsTrigger
-                value="teams"
-                className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
-              >
-                <Users className="w-3 h-3 md:w-5 md:h-5 mr-1" />
-                TEAMS
-              </TabsTrigger>
-              <TabsTrigger
-                value="leaderboards"
-                className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
-              >
-                <Trophy className="w-3 h-3 md:w-5 md:h-5 mr-1" />
-                LEADERBOARDS
-              </TabsTrigger>
-            </TabsList>
-
-            {/* Tabs Content */}
+          <TournamentTabs defaultTab="teams">
             <TabsContent value="matches">
-              {/* Matches Filter */}
               <MatchesFilter
                 options={["ALL MATCHES", "UPCOMING", "FINISHED"]}
                 defaultFilter="ALL MATCHES"
-                onFilterChange={setFilter} // No type conflict anymore
+                onFilterChange={setFilter}
               />
-
-              {/* Matches List */}
               <MatchesList matches={filteredMatches} />
             </TabsContent>
-
             <TabsContent value="teams">
-              <TeamList
-                teams={[
-                  {
-                    name: "DISCIPLES OF MAYHEM",
-                    logo: "/images/CODM_LOGO.png",
-                    playerCount: 6,
-                  },
-                  {
-                    name: "GRUMBLING GANGSTERS 2.0",
-                    logo: "/images/CODM_LOGO.png",
-                    playerCount: 6,
-                  },
-                  {
-                    name: "VENGEANCE SEEKERS",
-                    logo: "/images/MF_LOGO.png",
-                    playerCount: 6,
-                  },
-                  // Add more teams here
-                ]}
-                tournament="StrikerLeague1"
-              />
+              <TeamList teams={teams} tournament="StrikerLeague1" />
             </TabsContent>
-
             <TabsContent value="leaderboards">
               <TeamLeaderboard teams={teams} status={tournament.status} />
               <PlayerLeaderboard players={players} status={tournament.status} />
             </TabsContent>
-          </Tabs>
+          </TournamentTabs>
         </div>
       </div>
     </div>

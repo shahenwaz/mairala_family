@@ -16,10 +16,9 @@ import {
 } from "@/components/ui/select";
 
 interface Team {
-  rank: number;
   name: string;
-  rw: number;
-  kills: number;
+  rw: number; // Rounds Won
+  kills: number; // Total Kills
 }
 
 interface TeamLeaderboardProps {
@@ -29,27 +28,17 @@ interface TeamLeaderboardProps {
 
 const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
   const [sortBy, setSortBy] = useState<"rw" | "kills">("kills");
-  const [sortedTeams, setSortedTeams] = useState<Team[]>(
-    [...teams].sort((a, b) => b.kills - a.kills) // Initial sort by kills
-  );
+  const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
 
-  // Determine the table header color based on the status
+  // Determine the table header color based on the tournament status
   const tableHeaderColor =
     status === "Ongoing" ? "bg-yellow-400" : "bg-primary";
 
   // Sort teams dynamically based on the selected criteria
   useEffect(() => {
-    const sorted = [...teams].sort((a, b) => {
-      if (sortBy === "kills") {
-        return b.kills - a.kills; // Sort by Kills in descending order
-      }
-      return b.rw - a.rw; // Sort by Rounds Won in descending order
-    });
-
-    // Update ranks dynamically
-    sorted.forEach((team, index) => {
-      team.rank = index + 1;
-    });
+    const sorted = [...teams].sort((a, b) =>
+      sortBy === "kills" ? b.kills - a.kills : b.rw - a.rw
+    );
 
     setSortedTeams(sorted);
   }, [sortBy, teams]);
@@ -58,7 +47,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
     <div className="mt-8 space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <h2 className="text-lg md:text-2xl font-bold text-purple-400 text-center">
+        <h2 className="text-lg md:text-2xl font-bold text-purple text-center">
           TEAM LEADERBOARD
         </h2>
 
@@ -95,15 +84,15 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {sortedTeams.map((team) => (
+          {sortedTeams.map((team, index) => (
             <TableRow
-              key={team.rank}
+              key={team.name}
               className={`${
-                team.rank % 2 === 0 ? "bg-muted/20" : "bg-background"
+                index % 2 === 0 ? "bg-muted/20" : "bg-background"
               } hover:bg-muted/50 transition-all rounded-md shadow-sm my-2`}
             >
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.rank}
+                {index + 1}
               </TableCell>
               <TableCell className="px-4 py-3 font-semibold text-xs md:text-sm lg:text-base">
                 <div className="flex items-center gap-3">{team.name}</div>
