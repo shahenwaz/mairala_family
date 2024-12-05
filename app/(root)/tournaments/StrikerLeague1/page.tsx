@@ -6,6 +6,7 @@ import MatchesList from "@/components/tournament/MatchesList";
 import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
 import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Gamepad2, Users, Trophy } from "lucide-react";
 
 export default function StrikerLeague1() {
   const tournament = {
@@ -206,18 +207,21 @@ export default function StrikerLeague1() {
                 value="matches"
                 className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
               >
+                <Gamepad2 className="w-3 h-3 md:w-5 md:h-5 mr-1" />
                 MATCHES
               </TabsTrigger>
               <TabsTrigger
                 value="teams"
                 className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
               >
+                <Users className="w-3 h-3 md:w-5 md:h-5 mr-1" />
                 TEAMS
               </TabsTrigger>
               <TabsTrigger
                 value="leaderboards"
                 className="text-[10px] md:text-sm font-semibold hover:text-primary focus:text-primary active:text-primary transition-all md:bg-muted md:text-muted-foreground md:hover:bg-primary md:hover:text-primary-foreground md:focus:bg-primary md:focus:text-primary-foreground md:active:bg-primary/80 md:active:text-primary-foreground"
               >
+                <Trophy className="w-3 h-3 md:w-5 md:h-5 mr-1" />
                 LEADERBOARDS
               </TabsTrigger>
             </TabsList>

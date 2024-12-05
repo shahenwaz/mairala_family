@@ -105,7 +105,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
                 {team.rank}
               </TableCell>
-              <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base">
+              <TableCell className="px-4 py-3 font-semibold text-xs md:text-sm lg:text-base">
                 <div className="flex items-center gap-3">{team.name}</div>
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">

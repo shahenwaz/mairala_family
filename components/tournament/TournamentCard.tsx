@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Trophy } from "lucide-react";
+import { Banknote } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 interface Team {
@@ -48,9 +48,9 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
     <div className="bg-card shadow-md rounded-md p-6 space-y-6 w-full max-w-sm animate-fadeIn transition-transform hover:scale-[1.02]">
       {/* Prize Pool */}
       <div className="flex justify-center items-center space-x-2">
-        <Trophy className="text-primary w-5 h-5" />
+        <Banknote className="text-primary w-5 h-5" />
         <span className="text-sm font-bold text-primary">{prizePool}</span>
-        <Trophy className="text-primary w-5 h-5" />
+        <Banknote className="text-primary w-5 h-5" />
       </div>
 
       {/* Title */}
