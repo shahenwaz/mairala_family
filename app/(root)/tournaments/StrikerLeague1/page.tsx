@@ -249,13 +249,13 @@ export default function StrikerLeague1() {
                     playerCount: 6,
                   },
                   {
-                    name: "QUITE ONE ELITE",
+                    name: "GRUMBLING GANGSTERS 2.0",
                     logo: "/images/CODM_LOGO.png",
                     playerCount: 6,
                   },
                   {
                     name: "VENGEANCE SEEKERS",
-                    logo: "/images/CODM_LOGO.png",
+                    logo: "/images/MF_LOGO.png",
                     playerCount: 6,
                   },
                   // Add more teams here
@@ -263,6 +263,7 @@ export default function StrikerLeague1() {
                 tournament="StrikerLeague1"
               />
             </TabsContent>
+
             <TabsContent value="leaderboards">
               <TeamLeaderboard teams={teams} status={tournament.status} />
               <PlayerLeaderboard players={players} status={tournament.status} />
