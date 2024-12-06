@@ -74,14 +74,14 @@ export default function StrikerLeague1() {
     },
     {
       name: "QUITE ONE ELITE",
-      logo: "/images/CODM_LOGO.png",
+      logo: "/images/MF_LOGO.png",
       playerCount: 5,
       rw: 73,
       kills: 356,
     },
     {
       name: "VENGEANCE SEEKERS",
-      logo: "/images/CODM_LOGO.png",
+      logo: "/images/CR_LOGO.jpg",
       playerCount: 5,
       rw: 43,
       kills: 306,
@@ -89,7 +89,7 @@ export default function StrikerLeague1() {
     {
       name: "GRUMBLING GANGSTERS",
       playerCount: 5,
-      logo: "/images/CODM_LOGO.png",
+      logo: "/images/ASCEND.png",
       rw: 48,
       kills: 296,
     },

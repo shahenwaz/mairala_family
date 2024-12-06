@@ -61,6 +61,9 @@ export default {
       animation: {
         fadeIn: "fadeIn 0.5s ease-in-out",
       },
+      blur: {
+        xs: "1px", // Customize this value for a smaller blur
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

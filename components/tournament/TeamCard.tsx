@@ -21,34 +21,43 @@ const TeamCard: React.FC<TeamCardProps> = ({
   return (
     <Link
       href={`/tournaments/${tournament}/${encodedName}`}
-      className="relative group bg-card p-6 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300"
+      className="relative group bg-card rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform duration-300 overflow-hidden border-t-2 border-darkGray"
     >
-      {/* Glowing Border Effect */}
-      <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
+      {/* Glowing Effect (Under the Card) */}
+      <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-lightGray to-darkGray opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-lg"></div>
 
-      {/* Card Content */}
-      <div className="relative z-10 flex flex-col items-center space-y-3">
-        {/* Team Logo */}
-        <div className="w-20 h-20 rounded-full bg-gradient-to-r from-muted to-secondary flex items-center justify-center">
-          <Image
-            src={logo}
-            alt={`${name} logo`}
-            width={64} // Explicit width
-            height={64} // Explicit height
-            className="rounded-full object-cover border-2 border-primary"
-          />
+      {/* Background Section */}
+      <div className="relative h-20 bg-black">
+        {/* Background Image */}
+        <Image
+          src="/images/TEAM_BG.png"
+          alt="Team Background"
+          fill
+          className="object-cover object-center opacity-60 blur-xs"
+        />
+
+        {/* Team Logo (Independent and Sharp) */}
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <div className="w-16 h-16 flex items-center justify-center">
+            <Image
+              src={logo}
+              alt={`${name} logo`}
+              width={64}
+              height={64}
+              className="rounded-full object-cover"
+            />
+          </div>
         </div>
+      </div>
 
-        {/* Team Name */}
-        <h3 className="text-xl font-semibold text-primary group-hover:text-accent transition-colors duration-200">
+      {/* Team Name and Player Count */}
+      <div className="p-4 text-center">
+        <h3 className="text-base lg:text-sm font-semibold text-purple group-hover:text-lightGrayGray transition-colors duration-200">
           {name}
         </h3>
-
-        {/* Player Count */}
-        <p className="text-sm text-muted-foreground">{playerCount} Players</p>
-
-        {/* Hover Animation */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <p className="text-sm lg:text-xs text-muted-foreground">
+          {playerCount} Players
+        </p>
       </div>
     </Link>
   );
