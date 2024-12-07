@@ -30,7 +30,7 @@ const MatchesList: React.FC<MatchesListProps> = ({ matches, filterByTeam }) => {
           <MatchCard key={index} {...match} />
         ))
       ) : (
-        <p className="text-center text-muted-foreground">
+        <p className="text-center text-lightGray">
           No matches available for this team.
         </p>
       )}
