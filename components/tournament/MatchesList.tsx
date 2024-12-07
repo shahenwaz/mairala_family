@@ -13,16 +13,25 @@ interface Match {
 
 interface MatchesListProps {
   matches: Match[];
+  filterByTeam?: string; // Optional team filter
 }
 
-const MatchesList: React.FC<MatchesListProps> = ({ matches }) => {
+const MatchesList: React.FC<MatchesListProps> = ({ matches, filterByTeam }) => {
+  const filteredMatches = filterByTeam
+    ? matches.filter(
+        (match) => match.team1 === filterByTeam || match.team2 === filterByTeam
+      )
+    : matches;
+
   return (
     <div className="flex flex-col gap-6 mt-4">
-      {matches.length > 0 ? (
-        matches.map((match, index) => <MatchCard key={index} {...match} />)
+      {filteredMatches.length > 0 ? (
+        filteredMatches.map((match, index) => (
+          <MatchCard key={index} {...match} />
+        ))
       ) : (
         <p className="text-center text-muted-foreground">
-          No matches available for this filter.
+          No matches available for this team.
         </p>
       )}
     </div>
