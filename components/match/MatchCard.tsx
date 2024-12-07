@@ -23,19 +23,19 @@ const MatchCard: React.FC<MatchProps> = ({
   date,
 }) => {
   return (
-    <Card className="relative bg-card border-2 border-darkGray shadow-md transition-all duration-700 ease-in-out hover:border-primary rounded-lg w-full max-w-3xl mx-auto mb-4">
+    <Card className="relative w-full max-w-3xl mx-auto mb-4 transition-all duration-700 ease-in-out border-2 rounded-lg shadow-md bg-card border-darkGray hover:border-primary">
       {/* Round Tag */}
-      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary px-4 py-1 rounded-full text-sm text-primary-foreground font-semibold shadow-md">
+      <div className="absolute px-4 py-1 text-sm font-semibold transform -translate-x-1/2 rounded-full shadow-md -top-3 left-1/2 bg-primary text-primary-foreground">
         {round}
       </div>
 
       {/* Mobile Layout */}
-      <div className="flex flex-col md:hidden p-4 gap-2">
+      <div className="flex flex-col gap-2 p-4 md:hidden">
         {/* Teams and Score */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           {/* Team 1 */}
           <div className="flex flex-col items-center">
-            <div className="border-2 border-darkGray bg-zinc-900 rounded-md p-2">
+            <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
               <Image src={team1Logo} alt={team1} width={50} height={50} />
             </div>
           </div>
@@ -47,14 +47,14 @@ const MatchCard: React.FC<MatchProps> = ({
 
           {/* Team 2 */}
           <div className="flex flex-col items-center">
-            <div className="border-2 border-darkGray bg-zinc-900 rounded-md p-2">
+            <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
               <Image src={team2Logo} alt={team2} width={50} height={50} />
             </div>
           </div>
         </div>
 
         {/* Team Names */}
-        <div className="flex justify-between items-center mt-1 mb-3">
+        <div className="flex items-center justify-between mt-1 mb-3">
           <h3 className="text-xs font-semibold text-left text-foreground">
             {team1}
           </h3>
@@ -64,40 +64,40 @@ const MatchCard: React.FC<MatchProps> = ({
         </div>
 
         {/* Match Date */}
-        <div className="border border-primary absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-muted text-muted-foreground text-xs px-3 py-1 rounded-md shadow-md w-4/6 text-center">
+        <div className="absolute w-4/6 px-3 py-1 text-xs text-center transform -translate-x-1/2 border rounded-md shadow-md border-primary -bottom-3 left-1/2 bg-muted text-muted-foreground">
           {date}
         </div>
       </div>
 
       {/* Desktop Layout */}
-      <div className="hidden md:flex items-center justify-between p-4">
+      <div className="items-center justify-between hidden p-4 md:flex">
         {/* Team 1 */}
-        <div className="flex items-center gap-3 w-2/5 justify-start">
-          <div className="border-2 border-darkGray bg-zinc-900 rounded-md p-2">
+        <div className="flex items-center justify-start w-2/5 gap-3">
+          <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
             <Image src={team1Logo} alt={team1} width={60} height={60} />
           </div>
-          <h3 className="text-sm font-bold text-foreground text-left flex-grow">
+          <h3 className="flex-grow text-sm font-bold text-left text-foreground">
             {team1}
           </h3>
         </div>
 
         {/* Score */}
-        <div className="w-1/5 flex items-center justify-center">
+        <div className="flex items-center justify-center w-1/5">
           <p className="text-2xl font-extrabold text-primary">{score}</p>
         </div>
 
         {/* Team 2 */}
-        <div className="flex items-center gap-3 w-2/5 justify-end">
-          <h3 className="text-sm font-bold text-foreground text-right flex-grow">
+        <div className="flex items-center justify-end w-2/5 gap-3">
+          <h3 className="flex-grow text-sm font-bold text-right text-foreground">
             {team2}
           </h3>
-          <div className="border-2 border-darkGray bg-zinc-900 rounded-md p-2">
+          <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
             <Image src={team2Logo} alt={team2} width={60} height={60} />
           </div>
         </div>
 
         {/* Match Date */}
-        <div className="border border-primary absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-muted text-muted-foreground text-xs px-3 py-1 rounded-md shadow-md">
+        <div className="absolute px-3 py-1 text-xs transform -translate-x-1/2 border rounded-md shadow-md border-primary -bottom-3 left-1/2 bg-muted text-muted-foreground">
           {date}
         </div>
       </div>

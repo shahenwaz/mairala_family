@@ -43,21 +43,21 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
   return (
     <div className="mt-8 space-y-6">
       {/* Heading */}
-      <h2 className="text-xl md:text-2xl font-bold text-purple text-center">
+      <h2 className="text-xl font-bold text-center md:text-2xl text-purple">
         PLAYER LEADERBOARD
       </h2>
 
       {/* Table */}
-      <Table className="w-full border border-muted rounded-lg overflow-hidden">
+      <Table className="w-full overflow-hidden border rounded-lg border-muted">
         <TableHeader>
           <TableRow className={`${tableHeaderColor} text-primary-foreground`}>
-            <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base text-center">
+            <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
               #
             </TableCell>
-            <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base">
+            <TableCell className="px-4 py-3 text-xs font-bold md:text-sm lg:text-base">
               PLAYER NAME
             </TableCell>
-            <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base text-center">
+            <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
               KILLS
             </TableCell>
           </TableRow>
@@ -71,7 +71,7 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
                   (index + 1) % 2 === 0 ? "bg-muted/20" : "bg-background"
                 } hover:bg-muted/50 transition-all rounded-md shadow-sm my-2`}
               >
-                <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
+                <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
                   {index + 1} {/* Dynamic rank */}
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs md:text-sm lg:text-base">
@@ -85,7 +85,7 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
                     {player.team} {/* Team Name */}
                   </p>
                 </TableCell>
-                <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
+                <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
                   {player.kills}
                 </TableCell>
               </TableRow>
@@ -97,7 +97,7 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
       {/* Toggle Section */}
       <div className="flex justify-center transition-all duration-1000">
         <div
-          className="text-xs md:text-sm text-purple font-semibold cursor-pointer hover:text-lightGray transition-all duration-300"
+          className="text-xs font-semibold transition-all duration-300 cursor-pointer md:text-sm text-purple hover:text-lightGray"
           onClick={() => setShowAll(!showAll)}
         >
           {showAll ? (

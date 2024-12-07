@@ -1,4 +1,4 @@
-import MatchCard from "@/components/tournament/MatchCard";
+import MatchCard from "@/components/match/MatchCard";
 
 export default function Home() {
   // Define Match type

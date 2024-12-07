@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TournamentTabs from "@/components/tournament/TournamentTabs";
-import MatchesFilter from "@/components/tournament/MatchesFilter";
-import MatchesList from "@/components/tournament/MatchesList";
-import TeamList from "@/components/tournament/TeamList";
-import TeamLeaderboard from "@/components/tournament/TeamLeaderboard";
-import PlayerLeaderboard from "@/components/tournament/PlayerLeaderboard";
+import MatchesFilter from "@/components/match/MatchesFilter";
+import MatchesList from "@/components/match/MatchesList";
+import TeamList from "@/components/team/TeamList";
+import TeamLeaderboard from "@/components/team/TeamLeaderboard";
+import PlayerLeaderboard from "@/components/player/PlayerLeaderboard";
 import { TabsContent } from "@/components/ui/tabs";
 import { Team } from "@/types/Team";
 

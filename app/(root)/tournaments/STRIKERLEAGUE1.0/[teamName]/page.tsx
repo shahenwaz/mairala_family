@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TeamHeader from "@/components/team/TeamHeader";
 import PlayerList from "@/components/player/PlayerList";
-import MatchesList from "@/components/tournament/MatchesList";
+import MatchesList from "@/components/match/MatchesList";
 
 const TeamInfoPage = () => {
   const { teamName } = useParams();

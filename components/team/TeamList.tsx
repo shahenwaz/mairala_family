@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import TeamCard from "@/components/tournament/TeamCard";
+import TeamCard from "@/components/team/TeamCard";
 import { Team } from "@/types/Team";
 
 interface TeamListProps {
