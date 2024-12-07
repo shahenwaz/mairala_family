@@ -33,7 +33,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
           src="/images/TEAM_BG.png"
           alt="Team Background"
           fill
-          className="object-cover object-center opacity-60 blur-xs"
+          className="object-cover object-center opacity-80 blur-xs"
         />
 
         {/* Team Logo (Independent and Sharp) */}

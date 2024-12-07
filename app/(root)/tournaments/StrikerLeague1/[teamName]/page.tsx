@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 
-const TeamDetailsPage = () => {
+const TeamInfoPage = () => {
   const { teamName } = useParams();
 
   // Ensure teamName is a string
@@ -13,7 +13,7 @@ const TeamDetailsPage = () => {
       ? decodeURIComponent(teamName[0])
       : "Unknown Team";
 
-  const teamDetails = {
+  const teamInfo = {
     name: decodedTeamName,
     logo: "/images/CODM_LOGO.png",
     players: [
@@ -32,12 +32,12 @@ const TeamDetailsPage = () => {
 
   return (
     <div>
-      <TournamentDetails {...teamDetails.tournament} />
+      <TournamentDetails {...teamInfo.tournament} />
       <div className="w-full bg-background py-3">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-xl font-bold text-primary">{teamDetails.name}</h2>
+          <h2 className="text-xl font-bold text-primary">{teamInfo.name}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-            {teamDetails.players.map((player, index) => (
+            {teamInfo.players.map((player, index) => (
               <div
                 key={index}
                 className="bg-card p-4 rounded-lg shadow-md flex flex-col items-center"
@@ -55,4 +55,4 @@ const TeamDetailsPage = () => {
   );
 };
 
-export default TeamDetailsPage;
+export default TeamInfoPage;
