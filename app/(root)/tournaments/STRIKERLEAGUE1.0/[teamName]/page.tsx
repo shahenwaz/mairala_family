@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TeamHeader from "@/components/team/TeamHeader";
 import PlayerList from "@/components/player/PlayerList";
@@ -8,6 +8,7 @@ import MatchesList from "@/components/tournament/MatchesList";
 
 const TeamInfoPage = () => {
   const { teamName } = useParams();
+  const router = useRouter();
 
   const decodedTeamName =
     typeof teamName === "string"
@@ -71,11 +72,39 @@ const TeamInfoPage = () => {
   return (
     <div>
       <TournamentDetails {...teamInfo.tournament} />
-      <div className="min-h-screen bg-background text-foreground w-full max-w-3xl mx-auto">
+      <div className="w-full max-w-3xl min-h-screen mx-auto bg-background text-foreground">
         <div className="container px-4 py-2">
+          <button
+            className="flex items-center gap-2 px-4 py-2 mx-auto my-4 text-xs font-medium transition border rounded-md lg:text-sm text-lightGray border-lightGray hover:bg-primary hover:text-primary-foreground"
+            onClick={() =>
+              router.push(
+                `/tournaments/${encodeURIComponent(
+                  teamInfo.tournament.title.replace(/\s+/g, "")
+                )}`
+              )
+            }
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            BACK TO TEAMS
+          </button>
           <TeamHeader name={teamInfo.name} logo={teamInfo.logo} />
           <PlayerList players={teamInfo.players} />
-          <h2 className="text-2xl font-bold text-purple mt-8">Matches</h2>
+          <h2 className="mt-8 text-2xl font-bold text-center text-purple lg:text-start">
+            Matches
+          </h2>
           <MatchesList matches={matches} filterByTeam={teamInfo.name} />
         </div>
       </div>

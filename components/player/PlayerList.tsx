@@ -13,7 +13,9 @@ const PlayerList = ({ players }: PlayerListProps) => {
 
   return (
     <div>
-      <h2 className="mb-4 text-2xl font-bold text-purple">Players</h2>
+      <h2 className="mb-4 text-2xl font-bold text-center text-purple lg:text-start">
+        Players
+      </h2>
       <ul className="space-y-4">
         {sortedPlayers.map((player, index) => (
           <li

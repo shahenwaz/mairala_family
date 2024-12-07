@@ -200,8 +200,8 @@ export default function StrikerLeague1() {
   return (
     <div>
       <TournamentDetails {...tournament} />
-      <div className="w-full bg-background py-3">
-        <div className="max-w-4xl mx-auto px-4">
+      <div className="w-full py-3 bg-background">
+        <div className="max-w-4xl px-4 mx-auto">
           <TournamentTabs defaultTab="teams">
             <TabsContent value="matches">
               <MatchesFilter
@@ -212,7 +212,7 @@ export default function StrikerLeague1() {
               <MatchesList matches={filteredMatches} />
             </TabsContent>
             <TabsContent value="teams">
-              <TeamList teams={teams} tournament="StrikerLeague1" />
+              <TeamList teams={teams} tournament="STRIKERLEAGUE1.0" />
             </TabsContent>
             <TabsContent value="leaderboards">
               <TeamLeaderboard teams={teams} status={tournament.status} />

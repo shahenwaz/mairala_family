@@ -16,11 +16,12 @@ const TeamCard: React.FC<TeamCardProps> = ({
   playerCount,
   tournament,
 }) => {
+  const encodedTournament = encodeURIComponent(tournament);
   const encodedName = encodeURIComponent(name);
 
   return (
     <Link
-      href={`/tournaments/${tournament}/${encodedName}`}
+      href={`/tournaments/${encodedTournament}/${encodedName}`}
       className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray"
     >
       {/* Glowing Effect (Under the Card) */}
@@ -36,7 +37,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
           className="object-cover object-center opacity-80 blur-xs"
         />
 
-        {/* Team Logo (Independent and Sharp) */}
+        {/* Team Logo */}
         <div className="absolute inset-0 z-20 flex items-center justify-center">
           <div className="flex items-center justify-center w-16 h-16">
             <Image

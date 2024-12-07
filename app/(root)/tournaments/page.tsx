@@ -48,26 +48,26 @@ const TournamentsPage = () => {
         { name: "ADEUS (MVP)", prize: "500 TK" },
       ],
       colorScheme: "green" as const,
-      route: "/tournaments/StrikerLeague1",
+      route: "/tournaments/STRIKERLEAGUE1.0",
     },
   ];
 
   return (
-    <div className="container mx-auto px-4 py-10 space-y-8">
+    <div className="container px-4 py-10 mx-auto space-y-8">
       <div>
         {/* Subtitle */}
-        <h2 className="text-center text-sm font-bold text-muted-foreground mb-2">
+        <h2 className="mb-2 text-sm font-bold text-center text-muted-foreground">
           OUR TOURNAMENTS
         </h2>
 
         {/* Title */}
-        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground">
+        <h1 className="text-2xl font-extrabold text-center sm:text-3xl md:text-4xl text-foreground">
           CALL OF DUTY MOBILE
         </h1>
       </div>
 
       {/* Tournament Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-4 justify-center items-center place-items-center">
+      <div className="grid items-center justify-center grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 place-items-center">
         {tournaments.map((tournament, index) => (
           <TournamentCard
             key={index}
