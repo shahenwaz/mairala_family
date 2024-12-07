@@ -70,4 +70,9 @@ body {
     opacity: 1; /* Keep menu visible */
     transform: translateY(0); /* Prevent menu from resetting its position */
   }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform duration-200;
+  }
 }

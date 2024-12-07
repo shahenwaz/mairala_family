@@ -21,10 +21,10 @@ const TeamCard: React.FC<TeamCardProps> = ({
   return (
     <Link
       href={`/tournaments/${tournament}/${encodedName}`}
-      className="relative group bg-card rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform duration-300 overflow-hidden border-t-2 border-darkGray"
+      className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray"
     >
       {/* Glowing Effect (Under the Card) */}
-      <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-lightGray to-darkGray opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-lg"></div>
+      <div className="absolute transition-opacity duration-300 rounded-lg opacity-0 -inset-1 bg-gradient-to-r from-lightGray to-darkGray group-hover:opacity-20 blur-lg"></div>
 
       {/* Background Section */}
       <div className="relative h-20 bg-black">
@@ -37,14 +37,14 @@ const TeamCard: React.FC<TeamCardProps> = ({
         />
 
         {/* Team Logo (Independent and Sharp) */}
-        <div className="absolute inset-0 flex items-center justify-center z-20">
-          <div className="w-16 h-16 flex items-center justify-center">
+        <div className="absolute inset-0 z-20 flex items-center justify-center">
+          <div className="flex items-center justify-center w-16 h-16">
             <Image
               src={logo}
               alt={`${name} logo`}
               width={64}
               height={64}
-              className="rounded-full object-cover"
+              className="object-cover rounded-full"
             />
           </div>
         </div>
@@ -52,7 +52,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
 
       {/* Team Name and Player Count */}
       <div className="p-4 text-center">
-        <h3 className="text-base lg:text-sm font-semibold text-purple group-hover:text-lightGrayGray transition-colors duration-200">
+        <h3 className="text-base font-semibold transition-colors duration-200 lg:text-sm text-purple group-hover:text-lightGrayGray">
           {name}
         </h3>
         <p className="text-sm lg:text-xs text-muted-foreground">

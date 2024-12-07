@@ -45,12 +45,12 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
     colorScheme === "green" ? "text-primary" : "text-yellow-400";
 
   return (
-    <div className="bg-card shadow-md rounded-md p-6 space-y-6 w-full max-w-sm animate-fadeIn transition-transform hover:scale-[1.02]">
+    <div className="w-full max-w-sm p-6 space-y-6 rounded-md bg-card animate-fadeIn card-hover">
       {/* Prize Pool */}
-      <div className="flex justify-center items-center space-x-2">
-        <Banknote className="text-primary w-5 h-5" />
+      <div className="flex items-center justify-center space-x-2">
+        <Banknote className="w-5 h-5 text-primary" />
         <span className="text-sm font-bold text-primary">{prizePool}</span>
-        <Banknote className="text-primary w-5 h-5" />
+        <Banknote className="w-5 h-5 text-primary" />
       </div>
 
       {/* Title */}
@@ -66,7 +66,7 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
       </div>
 
       {/* MVP */}
-      <div className="bg-background rounded-md p-4 text-center">
+      <div className="p-4 text-center rounded-md bg-background">
         <p className="text-sm font-bold text-muted-foreground">
           MVP: <span className="text-foreground">{mvp}</span> ({mvpKills} kills)
         </p>
@@ -77,15 +77,15 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
         {teams.map((team, index) => (
           <div
             key={index}
-            className="flex justify-between items-center text-sm"
+            className="flex items-center justify-between text-sm"
           >
             <div className="flex items-center space-x-3">
               <Avatar>
                 <AvatarImage src={defaultLogos[index]} alt={team.name} />
               </Avatar>
-              <span className="text-foreground font-bold">{team.name}</span>
+              <span className="font-bold text-foreground">{team.name}</span>
             </div>
-            <span className="text-muted-foreground font-bold">
+            <span className="font-bold text-muted-foreground">
               {team.prize}
             </span>
           </div>
@@ -96,7 +96,7 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
       <div className="flex justify-center">
         <Button
           onClick={onViewDetails}
-          className="font-bold w-2/3 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md transition-all duration-300 hover:scale-105"
+          className="w-2/3 font-bold transition-all duration-300 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105"
         >
           View Details
         </Button>

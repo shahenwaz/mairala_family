@@ -13,12 +13,12 @@ const PlayerList = ({ players }: PlayerListProps) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-purple mb-4">Players</h2>
+      <h2 className="mb-4 text-2xl font-bold text-purple">Players</h2>
       <ul className="space-y-4">
         {sortedPlayers.map((player, index) => (
           <li
             key={index}
-            className="flex justify-between items-center p-4 bg-card rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform duration-300"
+            className="flex items-center justify-between p-4 overflow-hidden rounded-lg bg-card card-hover"
           >
             <span className="text-lg font-semibold">{player.name}</span>
             <span className="text-primary">
@@ -27,7 +27,7 @@ const PlayerList = ({ players }: PlayerListProps) => {
           </li>
         ))}
       </ul>
-      <div className="mt-4 flex justify-between items-center p-4 bg-card rounded-lg shadow-md text-lg font-semibold">
+      <div className="flex items-center justify-between p-4 mt-4 text-lg font-semibold rounded-lg bg-card card-hover">
         <span className="text-accent">Total Team Kills:</span>
         <span className="text-purple">{totalKills}</span>
       </div>
