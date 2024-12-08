@@ -102,7 +102,7 @@ const TeamInfoPage = () => {
           </button>
           <TeamHeader name={teamInfo.name} logo={teamInfo.logo} />
           <PlayerList players={teamInfo.players} />
-          <h2 className="mt-8 text-2xl font-bold text-center text-purple lg:text-start">
+          <h2 className="mt-8 text-xl lg:text-2xl font-bold text-center text-purple lg:text-start">
             Matches
           </h2>
           <MatchesList matches={matches} filterByTeam={teamInfo.name} />

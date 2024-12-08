@@ -13,7 +13,7 @@ const PlayerList = ({ players }: PlayerListProps) => {
 
   return (
     <div>
-      <h2 className="mb-4 text-2xl font-bold text-center text-purple lg:text-start">
+      <h2 className="mb-4 mt-6 text-xl lg:text-2xl font-bold text-center text-purple lg:text-start">
         Players
       </h2>
       <ul className="space-y-4">
