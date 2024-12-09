@@ -1,8 +1,8 @@
 const AdminDashboard = () => {
   const dashboardItems = [
     {
-      title: "Manage Teams",
-      description: "Add, edit, or delete teams for tournaments.",
+      title: "Manage Tournaments",
+      description: "Create, edit, and manage tournaments.",
     },
     { title: "View Blogs", description: "Create and manage blog posts." },
     { title: "Settings", description: "Configure admin dashboard settings." },
@@ -13,11 +13,9 @@ const AdminDashboard = () => {
       {dashboardItems.map((item, index) => (
         <div
           key={index}
-          className="bg-[var(--muted)] p-4 rounded shadow hover:shadow-lg transition-shadow"
+          className="bg-[var(--card)] text-[var(--card-foreground)] p-4 rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform duration-200"
         >
-          <h2 className="text-lg font-bold text-[var(--foreground)] mb-2">
-            {item.title}
-          </h2>
+          <h2 className="text-lg font-bold mb-2">{item.title}</h2>
           <p className="text-sm text-[var(--muted-foreground)]">
             {item.description}
           </p>
