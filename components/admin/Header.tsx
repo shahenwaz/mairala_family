@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
@@ -9,8 +11,8 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center px-6 py-4 bg-[var(--background)] border-b border-[var(--primary)]">
-      <h1 className="text-2xl font-bold text-[var(--foreground)]">
-        Admin Panel
+      <h1 className="text-xl font-semibold text-[var(--foreground)]">
+        Admin Dashboard
       </h1>
       <Button onClick={handleLogout} variant="destructive">
         Logout
