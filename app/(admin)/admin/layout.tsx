@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function AdminLayout({
   children,
@@ -17,7 +18,9 @@ export default function AdminLayout({
     <div className="flex flex-col h-screen bg-[var(--background)]">
       {/* Header */}
       <header className="flex justify-between items-center px-6 py-4 bg-background border-b border-darkGray">
-        <h1 className="text-xl font-bold text-purple">ADMIN DASHBOARD</h1>
+        <Link href="/admin" className="text-xl font-bold text-purple">
+          ADMIN DASHBOARD
+        </Link>
         {/* Ensure the logout button stays as a client component */}
         <Button
           variant="destructive"
