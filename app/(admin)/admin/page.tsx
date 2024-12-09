@@ -1,11 +1,12 @@
-import React from "react";
+const AdminDashboard = () => {
+  return (
+    <div className="text-[var(--foreground)]">
+      <h1 className="text-3xl font-bold mb-4">
+        Welcome to the Admin Dashboard
+      </h1>
+      <p>Use the sidebar to navigate between sections.</p>
+    </div>
+  );
+};
 
-const AdminPage = () => (
-  <div className="flex items-center justify-center h-screen bg-[var(--background)]">
-    <h1 className="text-3xl font-bold text-[var(--foreground)]">
-      Welcome to Admin Dashboard
-    </h1>
-  </div>
-);
-
-export default AdminPage;
+export default AdminDashboard;
