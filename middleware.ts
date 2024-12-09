@@ -2,19 +2,30 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  // Extract the value of the cookie
+  const { pathname } = request.nextUrl;
   const isAuthenticated = request.cookies.get("admin-auth")?.value === "true";
-  const url = request.nextUrl.clone();
 
-  // Redirect unauthenticated users to the login page
-  if (!isAuthenticated && url.pathname.startsWith("/admin")) {
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+  if (!isAuthenticated && pathname.startsWith("/admin")) {
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = "/login";
+    const response = NextResponse.redirect(loginUrl);
+    response.headers.set("Cache-Control", "no-store"); // Prevent caching
+    return response;
   }
 
-  return NextResponse.next();
+  if (isAuthenticated && pathname === "/login") {
+    const adminUrl = request.nextUrl.clone();
+    adminUrl.pathname = "/admin";
+    const response = NextResponse.redirect(adminUrl);
+    response.headers.set("Cache-Control", "no-store"); // Prevent caching
+    return response;
+  }
+
+  const response = NextResponse.next();
+  response.headers.set("Cache-Control", "no-store"); // Prevent caching
+  return response;
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/login"], // Apply middleware only to these routes
+  matcher: ["/admin/:path*", "/login"], // Apply middleware to admin and login paths
 };
