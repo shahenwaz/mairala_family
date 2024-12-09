@@ -13,13 +13,20 @@ import {
   SidebarProvider,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 
 const AdminSidebar = () => {
+  const handleLogout = () => {
+    document.cookie =
+      "admin-auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    window.location.href = "/login";
+  };
+
   return (
     <SidebarProvider>
-      <Sidebar className="bg-[var(--muted)] text-[var(--foreground)]">
+      <Sidebar className="bg-[var(--sidebar-background)] text-[var(--sidebar-foreground)]">
         {/* Sidebar Header */}
-        <SidebarHeader className="text-lg font-bold p-4 border-b border-[var(--primary)]">
+        <SidebarHeader className="text-lg font-bold p-4 border-b border-[var(--sidebar-border)]">
           Admin Panel
         </SidebarHeader>
 
@@ -30,17 +37,29 @@ const AdminSidebar = () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/admin">Dashboard</a>
+                  <a href="/admin" className="hover:text-[var(--primary)]">
+                    Dashboard
+                  </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/admin/teams">Teams</a>
+                  <a
+                    href="/admin/tournaments"
+                    className="hover:text-[var(--primary)]"
+                  >
+                    Tournaments
+                  </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/admin/blogs">Blogs</a>
+                  <a
+                    href="/admin/blogs"
+                    className="hover:text-[var(--primary)]"
+                  >
+                    Blogs
+                  </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -50,7 +69,19 @@ const AdminSidebar = () => {
 
         {/* Sidebar Footer */}
         <SidebarFooter className="p-4 text-sm">
-          Logged in as: <strong>Admin</strong>
+          <div className="flex justify-between items-center">
+            <span>
+              Logged in as: <strong>Admin</strong>
+            </span>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={handleLogout}
+              className="hover:bg-[var(--destructive)] hover:text-[var(--destructive-foreground)]"
+            >
+              Logout
+            </Button>
+          </div>
         </SidebarFooter>
       </Sidebar>
     </SidebarProvider>
