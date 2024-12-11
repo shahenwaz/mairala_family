@@ -5,8 +5,8 @@ const TeamSchema = new mongoose.Schema({
   name: { type: String, required: true },
   tournamentId: { type: String, required: true }, // References the tournament
   rw: { type: Number, default: 0 }, // Rounds Won
-  kills: { type: Number, default: 0 }, // Initial kills set to 0
-  playerCount: { type: Number, required: true },
+  kills: { type: Number, default: 0 },
+  playerCount: { type: Number, default: 0 },
 });
 
 TeamSchema.set("toJSON", {

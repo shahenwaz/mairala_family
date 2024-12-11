@@ -1,33 +1,37 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 interface TeamCardProps {
   name: string;
   playerCount: number;
   tournament: string;
+  isAdmin?: boolean; // Flag to indicate admin view
+  onEdit?: () => void; // Admin-only action
+  onDelete?: () => void; // Admin-only action
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
   name,
   playerCount,
   tournament,
+  isAdmin = false, // Default to client view
+  onEdit,
+  onDelete,
 }) => {
   const encodedTournament = encodeURIComponent(tournament);
   const encodedName = encodeURIComponent(name);
 
   return (
-    <Link
-      href={`/tournaments/${encodedTournament}/${encodedName}`}
-      className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray"
-    >
+    <div className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray">
       {/* Glowing Effect (Under the Card) */}
       <div className="absolute transition-opacity duration-300 rounded-lg opacity-0 -inset-1 bg-gradient-to-r from-lightGray to-darkGray group-hover:opacity-20 blur-lg"></div>
 
       {/* Background Section */}
       <div className="relative h-20 bg-black">
-        {/* Background Image */}
         <Image
           src="/images/TEAM_BG.png"
           alt="Team Background"
@@ -57,8 +61,25 @@ const TeamCard: React.FC<TeamCardProps> = ({
         <p className="text-sm lg:text-xs text-muted-foreground">
           {playerCount} Players
         </p>
+
+        {/* Admin Buttons (Edit/Delete) */}
+        {isAdmin && (
+          <div className="flex justify-center gap-2 mt-4">
+            <Button size="sm" onClick={onEdit} className="hover:bg-primary/90">
+              Edit
+            </Button>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={onDelete}
+              className="hover:bg-red-600"
+            >
+              Delete
+            </Button>
+          </div>
+        )}
       </div>
-    </Link>
+    </div>
   );
 };
 
