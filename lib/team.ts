@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const TeamSchema = new mongoose.Schema({
-  uniqueId: { type: String, required: true, unique: true }, // Custom unique ID for the team
+  teamId: { type: String, required: true, unique: true }, // Custom unique ID for the team
   name: { type: String, required: true },
   tournamentId: { type: String, required: true }, // References the tournament
   rw: { type: Number, default: 0 }, // Rounds Won

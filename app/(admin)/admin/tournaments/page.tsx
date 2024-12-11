@@ -8,14 +8,14 @@ const TournamentsPage = () => {
   const tournaments = [
     {
       id: "1",
-      uniqueId: "ST020",
+      tournamentId: "STRIKERLEAGUE2.0",
       title: "STRIKER LEAGUE 2.0",
       prizePool: 10000,
       status: "Ongoing",
     },
     {
       id: "2",
-      uniqueId: "ST010",
+      tournamentId: "STRIKERLEAGUE1.0",
       title: "STRIKER LEAGUE 1.O",
       prizePool: 5000,
       status: "Finalized",
@@ -32,7 +32,7 @@ const TournamentsPage = () => {
         {tournaments.map((tournament) => (
           <Link
             key={tournament.id}
-            href={`/admin/tournaments/${tournament.uniqueId}/teams`}
+            href={`/admin/tournaments/${tournament.tournamentId}/teams`}
           >
             <Card className="p-4 space-y-4 bg-card cursor-pointer card-hover">
               <h3 className="text-lg font-bold">{tournament.title}</h3>

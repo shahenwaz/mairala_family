@@ -19,7 +19,7 @@ const TeamsAdminPage = () => {
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      uniqueId: "",
+      teamId: "",
       name: "",
       playerCount: 5,
     },
@@ -46,7 +46,7 @@ const TeamsAdminPage = () => {
   const onSubmit = async (data: any) => {
     try {
       if (editMode && editingTeam) {
-        await axios.put("/api/teams", { id: editingTeam.uniqueId, ...data });
+        await axios.put("/api/teams", { id: editingTeam.teamId, ...data });
         addToast({
           title: "Success",
           description: "Team updated successfully!",
@@ -77,9 +77,9 @@ const TeamsAdminPage = () => {
   };
 
   // Delete team
-  const handleDelete = async (uniqueId: string) => {
+  const handleDelete = async (teamId: string) => {
     try {
-      await axios.delete(`/api/teams?id=${uniqueId}`);
+      await axios.delete(`/api/teams?id=${teamId}`);
       addToast({
         title: "Success",
         description: "Team deleted successfully!",
@@ -106,7 +106,7 @@ const TeamsAdminPage = () => {
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mb-6">
         <Input
-          {...register("uniqueId")}
+          {...register("teamId")}
           placeholder="Team Unique ID (e.g., ST02001)"
           className="border-primary focus:ring-primary"
         />
@@ -128,7 +128,7 @@ const TeamsAdminPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {teams.map((team) => (
           <Card
-            key={team.uniqueId}
+            key={team.teamId}
             className="p-4 bg-card hover:shadow-lg transition-all"
           >
             <h2 className="text-lg font-bold">{team.name}</h2>
@@ -142,7 +142,7 @@ const TeamsAdminPage = () => {
               </Button>
               <Button
                 variant="destructive"
-                onClick={() => handleDelete(team.uniqueId)}
+                onClick={() => handleDelete(team.teamId)}
               >
                 Delete
               </Button>

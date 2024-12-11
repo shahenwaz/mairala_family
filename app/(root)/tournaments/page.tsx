@@ -4,6 +4,16 @@ import React from "react";
 import TournamentCard from "@/components/tournament/TournamentCard";
 import { useRouter } from "next/navigation";
 
+export async function getStaticProps() {
+  const data = await fetch(
+    "http://localhost:3000/api/teams?tournamentId=STRIKERLEAGUE2.0"
+  );
+  return {
+    props: { teams: data },
+    revalidate: 10, // Revalidate every 10 seconds
+  };
+}
+
 const TournamentsPage = () => {
   const router = useRouter();
 
