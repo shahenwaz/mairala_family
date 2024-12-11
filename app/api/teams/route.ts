@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongoose";
 import Team from "@/lib/team";
 
+// GET method
 export async function GET(req: Request) {
   try {
     await dbConnect();
@@ -27,6 +28,7 @@ export async function GET(req: Request) {
   }
 }
 
+// POST endpoint allows adding new teams
 export async function POST(req: Request) {
   try {
     await dbConnect();
@@ -53,6 +55,38 @@ export async function POST(req: Request) {
     return NextResponse.json(newTeam, { status: 201 });
   } catch (error) {
     console.error("Error creating team:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
+
+// The PUT endpoint is used for editing existing teams
+export async function PUT(req: Request) {
+  try {
+    await dbConnect();
+    const body = await req.json();
+    const { id, ...updateData } = body;
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Team ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const updatedTeam = await Team.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updatedTeam) {
+      return NextResponse.json({ error: "Team not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedTeam, { status: 200 });
+  } catch (error) {
+    console.error("Error updating team:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
