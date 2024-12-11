@@ -2,21 +2,22 @@
 
 import React from "react";
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
 
 const TournamentsPage = () => {
   const tournaments = [
     {
       id: "1",
-      uniqueId: "ST010",
-      title: "Champions League",
-      prizePool: 50000,
+      uniqueId: "ST020",
+      title: "STRIKER LEAGUE 2.0",
+      prizePool: 10000,
       status: "Ongoing",
     },
     {
       id: "2",
-      uniqueId: "ST011",
-      title: "Masters Tournament",
-      prizePool: 30000,
+      uniqueId: "ST010",
+      title: "STRIKER LEAGUE 1.O",
+      prizePool: 5000,
       status: "Finalized",
     },
   ];
@@ -29,13 +30,20 @@ const TournamentsPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {tournaments.map((tournament) => (
-          <Card key={tournament.id} className="p-4 space-y-4 bg-card">
-            <h3 className="text-lg font-bold">{tournament.title}</h3>
-            <p className="text-sm text-muted-foreground">{tournament.status}</p>
-            <p className="text-sm text-muted-foreground">
-              Prize Pool: {tournament.prizePool} TK
-            </p>
-          </Card>
+          <Link
+            key={tournament.id}
+            href={`/admin/tournaments/${tournament.uniqueId}/teams`}
+          >
+            <Card className="p-4 space-y-4 bg-card cursor-pointer card-hover">
+              <h3 className="text-lg font-bold">{tournament.title}</h3>
+              <p className="text-sm text-muted-foreground">
+                {tournament.status}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Prize Pool: {tournament.prizePool} TK
+              </p>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

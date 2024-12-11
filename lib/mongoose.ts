@@ -37,6 +37,7 @@ async function dbConnect(): Promise<Connection> {
   }
 
   const mongooseInstance = await cached.promise;
+  console.log("MongoDB Connected:", mongooseInstance.connection.readyState);
   cached.conn = mongooseInstance.connection;
 
   return cached.conn;

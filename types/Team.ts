@@ -1,7 +1,7 @@
 export interface Team {
-  name: string;
-  logo: string;
-  playerCount: number;
-  rw: number;
-  kills: number;
+  uniqueId: string; // Unique team identifier
+  name: string; // Team name
+  playerCount: number; // Number of players
+  rw: number; // Rounds won
+  kills: number; // Total kills
 }

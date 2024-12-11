@@ -20,7 +20,7 @@ const TournamentsPage = () => {
         { name: "MVP", prize: "500 TK" },
       ],
       colorScheme: "yellow" as const,
-      route: "/tournaments/StrikerLeague2", // Static route
+      route: "/tournaments/STRIKERLEAGUE2.0", // Static route
     },
     {
       prizePool: "1000 TK",

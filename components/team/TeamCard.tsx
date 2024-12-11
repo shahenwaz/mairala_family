@@ -5,14 +5,12 @@ import Image from "next/image";
 
 interface TeamCardProps {
   name: string;
-  logo: string;
   playerCount: number;
   tournament: string;
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
   name,
-  logo,
   playerCount,
   tournament,
 }) => {
@@ -41,7 +39,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
         <div className="absolute inset-0 z-20 flex items-center justify-center">
           <div className="flex items-center justify-center w-16 h-16">
             <Image
-              src={logo}
+              src="/images/CODM_LOGO.png"
               alt={`${name} logo`}
               width={64}
               height={64}
