@@ -26,3 +26,36 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function POST(req: Request) {
+  try {
+    await dbConnect();
+    const body = await req.json();
+    const { teamId, name, tournamentId, playerCount, rw = 0, kills = 0 } = body;
+
+    if (!teamId || !name || !tournamentId || playerCount === undefined) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    const newTeam = new Team({
+      teamId,
+      name,
+      tournamentId,
+      rw,
+      kills,
+      playerCount,
+    });
+    await newTeam.save();
+
+    return NextResponse.json(newTeam, { status: 201 });
+  } catch (error) {
+    console.error("Error creating team:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
