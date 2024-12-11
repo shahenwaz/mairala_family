@@ -93,3 +93,36 @@ export async function PUT(req: Request) {
     );
   }
 }
+
+// The DELETE endpoint removes a team from the database
+export async function DELETE(req: Request) {
+  try {
+    await dbConnect();
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Team ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const deletedTeam = await Team.findByIdAndDelete(id);
+
+    if (!deletedTeam) {
+      return NextResponse.json({ error: "Team not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      { message: "Team deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting team:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
