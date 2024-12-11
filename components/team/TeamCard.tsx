@@ -6,30 +6,26 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface TeamCardProps {
+  id: string; // MongoDB `_id` for dynamic linking
   name: string;
   playerCount: number;
-  tournament: string;
-  isAdmin?: boolean; // Flag to indicate admin view
-  onEdit?: () => void; // Admin-only action
-  onDelete?: () => void; // Admin-only action
+  tournamentId: string;
+  isAdmin?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
+  id,
   name,
   playerCount,
-  tournament,
-  isAdmin = false, // Default to client view
+  tournamentId,
+  isAdmin = false,
   onEdit,
   onDelete,
 }) => {
-  const encodedTournament = encodeURIComponent(tournament);
-  const encodedName = encodeURIComponent(name);
-
   return (
     <div className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray">
-      {/* Glowing Effect (Under the Card) */}
-      <div className="absolute transition-opacity duration-300 rounded-lg opacity-0 -inset-1 bg-gradient-to-r from-lightGray to-darkGray group-hover:opacity-20 blur-lg"></div>
-
       {/* Background Section */}
       <div className="relative h-20 bg-black">
         <Image
@@ -38,7 +34,6 @@ const TeamCard: React.FC<TeamCardProps> = ({
           fill
           className="object-cover object-center opacity-80 blur-xs"
         />
-
         {/* Team Logo */}
         <div className="absolute inset-0 z-20 flex items-center justify-center">
           <div className="flex items-center justify-center w-16 h-16">
@@ -55,14 +50,19 @@ const TeamCard: React.FC<TeamCardProps> = ({
 
       {/* Team Name and Player Count */}
       <div className="p-4 text-center">
-        <h3 className="text-base font-semibold transition-colors duration-200 lg:text-sm text-purple group-hover:text-lightGrayGray">
-          {name}
-        </h3>
+        <Link
+          href={`/tournaments/${tournamentId}/teams/${id}`}
+          className="hover:underline"
+        >
+          <h3 className="text-base font-semibold transition-colors duration-200 lg:text-sm text-purple group-hover:text-lightGrayGray">
+            {name}
+          </h3>
+        </Link>
         <p className="text-sm lg:text-xs text-muted-foreground">
           {playerCount} Players
         </p>
 
-        {/* Admin Buttons (Edit/Delete) */}
+        {/* Admin Buttons */}
         {isAdmin && (
           <div className="flex justify-center gap-2 mt-4">
             <Button size="sm" onClick={onEdit} className="hover:bg-primary/90">

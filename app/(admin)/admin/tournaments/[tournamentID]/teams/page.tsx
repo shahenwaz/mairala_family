@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,7 @@ const TeamsAdminPage = () => {
   const params = useParams();
   const tournamentId = Array.isArray(params.tournamentId)
     ? params.tournamentId[0]
-    : params.tournamentId || ""; // Ensure a string value
+    : params.tournamentId || "";
 
   const { addToast } = useToast();
   const [teams, setTeams] = useState<Team[]>([]);
@@ -31,8 +32,7 @@ const TeamsAdminPage = () => {
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      teamId: "",
-      name: "",
+      name: "", // Only the team name is required for creation
     },
   });
 
@@ -46,7 +46,6 @@ const TeamsAdminPage = () => {
       const { data }: { data: Team[] } = await axios.get(
         `/api/teams?tournamentId=${tournamentId}`
       );
-
       setTeams(data);
     } catch (error: any) {
       console.error("Error fetching teams:", error);
@@ -58,7 +57,7 @@ const TeamsAdminPage = () => {
     }
   };
 
-  // Add or Edit team
+  // onSubmit function for adding/editing teams
   const onSubmit = async (data: any) => {
     try {
       if (!tournamentId) {
@@ -71,18 +70,18 @@ const TeamsAdminPage = () => {
       }
 
       if (editMode && editingTeam) {
-        await axios.put("/api/teams", {
-          id: editingTeam.teamId,
-          ...data,
+        await axios.put(`/api/teams`, {
+          id: editingTeam._id, // Use MongoDB’s _id
+          name: data.name,
         });
         addToast({
           title: "Success",
           description: "Team updated successfully!",
         });
       } else {
-        await axios.post("/api/teams", {
-          ...data,
-          tournamentId, // Ensure the tournamentId is passed correctly
+        await axios.post(`/api/teams`, {
+          name: data.name,
+          tournamentId,
         });
         addToast({
           title: "Success",
@@ -95,7 +94,7 @@ const TeamsAdminPage = () => {
       setEditingTeam(null);
       setIsSheetOpen(false);
       fetchTeams();
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error submitting team:", error);
       addToast({
         title: "Error",
@@ -105,13 +104,15 @@ const TeamsAdminPage = () => {
     }
   };
 
+  // Edit Team Handler
   const handleEdit = (team: Team) => {
     setEditMode(true);
     setEditingTeam(team);
     setIsSheetOpen(true);
-    reset(team);
+    reset({ name: team.name });
   };
 
+  // Delete Team Handler
   const handleDelete = async (teamId: string) => {
     try {
       await axios.delete(`/api/teams?id=${teamId}`);
@@ -137,65 +138,64 @@ const TeamsAdminPage = () => {
   }, [tournamentId]);
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-center text-3xl font-extrabold mb-6">
-        Manage Teams for Tournament {tournamentId || "Unknown"}
-      </h1>
+    <div className="w-full py-3 bg-background">
+      <div className="max-w-4xl px-4 mx-auto">
+        <h2 className="text-center text-xl font-semibold mb-6">Manage Teams</h2>
+        <h1 className="text-center text-3xl font-extrabold mb-6">
+          {tournamentId || "Unknown"}
+        </h1>
 
-      {/* CREATE TEAM BUTTON */}
-      <div className="flex justify-center mb-6">
-        <Button
-          onClick={() => {
-            reset();
-            setEditMode(false);
-            setIsSheetOpen(true);
-          }}
-          className="px-8 py-3 text-lg hover:bg-primary/90"
-        >
-          CREATE TEAM
-        </Button>
-      </div>
-
-      {/* Team List */}
-      <TeamList
-        teams={teams}
-        tournamentId={tournamentId}
-        isAdmin={true} // Enable admin mode
-        onEditTeam={handleEdit} // Pass the edit handler
-        onDeleteTeam={handleDelete} // Pass the delete handler
-      />
-
-      {/* Sheet for Adding or Editing a Team */}
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent className="w-full sm:max-w-md">
-          <SheetHeader>
-            <SheetTitle>{editMode ? "Edit Team" : "Add Team"}</SheetTitle>
-            <SheetDescription>
-              {editMode
-                ? "Update the team details."
-                : "Fill out the form below to create a new team."}
-            </SheetDescription>
-          </SheetHeader>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col space-y-4 mt-4"
+        {/* CREATE TEAM BUTTON */}
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={() => {
+              reset();
+              setEditMode(false);
+              setIsSheetOpen(true);
+            }}
+            className="px-8 py-3 text-lg font-semibold card-hover"
           >
-            <Input
-              {...register("teamId", { required: true })}
-              placeholder="Team ID (e.g., TEAM001)"
-            />
-            <Input
-              {...register("name", { required: true })}
-              placeholder="Team Name"
-            />
-            <SheetFooter>
-              <Button type="submit">
-                {editMode ? "Update Team" : "Add Team"}
-              </Button>
-            </SheetFooter>
-          </form>
-        </SheetContent>
-      </Sheet>
+            CREATE TEAM
+          </Button>
+        </div>
+
+        {/* Team List */}
+        <TeamList
+          teams={teams}
+          tournamentId={tournamentId}
+          isAdmin={true}
+          onEditTeam={handleEdit}
+          onDeleteTeam={handleDelete}
+        />
+
+        {/* Sheet for Adding or Editing a Team */}
+        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+          <SheetContent className="w-full sm:max-w-md">
+            <SheetHeader>
+              <SheetTitle>{editMode ? "Edit Team" : "Add Team"}</SheetTitle>
+              <SheetDescription>
+                {editMode
+                  ? "Update the team details."
+                  : "Fill out the form below to create a new team."}
+              </SheetDescription>
+            </SheetHeader>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col space-y-4 mt-4"
+            >
+              <Input
+                {...register("name", { required: true })}
+                placeholder="Team Name"
+              />
+              <SheetFooter>
+                <Button type="submit" className="card-hover">
+                  {editMode ? "Update Team" : "Add Team"}
+                </Button>
+              </SheetFooter>
+            </form>
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   );
 };

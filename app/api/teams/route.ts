@@ -29,41 +29,28 @@ export async function GET(req: Request) {
   }
 }
 
-// POST endpoint
+// POST method for creating a team
 export async function POST(req: Request) {
   try {
     await dbConnect();
     const body = await req.json();
-    const { teamId, name, tournamentId, playerCount, rw, kills } = body;
+    const { name, tournamentId } = body;
 
-    if (!teamId || !name || !tournamentId) {
-      console.error("POST: Missing required fields:", {
-        teamId,
-        name,
-        tournamentId,
-      });
+    if (!name || !tournamentId) {
       return NextResponse.json(
-        { error: "All fields are required (teamId, name, tournamentId)." },
+        { error: "Team name and tournament ID are required." },
         { status: 400 }
       );
     }
 
-    const newTeam = new Team({
-      teamId,
-      name,
-      tournamentId,
-      rw: rw ?? 0,
-      kills: kills ?? 0,
-      playerCount: playerCount ?? 0,
-    });
-
+    const newTeam = new Team({ name, tournamentId });
     await newTeam.save();
 
     return NextResponse.json(newTeam, { status: 201 });
   } catch (error) {
-    console.error("POST: Error creating team:", (error as Error).message);
+    console.error("POST: Error creating team:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: (error as Error).message },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
