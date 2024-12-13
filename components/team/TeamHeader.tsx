@@ -13,7 +13,7 @@ const TeamHeader = ({ teamName, logo }: TeamHeaderProps) => (
     {/* Logo */}
     <div className="relative">
       <Image
-        src={logo}
+        src="/images/CODM_LOGO.png"
         alt={`${teamName} Logo`}
         width={120}
         height={120}
