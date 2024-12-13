@@ -16,28 +16,33 @@ interface TeamCardProps {
 
 const TeamCard: React.FC<TeamCardProps> = ({
   _id,
-  teamName = "Unnamed Team", // Default value
-  playerCount = 0, // Default value
+  teamName = "Unnamed Team",
+  playerCount = 0,
   tournamentId,
   isAdmin = false,
   onEdit,
   onDelete,
 }) => {
-  return (
-    <Link
-      href={`/admin/tournaments/${encodeURIComponent(
+  const teamLink = isAdmin
+    ? `/admin/tournaments/${encodeURIComponent(
         tournamentId
-      )}/${encodeURIComponent(_id)}`}
-    >
+      )}/${encodeURIComponent(_id)}`
+    : `/tournaments/${encodeURIComponent(tournamentId)}/${encodeURIComponent(
+        _id
+      )}`;
+
+  return (
+    <Link href={teamLink}>
       <div className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray">
-        {/* Background Section */}
         <div className="relative h-20 bg-black">
+          {/* Background Section */}
           <Image
             src="/images/TEAM_BG.png"
             alt={`${teamName} Background`}
             fill
             className="object-cover object-center opacity-80 blur-xs"
           />
+
           {/* Team Logo */}
           <div className="absolute inset-0 z-20 flex items-center justify-center">
             <div className="flex items-center justify-center w-16 h-16">
@@ -54,10 +59,10 @@ const TeamCard: React.FC<TeamCardProps> = ({
 
         {/* Team Details */}
         <div className="p-4 text-center">
-          <h3 className="text-base font-semibold transition-colors duration-200 lg:text-sm text-purple group-hover:text-lightGrayGray">
+          <h3 className="text-base font-semibold text-purple group-hover:text-lightGrayGray">
             {teamName}
           </h3>
-          <p className="text-sm lg:text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             {playerCount} {playerCount === 1 ? "Player" : "Players"}
           </p>
 

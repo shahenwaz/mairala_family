@@ -4,7 +4,7 @@ import TeamCard from "@/components/team/TeamCard";
 import { Team } from "@/types/Team";
 
 interface TeamListProps {
-  teams: Team[] | null; // Adjust to accept `null` or empty
+  teams: Team[] | null;
   tournamentId: string;
   isAdmin?: boolean;
   onEditTeam?: (team: Team) => void;
@@ -12,13 +12,13 @@ interface TeamListProps {
 }
 
 const TeamList: React.FC<TeamListProps> = ({
-  teams = [], // Default to empty array if null
+  teams = [],
   tournamentId,
   isAdmin = false,
   onEditTeam,
   onDeleteTeam,
 }) => {
-  if (!Array.isArray(teams) || teams.length === 0) {
+  if (!teams || teams.length === 0) {
     return (
       <div className="text-center mt-6 text-muted">
         <p>No teams have been added yet.</p>
@@ -34,7 +34,7 @@ const TeamList: React.FC<TeamListProps> = ({
           _id={team._id}
           teamName={team.teamName || "Unnamed Team"}
           playerCount={team.playerCount || 0}
-          tournamentId={tournamentId.replace(/\s+/g, "")}
+          tournamentId={tournamentId}
           isAdmin={isAdmin}
           onEdit={isAdmin ? () => onEditTeam?.(team) : undefined}
           onDelete={isAdmin ? () => onDeleteTeam?.(team._id) : undefined}

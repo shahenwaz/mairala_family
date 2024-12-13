@@ -10,9 +10,9 @@ interface Player {
 
 interface PlayerListProps {
   players: Player[];
-  onDeletePlayer: (playerId: string) => void;
-  onAddKills: (playerId: string, kills: number) => void;
-  onEditPlayer: (playerId: string, playerName: string) => void;
+  onDeletePlayer?: (playerId: string) => void; // Made optional
+  onAddKills?: (playerId: string, kills: number) => void; // Made optional
+  onEditPlayer?: (playerId: string, playerName: string) => void; // Made optional
 }
 
 const PlayerList: React.FC<PlayerListProps> = ({
@@ -52,25 +52,33 @@ const PlayerList: React.FC<PlayerListProps> = ({
                 Kills: <span className="text-white">{player.playerKills}</span>
               </span>
             </div>
-            <div className="flex gap-2">
-              <Button size="sm" onClick={() => onAddKills(player._id, 1)}>
-                +1 Kill
-              </Button>
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => onEditPlayer(player._id, player.playerName)}
-              >
-                Edit
-              </Button>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => onDeletePlayer(player._id)}
-              >
-                Delete
-              </Button>
-            </div>
+            {(onDeletePlayer || onAddKills || onEditPlayer) && (
+              <div className="flex gap-2">
+                {onAddKills && (
+                  <Button size="sm" onClick={() => onAddKills(player._id, 1)}>
+                    +1 Kill
+                  </Button>
+                )}
+                {onEditPlayer && (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => onEditPlayer(player._id, player.playerName)}
+                  >
+                    Edit
+                  </Button>
+                )}
+                {onDeletePlayer && (
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => onDeletePlayer(player._id)}
+                  >
+                    Delete
+                  </Button>
+                )}
+              </div>
+            )}
           </li>
         ))}
       </ul>

@@ -6,29 +6,25 @@ import axios from "axios";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TeamHeader from "@/components/team/TeamHeader";
 import PlayerList from "@/components/player/PlayerList";
-import MatchesList from "@/components/match/MatchesList";
-
-// Define types
-interface Tournament {
-  title: string;
-  logo: string;
-  startDate: string;
-  endDate: string;
-  status: string;
-  background: string;
-}
 
 interface TeamDetails {
   _id: string;
-  name: string;
+  teamName: string;
   logo: string;
-  tournament: Tournament;
+  tournament: {
+    title: string;
+    logo: string;
+    startDate: string;
+    endDate: string;
+    status: string;
+    background: string;
+  };
 }
 
 interface Player {
   _id: string;
-  name: string;
-  kills: number;
+  playerName: string;
+  playerKills: number;
 }
 
 const TeamInfoPage = () => {
@@ -42,13 +38,11 @@ const TeamInfoPage = () => {
   useEffect(() => {
     const fetchTeamData = async () => {
       try {
-        // Fetch team details by `teamName` and `tournamentId`
         const { data: team } = await axios.get<TeamDetails>(
           `/api/teams?tournamentId=${tournamentId}&teamName=${teamName}`
         );
         setTeamDetails(team);
 
-        // Fetch players for the team
         const { data: playerData } = await axios.get<Player[]>(
           `/api/players?teamId=${team._id}`
         );
@@ -80,13 +74,7 @@ const TeamInfoPage = () => {
           {/* Back Button */}
           <button
             className="flex items-center gap-2 px-4 py-2 mx-auto my-4 text-xs font-medium transition border rounded-md lg:text-sm text-lightGray border-lightGray hover:bg-primary hover:text-primary-foreground"
-            onClick={() =>
-              router.push(
-                `/tournaments/${encodeURIComponent(
-                  teamDetails.tournament.title.replace(/\s+/g, "")
-                )}`
-              )
-            }
+            onClick={() => router.push(`/tournaments/${tournamentId}`)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -106,16 +94,10 @@ const TeamInfoPage = () => {
           </button>
 
           {/* Team Header */}
-          <TeamHeader name={teamDetails.name} logo={teamDetails.logo} />
+          <TeamHeader teamName={teamDetails.teamName} logo={teamDetails.logo} />
 
           {/* Player List */}
           <PlayerList players={players} />
-
-          {/* Matches Section */}
-          <h2 className="mt-8 text-xl lg:text-2xl font-bold text-center text-purple lg:text-start">
-            Matches
-          </h2>
-          <MatchesList matches={[]} filterByTeam={teamDetails.name} />
         </div>
       </div>
     </div>

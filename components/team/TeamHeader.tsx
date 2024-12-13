@@ -2,9 +2,13 @@ import Image from "next/image";
 
 interface TeamHeaderProps {
   teamName: string;
+  logo?: string; // Optional logo for flexibility in client-side usage
 }
 
-const TeamHeader = ({ teamName }: TeamHeaderProps) => (
+const TeamHeader = ({
+  teamName,
+  logo = "/images/CODM_LOGO.png",
+}: TeamHeaderProps) => (
   <div className="relative mt-6 mb-10 text-center flex items-center justify-center gap-4">
     {/* Left decorative line */}
     <div className="w-1/4 h-1 bg-gradient-to-r from-transparent to-purple lg:w-1/3" />
@@ -12,7 +16,7 @@ const TeamHeader = ({ teamName }: TeamHeaderProps) => (
     {/* Logo */}
     <div className="relative">
       <Image
-        src="/images/CODM_LOGO.png"
+        src={logo}
         alt={`${teamName} Logo`}
         width={120}
         height={120}
