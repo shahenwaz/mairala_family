@@ -1,11 +1,11 @@
 import Image from "next/image";
 
 interface TeamHeaderProps {
-  name: string;
+  teamName: string;
   logo: string;
 }
 
-const TeamHeader = ({ name, logo }: TeamHeaderProps) => (
+const TeamHeader = ({ teamName, logo }: TeamHeaderProps) => (
   <div className="relative mt-6 mb-10 text-center flex items-center justify-center gap-4">
     {/* Left decorative line */}
     <div className="w-1/4 h-1 bg-gradient-to-r from-transparent to-purple lg:w-1/3" />
@@ -14,7 +14,7 @@ const TeamHeader = ({ name, logo }: TeamHeaderProps) => (
     <div className="relative">
       <Image
         src={logo}
-        alt={`${name} Logo`}
+        alt={`${teamName} Logo`}
         width={120}
         height={120}
         className="mx-auto"
@@ -26,7 +26,7 @@ const TeamHeader = ({ name, logo }: TeamHeaderProps) => (
 
     {/* Team Name */}
     <h1 className="absolute -bottom-8 text-xl font-semibold lg:text-2xl text-primary">
-      {name}
+      {teamName || "Unnamed Team"}
     </h1>
   </div>
 );

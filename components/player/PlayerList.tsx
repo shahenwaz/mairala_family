@@ -1,15 +1,30 @@
+"use client";
+import React from "react";
+
 interface Player {
-  name: string;
-  kills: number;
+  _id: string;
+  playerName: string;
+  playerKills: number;
 }
 
 interface PlayerListProps {
   players: Player[];
 }
 
-const PlayerList = ({ players }: PlayerListProps) => {
-  const sortedPlayers = players.sort((a, b) => b.kills - a.kills);
-  const totalKills = players.reduce((sum, player) => sum + player.kills, 0);
+const PlayerList: React.FC<PlayerListProps> = ({ players }) => {
+  const sortedPlayers = players.sort((a, b) => b.playerKills - a.playerKills);
+  const totalKills = players.reduce(
+    (sum, player) => sum + player.playerKills,
+    0
+  );
+
+  if (!players || players.length === 0) {
+    return (
+      <div className="text-center mt-4 text-muted">
+        <p>No players have been added to this team yet.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -17,14 +32,14 @@ const PlayerList = ({ players }: PlayerListProps) => {
         Players
       </h2>
       <ul className="space-y-4">
-        {sortedPlayers.map((player, index) => (
+        {sortedPlayers.map((player) => (
           <li
-            key={index}
+            key={player._id}
             className="flex items-center justify-between p-4 overflow-hidden rounded-lg bg-card card-hover"
           >
-            <span className="text-lg font-semibold">{player.name}</span>
+            <span className="text-lg font-semibold">{player.playerName}</span>
             <span className="text-primary">
-              Kills: <span className="text-white">{player.kills}</span>
+              Kills: <span className="text-white">{player.playerKills}</span>
             </span>
           </li>
         ))}

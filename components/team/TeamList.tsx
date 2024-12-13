@@ -1,32 +1,39 @@
 "use client";
-
 import React from "react";
 import TeamCard from "@/components/team/TeamCard";
 import { Team } from "@/types/Team";
 
 interface TeamListProps {
-  teams: Team[];
+  teams: Team[] | null; // Adjust to accept `null` or empty
   tournamentId: string;
-  isAdmin?: boolean; // Flag to indicate admin view
-  onEditTeam?: (team: Team) => void; // Admin action: Edit
-  onDeleteTeam?: (teamId: string) => void; // Admin action: Delete
+  isAdmin?: boolean;
+  onEditTeam?: (team: Team) => void;
+  onDeleteTeam?: (teamId: string) => void;
 }
 
 const TeamList: React.FC<TeamListProps> = ({
-  teams,
+  teams = [], // Default to empty array if null
   tournamentId,
   isAdmin = false,
   onEditTeam,
   onDeleteTeam,
 }) => {
+  if (!Array.isArray(teams) || teams.length === 0) {
+    return (
+      <div className="text-center mt-6 text-muted">
+        <p>No teams have been added yet.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 gap-4 mt-8 mb-8 sm:grid-cols-2 lg:grid-cols-3">
       {teams.map((team) => (
         <TeamCard
-          key={team._id} // Use the `id` field from the updated Team interface
-          id={team._id}
-          name={team.name}
-          playerCount={team.playerCount}
+          key={team._id}
+          _id={team._id}
+          teamName={team.teamName || "Unnamed Team"}
+          playerCount={team.playerCount || 0}
           tournamentId={tournamentId.replace(/\s+/g, "")}
           isAdmin={isAdmin}
           onEdit={isAdmin ? () => onEditTeam?.(team) : undefined}

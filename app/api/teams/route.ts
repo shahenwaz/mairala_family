@@ -6,19 +6,31 @@ import Team from "@/lib/team";
 export async function GET(req: Request) {
   try {
     await dbConnect();
-
     const { searchParams } = new URL(req.url);
     const tournamentId = searchParams.get("tournamentId");
+    const teamId = searchParams.get("id"); // Using `_id`
 
     if (!tournamentId) {
-      console.error("GET: Missing tournamentId");
       return NextResponse.json(
         { error: "Tournament ID is required" },
         { status: 400 }
       );
     }
 
-    const teams = await Team.find({ tournamentId });
+    let query: any = { tournamentId };
+    if (teamId) query._id = teamId; // Fetch by `_id`
+
+    const teams = teamId
+      ? await Team.findOne(query).lean() // Use `findOne` for unique `_id`
+      : await Team.find(query).lean(); // Use `find` to get all teams for the tournament
+
+    if (!teams || (Array.isArray(teams) && teams.length === 0)) {
+      return NextResponse.json(
+        { error: "No teams found for the given query" },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(teams, { status: 200 });
   } catch (error) {
     console.error("GET: Error fetching teams:", (error as Error).message);
@@ -29,21 +41,21 @@ export async function GET(req: Request) {
   }
 }
 
-// POST method for creating a team
+// POST method to create a TEAM
 export async function POST(req: Request) {
   try {
     await dbConnect();
     const body = await req.json();
-    const { name, tournamentId } = body;
+    const { teamName, tournamentId } = body;
 
-    if (!name || !tournamentId) {
+    if (!teamName || !tournamentId) {
       return NextResponse.json(
         { error: "Team name and tournament ID are required." },
         { status: 400 }
       );
     }
 
-    const newTeam = new Team({ name, tournamentId });
+    const newTeam = new Team({ teamName, tournamentId });
     await newTeam.save();
 
     return NextResponse.json(newTeam, { status: 201 });

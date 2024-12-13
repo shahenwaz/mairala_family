@@ -1,13 +1,12 @@
 "use client";
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 interface TeamCardProps {
-  id: string; // MongoDB `_id` for dynamic linking
-  name: string;
+  _id: string;
+  teamName: string;
   playerCount: number;
   tournamentId: string;
   isAdmin?: boolean;
@@ -16,70 +15,81 @@ interface TeamCardProps {
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
-  id,
-  name,
-  playerCount,
+  _id,
+  teamName = "Unnamed Team", // Default value
+  playerCount = 0, // Default value
   tournamentId,
   isAdmin = false,
   onEdit,
   onDelete,
 }) => {
   return (
-    <div className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray">
-      {/* Background Section */}
-      <div className="relative h-20 bg-black">
-        <Image
-          src="/images/TEAM_BG.png"
-          alt="Team Background"
-          fill
-          className="object-cover object-center opacity-80 blur-xs"
-        />
-        {/* Team Logo */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center">
-          <div className="flex items-center justify-center w-16 h-16">
-            <Image
-              src="/images/CODM_LOGO.png"
-              alt={`${name} logo`}
-              width={64}
-              height={64}
-              className="object-cover rounded-full"
-            />
+    <Link
+      href={`/admin/tournaments/${encodeURIComponent(
+        tournamentId
+      )}/${encodeURIComponent(_id)}`}
+    >
+      <div className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray">
+        {/* Background Section */}
+        <div className="relative h-20 bg-black">
+          <Image
+            src="/images/TEAM_BG.png"
+            alt={`${teamName} Background`}
+            fill
+            className="object-cover object-center opacity-80 blur-xs"
+          />
+          {/* Team Logo */}
+          <div className="absolute inset-0 z-20 flex items-center justify-center">
+            <div className="flex items-center justify-center w-16 h-16">
+              <Image
+                src="/images/CODM_LOGO.png"
+                alt={`${teamName} Logo`}
+                width={64}
+                height={64}
+                className="object-cover rounded-full"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Team Name and Player Count */}
-      <div className="p-4 text-center">
-        <Link
-          href={`/tournaments/${tournamentId}/teams/${id}`}
-          className="hover:underline"
-        >
+        {/* Team Details */}
+        <div className="p-4 text-center">
           <h3 className="text-base font-semibold transition-colors duration-200 lg:text-sm text-purple group-hover:text-lightGrayGray">
-            {name}
+            {teamName}
           </h3>
-        </Link>
-        <p className="text-sm lg:text-xs text-muted-foreground">
-          {playerCount} Players
-        </p>
+          <p className="text-sm lg:text-xs text-muted-foreground">
+            {playerCount} {playerCount === 1 ? "Player" : "Players"}
+          </p>
 
-        {/* Admin Buttons */}
-        {isAdmin && (
-          <div className="flex justify-center gap-2 mt-4">
-            <Button size="sm" onClick={onEdit} className="hover:bg-primary/90">
-              Edit
-            </Button>
-            <Button
-              size="sm"
-              variant="destructive"
-              onClick={onDelete}
-              className="hover:bg-red-600"
-            >
-              Delete
-            </Button>
-          </div>
-        )}
+          {/* Admin Buttons */}
+          {isAdmin && (
+            <div className="flex justify-center gap-2 mt-4">
+              <Button
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onEdit?.();
+                }}
+                className="hover:bg-primary/90"
+              >
+                Edit
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onDelete?.();
+                }}
+                className="hover:bg-red-600"
+              >
+                Delete
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

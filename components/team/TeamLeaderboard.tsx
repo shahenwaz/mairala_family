@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import {
   Table,
@@ -16,9 +17,9 @@ import {
 } from "@/components/ui/select";
 
 interface Team {
-  name: string;
-  rw: number; // Rounds Won
-  kills: number; // Total Kills
+  teamName: string;
+  rw: number;
+  teamKills: number;
 }
 
 interface TeamLeaderboardProps {
@@ -37,7 +38,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
   // Sort teams dynamically based on the selected criteria
   useEffect(() => {
     const sorted = [...teams].sort((a, b) =>
-      sortBy === "kills" ? b.kills - a.kills : b.rw - a.rw
+      sortBy === "kills" ? b.teamKills - a.teamKills : b.rw - a.rw
     );
 
     setSortedTeams(sorted);
@@ -45,13 +46,10 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
 
   return (
     <div className="mt-8 space-y-6">
-      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         <h2 className="text-lg md:text-2xl font-bold text-purple text-center">
           TEAM LEADERBOARD
         </h2>
-
-        {/* Filter */}
         <div className="relative z-10">
           <Select onValueChange={(value) => setSortBy(value as "kills" | "rw")}>
             <SelectTrigger className="w-[120px] md:w-[180px] border border-primary rounded-lg font-bold text-xs md:text-base hover:bg-muted/80 focus:ring-2 focus:ring-offset-2 focus:ring-primary">
@@ -65,20 +63,19 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
         </div>
       </div>
 
-      {/* Table */}
       <Table className="w-full border border-muted rounded-lg overflow-hidden">
         <TableHeader>
           <TableRow className={`${tableHeaderColor} text-primary-foreground`}>
-            <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base text-center">
+            <TableCell className="px-4 py-3 font-bold text-xs text-center">
               #
             </TableCell>
-            <TableCell className="px-4 py-3 font-bold text-xs lg:text-base">
+            <TableCell className="px-4 py-3 font-bold text-xs">
               TEAM NAME
             </TableCell>
-            <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base text-center">
+            <TableCell className="px-4 py-3 font-bold text-xs text-center">
               RW
             </TableCell>
-            <TableCell className="px-4 py-3 font-bold text-xs md:text-sm lg:text-base text-center">
+            <TableCell className="px-4 py-3 font-bold text-xs text-center">
               KILLS
             </TableCell>
           </TableRow>
@@ -86,22 +83,22 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
         <TableBody>
           {sortedTeams.map((team, index) => (
             <TableRow
-              key={team.name}
+              key={team.teamName}
               className={`${
                 index % 2 === 0 ? "bg-muted/20" : "bg-background"
               } hover:bg-muted/50 transition-all rounded-md shadow-sm my-2`}
             >
-              <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
+              <TableCell className="px-4 py-3 font-bold text-center">
                 {index + 1}
               </TableCell>
-              <TableCell className="px-4 py-3 font-semibold text-xs md:text-sm lg:text-base">
-                <div className="flex items-center gap-3">{team.name}</div>
+              <TableCell className="px-4 py-3 font-semibold">
+                {team.teamName || "Unnamed Team"}
               </TableCell>
-              <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
+              <TableCell className="px-4 py-3 font-bold text-center">
                 {team.rw}
               </TableCell>
-              <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.kills}
+              <TableCell className="px-4 py-3 font-bold text-center">
+                {team.teamKills}
               </TableCell>
             </TableRow>
           ))}

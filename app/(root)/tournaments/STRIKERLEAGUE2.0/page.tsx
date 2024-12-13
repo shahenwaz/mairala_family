@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Ensure axios is imported
+import axios from "axios";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TournamentTabs from "@/components/tournament/TournamentTabs";
 import MatchesFilter from "@/components/match/MatchesFilter";
@@ -11,7 +11,7 @@ import PlayerLeaderboard from "@/components/player/PlayerLeaderboard";
 import { TabsContent } from "@/components/ui/tabs";
 import { Team } from "@/types/Team";
 
-export default function StrikerLeague1() {
+export default function StrikerLeague2() {
   const tournament = {
     title: "STRIKER LEAGUE 2.0",
     logo: "/images/SND_SLS2_LOGO.png",
@@ -32,7 +32,6 @@ export default function StrikerLeague1() {
       date: "3 DECEMBER 2024, 8:30 PM BST",
       status: "UPCOMING" as const,
     },
-    // Additional matches...
   ];
 
   const [filter, setFilter] = useState<"ALL MATCHES" | "UPCOMING" | "FINISHED">(
@@ -53,11 +52,11 @@ export default function StrikerLeague1() {
           `/api/teams?tournamentId=STRIKERLEAGUE2.0`
         );
 
-        // Add default values for missing fields
+        // Ensure default values for missing fields
         const teamsWithDefaults = data.map((team) => ({
           ...team,
-          rw: team.rw ?? 0, // Default rounds won
-          kills: team.kills ?? 0, // Default kills
+          rw: team.rw ?? 0, // Default rounds won to 0 if undefined
+          kills: team.kills ?? 0, // Default kills to 0 if undefined
         }));
 
         setTeams(teamsWithDefaults);
@@ -68,10 +67,7 @@ export default function StrikerLeague1() {
     fetchTeams();
   }, []);
 
-  const players = [
-    { name: "Adeus", team: "Disciples of Mayhem", kills: 107 },
-    // Additional players...
-  ];
+  const players = [{ name: "Adeus", team: "Disciples of Mayhem", kills: 107 }];
 
   return (
     <div>

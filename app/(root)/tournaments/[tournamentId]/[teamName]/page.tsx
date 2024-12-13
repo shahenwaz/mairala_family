@@ -27,59 +27,44 @@ interface TeamDetails {
 
 interface Player {
   _id: string;
-  playerName: string;
+  name: string;
   kills: number;
 }
 
 const TeamInfoPage = () => {
-  const params = useParams();
+  const { teamName, tournamentId } = useParams();
   const router = useRouter();
-
-  // Use `_id` instead of `teamName`
-  const teamId = typeof params.teamName === "string" ? params.teamName : "";
-  const tournamentId =
-    typeof params.tournamentId === "string" ? params.tournamentId : "";
 
   const [teamDetails, setTeamDetails] = useState<TeamDetails | null>(null);
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (teamId && tournamentId) {
-      fetchTeamData();
-    }
-  }, [teamId, tournamentId]);
+    const fetchTeamData = async () => {
+      try {
+        // Fetch team details by `teamName` and `tournamentId`
+        const { data: team } = await axios.get<TeamDetails>(
+          `/api/teams?tournamentId=${tournamentId}&teamName=${teamName}`
+        );
+        setTeamDetails(team);
 
-  const fetchTeamData = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      // Fetch team details by `_id` (teamId)
-      const { data: team } = await axios.get<TeamDetails>(
-        `/api/teams?id=${encodeURIComponent(teamId)}`
-      );
-      setTeamDetails(team);
+        // Fetch players for the team
+        const { data: playerData } = await axios.get<Player[]>(
+          `/api/players?teamId=${team._id}`
+        );
+        setPlayers(playerData);
+      } catch (error) {
+        console.error("Error fetching team or player data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-      // Fetch players for the team
-      const { data: playerData } = await axios.get<Player[]>(
-        `/api/players?teamId=${team._id}`
-      );
-      setPlayers(playerData);
-    } catch (err) {
-      console.error("Error fetching team or player data:", err);
-      setError("Failed to load team or player data. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    fetchTeamData();
+  }, [teamName, tournamentId]);
 
   if (isLoading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
   }
 
   if (!teamDetails) {

@@ -32,7 +32,7 @@ const TeamsAdminPage = () => {
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      name: "", // Only the team name is required for creation
+      teamName: "", // Align with the API
     },
   });
 
@@ -44,7 +44,7 @@ const TeamsAdminPage = () => {
       }
 
       const { data }: { data: Team[] } = await axios.get(
-        `/api/teams?tournamentId=${tournamentId}`
+        `/api/teams?tournamentId=${encodeURIComponent(tournamentId)}`
       );
       setTeams(data);
     } catch (error: any) {
@@ -57,7 +57,7 @@ const TeamsAdminPage = () => {
     }
   };
 
-  // onSubmit function for adding/editing teams
+  // Submit function for adding/editing teams
   const onSubmit = async (data: any) => {
     try {
       if (!tournamentId) {
@@ -71,8 +71,8 @@ const TeamsAdminPage = () => {
 
       if (editMode && editingTeam) {
         await axios.put(`/api/teams`, {
-          id: editingTeam._id, // Use MongoDB’s _id
-          name: data.name,
+          id: editingTeam._id,
+          teamName: data.teamName, // Align with the API
         });
         addToast({
           title: "Success",
@@ -80,7 +80,7 @@ const TeamsAdminPage = () => {
         });
       } else {
         await axios.post(`/api/teams`, {
-          name: data.name,
+          teamName: data.teamName, // Align with the API
           tournamentId,
         });
         addToast({
@@ -109,13 +109,13 @@ const TeamsAdminPage = () => {
     setEditMode(true);
     setEditingTeam(team);
     setIsSheetOpen(true);
-    reset({ name: team.name });
+    reset({ teamName: team.teamName });
   };
 
   // Delete Team Handler
   const handleDelete = async (teamId: string) => {
     try {
-      await axios.delete(`/api/teams?id=${teamId}`);
+      await axios.delete(`/api/teams?id=${encodeURIComponent(teamId)}`);
       addToast({
         title: "Success",
         description: "Team deleted successfully!",
@@ -184,7 +184,7 @@ const TeamsAdminPage = () => {
               className="flex flex-col space-y-4 mt-4"
             >
               <Input
-                {...register("name", { required: true })}
+                {...register("teamName", { required: true })}
                 placeholder="Team Name"
               />
               <SheetFooter>
