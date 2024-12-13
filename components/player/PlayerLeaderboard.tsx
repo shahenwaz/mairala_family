@@ -15,28 +15,38 @@ interface Player {
 }
 
 interface PlayerLeaderboardProps {
-  players: Player[];
+  fetchPlayers: () => Promise<Player[]>; // Fetch function to retrieve player data dynamically
   status: "Ongoing" | "Finalized";
 }
 
 const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
-  players,
+  fetchPlayers,
   status,
 }) => {
+  const [players, setPlayers] = useState<Player[]>([]);
   const [sortedPlayers, setSortedPlayers] = useState<Player[]>([]);
-  const [showAll, setShowAll] = useState(false); // State to control rows visibility
+  const [showAll, setShowAll] = useState(false);
 
-  // Sort players by kills on component load
   useEffect(() => {
-    const sorted = [...players].sort((a, b) => b.kills - a.kills); // Sort by kills (descending)
-    setSortedPlayers(sorted);
-  }, [players]);
+    const fetchAndSortPlayers = async () => {
+      try {
+        const playersData = await fetchPlayers();
+        setPlayers(playersData);
 
-  // Determine the table header color based on the status
+        // Sort players by kills
+        const sorted = [...playersData].sort((a, b) => b.kills - a.kills);
+        setSortedPlayers(sorted);
+      } catch (error) {
+        console.error("Error fetching players for leaderboard:", error);
+      }
+    };
+
+    fetchAndSortPlayers();
+  }, [fetchPlayers]);
+
+  // Determine table header and team name colors based on status
   const tableHeaderColor =
     status === "Ongoing" ? "bg-yellow-400" : "bg-primary";
-
-  // Determine the team name color based on the status
   const teamNameColor =
     status === "Ongoing" ? "text-yellow-400" : "text-primary";
 
@@ -78,11 +88,10 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
                   <p className="font-extrabold text-foreground">
                     {player.name}
                   </p>
-                  {/* Player Name */}
                   <p
                     className={`font-semibold italic ${teamNameColor} text-[10px] md:text-xs`}
                   >
-                    {player.team} {/* Team Name */}
+                    {player.team}
                   </p>
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
