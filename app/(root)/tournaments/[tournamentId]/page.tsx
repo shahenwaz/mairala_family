@@ -34,9 +34,19 @@ export default function TournamentPage() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
+        if (!tournamentId) {
+          console.error("Tournament ID is missing.");
+          return;
+        }
+
         const { data }: { data: Team[] } = await axios.get(
-          `/api/teams?tournamentId=${tournamentId}`
+          `/api/teams?tournamentId=${encodeURIComponent(tournamentId)}`
         );
+
+        if (!Array.isArray(data)) {
+          console.error("Unexpected API response:", data);
+          throw new Error("Invalid API response. Expected an array of teams.");
+        }
 
         setTeams(
           data.map((team) => ({
@@ -49,6 +59,7 @@ export default function TournamentPage() {
         console.error("Failed to fetch teams:", error);
       }
     };
+
     fetchTeams();
   }, [tournamentId]);
 

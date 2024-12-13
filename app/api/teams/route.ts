@@ -3,7 +3,6 @@ import dbConnect from "@/lib/mongoose";
 import Team from "@/lib/team";
 
 // GET method
-// GET method
 export async function GET(req: Request) {
   try {
     await dbConnect();

@@ -10,9 +10,9 @@ interface Player {
 
 interface PlayerListProps {
   players: Player[];
-  onDeletePlayer?: (playerId: string) => void; // Made optional
-  onAddKills?: (playerId: string, kills: number) => void; // Made optional
-  onEditPlayer?: (playerId: string, playerName: string) => void; // Made optional
+  onDeletePlayer?: (playerId: string) => void; // Optional for admin CRUD
+  onAddKills?: (playerId: string, kills: number) => void; // Optional for admin CRUD
+  onEditPlayer?: (playerId: string, playerName: string) => void; // Optional for admin CRUD
 }
 
 const PlayerList: React.FC<PlayerListProps> = ({
@@ -52,6 +52,8 @@ const PlayerList: React.FC<PlayerListProps> = ({
                 Kills: <span className="text-white">{player.playerKills}</span>
               </span>
             </div>
+
+            {/* Admin Buttons: Only Render If Props Are Passed */}
             {(onDeletePlayer || onAddKills || onEditPlayer) && (
               <div className="flex gap-2">
                 {onAddKills && (
