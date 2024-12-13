@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import {
   Table,
@@ -9,13 +10,13 @@ import {
 } from "@/components/ui/table";
 
 interface Player {
-  name: string;
-  team: string;
-  kills: number;
+  playerName: string;
+  teamName: string;
+  playerKills: number;
 }
 
 interface PlayerLeaderboardProps {
-  fetchPlayers: () => Promise<Player[]>; // Fetch function to retrieve player data dynamically
+  fetchPlayers: () => Promise<Player[]>; // Fetch function for players
   status: "Ongoing" | "Finalized";
 }
 
@@ -34,7 +35,9 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
         setPlayers(playersData);
 
         // Sort players by kills
-        const sorted = [...playersData].sort((a, b) => b.kills - a.kills);
+        const sorted = [...playersData].sort(
+          (a, b) => b.playerKills - a.playerKills
+        );
         setSortedPlayers(sorted);
       } catch (error) {
         console.error("Error fetching players for leaderboard:", error);
@@ -86,16 +89,16 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs md:text-sm lg:text-base">
                   <p className="font-extrabold text-foreground">
-                    {player.name}
+                    {player.playerName}
                   </p>
                   <p
                     className={`font-semibold italic ${teamNameColor} text-[10px] md:text-xs`}
                   >
-                    {player.team}
+                    {player.teamName}
                   </p>
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
-                  {player.kills}
+                  {player.playerKills}
                 </TableCell>
               </TableRow>
             ) : null

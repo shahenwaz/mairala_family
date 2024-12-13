@@ -3,6 +3,7 @@ import dbConnect from "@/lib/mongoose";
 import Team from "@/lib/team";
 
 // GET method
+// GET method
 export async function GET(req: Request) {
   try {
     await dbConnect();
@@ -25,10 +26,8 @@ export async function GET(req: Request) {
       : await Team.find(query).lean(); // Use `find` to get all teams for the tournament
 
     if (!teams || (Array.isArray(teams) && teams.length === 0)) {
-      return NextResponse.json(
-        { error: "No teams found for the given query" },
-        { status: 404 }
-      );
+      // Return an empty array when no teams are found
+      return NextResponse.json([], { status: 200 });
     }
 
     return NextResponse.json(teams, { status: 200 });

@@ -7,7 +7,7 @@ import Link from "next/link";
 const TournamentsPage = () => {
   const tournaments = [
     {
-      id: "1",
+      id: "3",
       tournamentId: "STRIKERLEAGUE2.0",
       title: "STRIKER LEAGUE 2.0",
       prizePool: 10000,
@@ -15,6 +15,13 @@ const TournamentsPage = () => {
     },
     {
       id: "2",
+      tournamentId: "FRIENDLYTOUR1.0",
+      title: "FRIENDLYTOUR1.0",
+      prizePool: 1000,
+      status: "Finalized",
+    },
+    {
+      id: "1",
       tournamentId: "STRIKERLEAGUE1.0",
       title: "STRIKER LEAGUE 1.O",
       prizePool: 5000,

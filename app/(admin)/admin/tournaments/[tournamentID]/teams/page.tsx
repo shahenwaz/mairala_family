@@ -29,10 +29,11 @@ const TeamsAdminPage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editingTeam, setEditingTeam] = useState<Team | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      teamName: "", // Align with the API
+      teamName: "",
     },
   });
 
@@ -43,17 +44,29 @@ const TeamsAdminPage = () => {
         throw new Error("Tournament ID is undefined.");
       }
 
+      setIsLoading(true);
+
       const { data }: { data: Team[] } = await axios.get(
         `/api/teams?tournamentId=${encodeURIComponent(tournamentId)}`
       );
-      setTeams(data);
+
+      setTeams(
+        data.map((team) => ({
+          ...team,
+          rw: team.rw ?? 0,
+          teamKills: team.teamKills ?? 0,
+        }))
+      );
     } catch (error: any) {
-      console.error("Error fetching teams:", error);
+      console.error("Error fetching teams:", error.message || error);
       addToast({
         title: "Error",
         description: "Failed to fetch teams. Please try again.",
         variant: "destructive",
       });
+      setTeams([]); // Ensure teams are set to an empty array on error
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +85,7 @@ const TeamsAdminPage = () => {
       if (editMode && editingTeam) {
         await axios.put(`/api/teams`, {
           id: editingTeam._id,
-          teamName: data.teamName, // Align with the API
+          teamName: data.teamName,
         });
         addToast({
           title: "Success",
@@ -80,7 +93,7 @@ const TeamsAdminPage = () => {
         });
       } else {
         await axios.post(`/api/teams`, {
-          teamName: data.teamName, // Align with the API
+          teamName: data.teamName,
           tournamentId,
         });
         addToast({
@@ -104,33 +117,6 @@ const TeamsAdminPage = () => {
     }
   };
 
-  // Edit Team Handler
-  const handleEdit = (team: Team) => {
-    setEditMode(true);
-    setEditingTeam(team);
-    setIsSheetOpen(true);
-    reset({ teamName: team.teamName });
-  };
-
-  // Delete Team Handler
-  const handleDelete = async (teamId: string) => {
-    try {
-      await axios.delete(`/api/teams?id=${encodeURIComponent(teamId)}`);
-      addToast({
-        title: "Success",
-        description: "Team deleted successfully!",
-      });
-      fetchTeams();
-    } catch (error: any) {
-      console.error("Error deleting team:", error);
-      addToast({
-        title: "Error",
-        description: "Failed to delete team. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
   useEffect(() => {
     if (tournamentId) {
       fetchTeams();
@@ -140,13 +126,14 @@ const TeamsAdminPage = () => {
   return (
     <div className="w-full py-3 bg-background">
       <div className="max-w-4xl px-4 mx-auto">
-        <h2 className="text-center text-xl font-semibold mb-6">Manage Teams</h2>
+        <h2 className="text-purple text-center text-xl font-semibold mb-2">
+          Manage Teams
+        </h2>
         <h1 className="text-center text-3xl font-extrabold mb-6">
           {tournamentId || "Unknown"}
         </h1>
 
-        {/* CREATE TEAM BUTTON */}
-        <div className="flex justify-center mb-6">
+        <div className="text-center mt-3 mb-3">
           <Button
             onClick={() => {
               reset();
@@ -159,24 +146,45 @@ const TeamsAdminPage = () => {
           </Button>
         </div>
 
-        {/* Team List */}
-        <TeamList
-          teams={teams}
-          tournamentId={tournamentId}
-          isAdmin={true}
-          onEditTeam={handleEdit}
-          onDeleteTeam={handleDelete}
-        />
+        {isLoading ? (
+          <div className="text-center text-lightGray">Loading...</div>
+        ) : teams.length === 0 ? (
+          <div className="text-center text-lightGray">No teams found.</div>
+        ) : (
+          <TeamList
+            teams={teams}
+            tournamentId={tournamentId}
+            isAdmin={true}
+            onEditTeam={(team) => {
+              setEditMode(true);
+              setEditingTeam(team);
+              setIsSheetOpen(true);
+              reset({ teamName: team.teamName });
+            }}
+            onDeleteTeam={async (teamId) => {
+              try {
+                await axios.delete(`/api/teams?id=${teamId}`);
+                fetchTeams();
+              } catch (error) {
+                addToast({
+                  title: "Error",
+                  description: "Failed to delete team.",
+                  variant: "destructive",
+                });
+              }
+            }}
+          />
+        )}
 
-        {/* Sheet for Adding or Editing a Team */}
+        {/* Sheet for Adding/Editing Teams */}
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-          <SheetContent className="w-full sm:max-w-md">
+          <SheetContent>
             <SheetHeader>
               <SheetTitle>{editMode ? "Edit Team" : "Add Team"}</SheetTitle>
               <SheetDescription>
                 {editMode
-                  ? "Update the team details."
-                  : "Fill out the form below to create a new team."}
+                  ? "Update team details."
+                  : "Fill in the form to create a new team."}
               </SheetDescription>
             </SheetHeader>
             <form
@@ -188,7 +196,7 @@ const TeamsAdminPage = () => {
                 placeholder="Team Name"
               />
               <SheetFooter>
-                <Button type="submit" className="card-hover">
+                <Button type="submit">
                   {editMode ? "Update Team" : "Add Team"}
                 </Button>
               </SheetFooter>
