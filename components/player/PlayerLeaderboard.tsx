@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import {
   Table,
@@ -10,46 +9,34 @@ import {
 } from "@/components/ui/table";
 
 interface Player {
-  playerName: string;
-  teamName: string;
-  playerKills: number;
+  name: string;
+  team: string;
+  kills: number;
 }
 
 interface PlayerLeaderboardProps {
-  fetchPlayers: () => Promise<Player[]>; // Fetch function for players
+  players: Player[];
   status: "Ongoing" | "Finalized";
 }
 
 const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
-  fetchPlayers,
+  players,
   status,
 }) => {
-  const [players, setPlayers] = useState<Player[]>([]);
   const [sortedPlayers, setSortedPlayers] = useState<Player[]>([]);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(false); // State to control rows visibility
 
+  // Sort players by kills on component load
   useEffect(() => {
-    const fetchAndSortPlayers = async () => {
-      try {
-        const playersData = await fetchPlayers();
-        setPlayers(playersData);
+    const sorted = [...players].sort((a, b) => b.kills - a.kills); // Sort by kills (descending)
+    setSortedPlayers(sorted);
+  }, [players]);
 
-        // Sort players by kills
-        const sorted = [...playersData].sort(
-          (a, b) => b.playerKills - a.playerKills
-        );
-        setSortedPlayers(sorted);
-      } catch (error) {
-        console.error("Error fetching players for leaderboard:", error);
-      }
-    };
-
-    fetchAndSortPlayers();
-  }, [fetchPlayers]);
-
-  // Determine table header and team name colors based on status
+  // Determine the table header color based on the status
   const tableHeaderColor =
     status === "Ongoing" ? "bg-yellow-400" : "bg-primary";
+
+  // Determine the team name color based on the status
   const teamNameColor =
     status === "Ongoing" ? "text-yellow-400" : "text-primary";
 
@@ -89,16 +76,17 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs md:text-sm lg:text-base">
                   <p className="font-extrabold text-foreground">
-                    {player.playerName}
+                    {player.name}
                   </p>
+                  {/* Player Name */}
                   <p
                     className={`font-semibold italic ${teamNameColor} text-[10px] md:text-xs`}
                   >
-                    {player.teamName}
+                    {player.team} {/* Team Name */}
                   </p>
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
-                  {player.playerKills}
+                  {player.kills}
                 </TableCell>
               </TableRow>
             ) : null

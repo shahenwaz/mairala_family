@@ -1,56 +1,27 @@
 "use client";
 
-import React from "react";
-import { Card } from "@/components/ui/card";
-import Link from "next/link";
-
 const TournamentsPage = () => {
   const tournaments = [
-    {
-      id: "3",
-      tournamentId: "STRIKERLEAGUE2.0",
-      title: "STRIKER LEAGUE 2.0",
-      prizePool: 10000,
-      status: "Ongoing",
-    },
-    {
-      id: "2",
-      tournamentId: "FRIENDLYTOUR1.0",
-      title: "FRIENDLYTOUR1.0",
-      prizePool: 1000,
-      status: "Finalized",
-    },
-    {
-      id: "1",
-      tournamentId: "STRIKERLEAGUE1.0",
-      title: "STRIKER LEAGUE 1.O",
-      prizePool: 5000,
-      status: "Finalized",
-    },
+    { id: 1, name: "Striker League", status: "Ongoing" },
+    { id: 2, name: "Winter Cup", status: "Upcoming" },
   ];
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-center text-3xl font-extrabold mb-6">
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold text-foreground]">
         Manage Tournaments
-      </h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {tournaments.map((tournament) => (
-          <Link
+          <div
             key={tournament.id}
-            href={`/admin/tournaments/${tournament.tournamentId}/teams`}
+            className="p-4 bg-card text-foreground rounded-lg card-hover"
           >
-            <Card className="p-4 space-y-4 bg-card cursor-pointer card-hover">
-              <h3 className="text-lg font-bold">{tournament.title}</h3>
-              <p className="text-sm text-muted-foreground">
-                {tournament.status}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Prize Pool: {tournament.prizePool} TK
-              </p>
-            </Card>
-          </Link>
+            <h3 className="font-semibold">{tournament.name}</h3>
+            <p className="text-sm text-muted-foreground">
+              Status: {tournament.status}
+            </p>
+          </div>
         ))}
       </div>
     </div>

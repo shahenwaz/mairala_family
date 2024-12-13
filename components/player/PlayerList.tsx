@@ -1,39 +1,15 @@
-"use client";
-import React from "react";
-import { Button } from "@/components/ui/button";
-
 interface Player {
-  _id: string;
-  playerName: string;
-  playerKills: number;
+  name: string;
+  kills: number;
 }
 
 interface PlayerListProps {
   players: Player[];
-  onDeletePlayer?: (playerId: string) => void; // Optional for admin CRUD
-  onAddKills?: (playerId: string, kills: number) => void; // Optional for admin CRUD
-  onEditPlayer?: (playerId: string, playerName: string) => void; // Optional for admin CRUD
 }
 
-const PlayerList: React.FC<PlayerListProps> = ({
-  players,
-  onDeletePlayer,
-  onAddKills,
-  onEditPlayer,
-}) => {
-  const sortedPlayers = players.sort((a, b) => b.playerKills - a.playerKills);
-  const totalKills = players.reduce(
-    (sum, player) => sum + player.playerKills,
-    0
-  );
-
-  if (!players || players.length === 0) {
-    return (
-      <div className="text-center mt-4 text-lightGray">
-        <p>No players have been added yet.</p>
-      </div>
-    );
-  }
+const PlayerList = ({ players }: PlayerListProps) => {
+  const sortedPlayers = players.sort((a, b) => b.kills - a.kills);
+  const totalKills = players.reduce((sum, player) => sum + player.kills, 0);
 
   return (
     <div>
@@ -41,46 +17,15 @@ const PlayerList: React.FC<PlayerListProps> = ({
         Players
       </h2>
       <ul className="space-y-4">
-        {sortedPlayers.map((player) => (
+        {sortedPlayers.map((player, index) => (
           <li
-            key={player._id}
+            key={index}
             className="flex items-center justify-between p-4 overflow-hidden rounded-lg bg-card card-hover"
           >
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">{player.playerName}</span>
-              <span className="text-primary">
-                Kills: <span className="text-white">{player.playerKills}</span>
-              </span>
-            </div>
-
-            {/* Admin Buttons: Only Render If Props Are Passed */}
-            {(onDeletePlayer || onAddKills || onEditPlayer) && (
-              <div className="flex gap-2">
-                {onAddKills && (
-                  <Button size="sm" onClick={() => onAddKills(player._id, 1)}>
-                    +1 Kill
-                  </Button>
-                )}
-                {onEditPlayer && (
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    onClick={() => onEditPlayer(player._id, player.playerName)}
-                  >
-                    Edit
-                  </Button>
-                )}
-                {onDeletePlayer && (
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => onDeletePlayer(player._id)}
-                  >
-                    Delete
-                  </Button>
-                )}
-              </div>
-            )}
+            <span className="text-lg font-semibold">{player.name}</span>
+            <span className="text-primary">
+              Kills: <span className="text-white">{player.kills}</span>
+            </span>
           </li>
         ))}
       </ul>
