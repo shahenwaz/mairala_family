@@ -5,7 +5,6 @@ import TournamentTabs from "@/components/tournament/TournamentTabs";
 import MatchesFilter from "@/components/match/MatchesFilter";
 import MatchesList from "@/components/match/MatchesList";
 import TeamList from "@/components/team/TeamList";
-import TeamLeaderboard from "@/components/team/TeamLeaderboard";
 import PlayerLeaderboard from "@/components/player/PlayerLeaderboard";
 import { TabsContent } from "@/components/ui/tabs";
 import { Team } from "@/types/Team";
@@ -66,116 +65,116 @@ export default function StrikerLeague1() {
 
   const [teams] = useState<Team[]>([
     {
-      name: "DISCIPLES OF MAYHEM",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "DISCIPLES OF MAYHEM",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 67,
-      kills: 393,
+      teamKills: 393,
     },
     {
-      name: "QUITE ONE ELITE",
-      logo: "/images/MF_LOGO.png",
+      teamName: "QUITE ONE ELITE",
+      teamLogo: "/images/MF_LOGO.png",
       playerCount: 5,
       rw: 73,
-      kills: 356,
+      teamKills: 356,
     },
     {
-      name: "VENGEANCE SEEKERS",
-      logo: "/images/CR_LOGO.jpg",
+      teamName: "VENGEANCE SEEKERS",
+      teamLogo: "/images/CR_LOGO.jpg",
       playerCount: 5,
       rw: 43,
-      kills: 306,
+      teamKills: 306,
     },
     {
-      name: "GRUMBLING GANGSTERS",
+      teamName: "GRUMBLING GANGSTERS",
       playerCount: 5,
-      logo: "/images/ASCEND.png",
+      teamLogo: "/images/ASCEND.png",
       rw: 48,
-      kills: 296,
+      teamKills: 296,
     },
     {
-      name: "GRUMBLING GANGSTERS 2.0",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "GRUMBLING GANGSTERS 2.0",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 28,
-      kills: 162,
+      teamKills: 162,
     },
     {
-      name: "TOXIQUE GIRLS",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "TOXIQUE GIRLS",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 25,
-      kills: 147,
+      teamKills: 147,
     },
     {
-      name: "BTV",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "BTV",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 23,
-      kills: 139,
+      teamKills: 139,
     },
     {
-      name: "TEAM MAIRALA",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "TEAM MAIRALA",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 27,
-      kills: 104,
+      teamKills: 104,
     },
     {
-      name: "THE MIGHTY FORCE",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "THE MIGHTY FORCE",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 12,
-      kills: 81,
+      teamKills: 81,
     },
     {
-      name: "ASTRAL LEGIONS",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "ASTRAL LEGIONS",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 4,
-      kills: 47,
+      teamKills: 47,
     },
     {
-      name: "TEAM OMEGA",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "TEAM OMEGA",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 3,
-      kills: 45,
+      teamKills: 45,
     },
     {
-      name: "LIONS ROAR",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "LIONS ROAR",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 9,
-      kills: 43,
+      teamKills: 43,
     },
     {
-      name: "TEAM EPSILON",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "TEAM EPSILON",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 0,
-      kills: 43,
+      teamKills: 43,
     },
     {
-      name: "GANGS OF COD",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "GANGS OF COD",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 0,
-      kills: 18,
+      teamKills: 18,
     },
     {
-      name: "BLOOD CULT",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "BLOOD CULT",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 7,
-      kills: 10,
+      teamKills: 10,
     },
     {
-      name: "TEAM ALPHA",
-      logo: "/images/CODM_LOGO.png",
+      teamName: "TEAM ALPHA",
+      teamLogo: "/images/CODM_LOGO.png",
       playerCount: 5,
       rw: 0,
-      kills: 0,
+      teamKills: 0,
     },
   ]);
 
@@ -215,7 +214,6 @@ export default function StrikerLeague1() {
               <TeamList teams={teams} tournament="STRIKERLEAGUE1.0" />
             </TabsContent>
             <TabsContent value="leaderboards">
-              <TeamLeaderboard teams={teams} status={tournament.status} />
               <PlayerLeaderboard players={players} status={tournament.status} />
             </TabsContent>
           </TournamentTabs>

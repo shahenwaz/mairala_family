@@ -1,7 +1,7 @@
 export interface Team {
-  name: string;
-  logo: string;
+  teamName: string;
+  teamLogo: string;
   playerCount: number;
   rw: number;
-  kills: number;
+  teamKills: number;
 }
