@@ -38,13 +38,12 @@ interface Player {
   teamName: string;
 }
 
-export default function TournamentPage() {
+export default function Tournament2Page() {
   const [tournament, setTournament] = useState<Tournament | null>(null);
   const [teams, setTeams] = useState<Team[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Static tournament ID (ST020) for StrikerLeague2.0
   const staticTournamentId = "ST020";
 
   useEffect(() => {
@@ -53,65 +52,66 @@ export default function TournamentPage() {
       setIsLoading(true);
 
       try {
-        // Fetch tournament details
-        const tournamentDocRef = doc(db, "tournaments", staticTournamentId);
-        const tournamentSnapshot = await getDoc(tournamentDocRef);
+        const tournamentRef = doc(db, "tournaments", staticTournamentId);
+        const tournamentSnap = await getDoc(tournamentRef);
 
-        if (tournamentSnapshot.exists()) {
-          setTournament(tournamentSnapshot.data() as Tournament);
+        if (!tournamentSnap.exists()) {
+          console.error("Tournament not found");
+          setTournament(null);
+          return;
+        }
 
-          // Fetch teams data
-          const teamsRef = collection(
+        const tournamentData = tournamentSnap.data() as Tournament;
+
+        const teamsRef = collection(
+          db,
+          "tournaments",
+          staticTournamentId,
+          "teams"
+        );
+        const teamsSnapshot = await getDocs(teamsRef);
+
+        const teamsData: Team[] = [];
+        const playersData: Player[] = [];
+
+        for (const teamDoc of teamsSnapshot.docs) {
+          const teamData = teamDoc.data();
+          const teamName = teamData.teamName || "Unknown Team";
+
+          teamsData.push({
+            teamName,
+            teamLogo: teamData.teamLogo || "",
+            playerCount: teamData.playerCount ?? 0,
+            roundWon: teamData.roundWon ?? 0,
+            teamKills: teamData.teamKills ?? 0,
+          });
+
+          const playersRef = collection(
             db,
             "tournaments",
             staticTournamentId,
-            "teams"
+            "teams",
+            teamDoc.id,
+            "players"
           );
-          const teamsSnapshot = await getDocs(teamsRef);
+          const playersSnapshot = await getDocs(playersRef);
 
-          const teamsData: Team[] = [];
-          const playersData: Player[] = [];
-
-          for (const teamDoc of teamsSnapshot.docs) {
-            const teamData = teamDoc.data();
-            const teamName = teamData.teamName || "Unknown Team";
-
-            teamsData.push({
+          playersSnapshot.docs.forEach((playerDoc) => {
+            const playerData = playerDoc.data();
+            playersData.push({
+              playerName: playerData.playerName || "Unnamed Player",
+              playerKills: playerData.playerKills ?? 0,
               teamName,
-              teamLogo: teamData.teamLogo,
-              playerCount: teamData.playerCount ?? 0,
-              roundWon: teamData.roundWon ?? 0,
-              teamKills: teamData.teamKills ?? 0,
             });
-
-            // Fetch players for each team
-            const playersRef = collection(
-              db,
-              "tournaments",
-              staticTournamentId,
-              "teams",
-              teamDoc.id,
-              "players"
-            );
-            const playersSnapshot = await getDocs(playersRef);
-
-            playersSnapshot.docs.forEach((playerDoc) => {
-              const playerData = playerDoc.data();
-              playersData.push({
-                playerName: playerData.playerName || "Unnamed Player",
-                playerKills: playerData.playerKills ?? 0,
-                teamName,
-              });
-            });
-          }
-
-          setTeams(teamsData);
-          setPlayers(playersData);
-        } else {
-          console.error("Tournament not found");
+          });
         }
+
+        setTournament(tournamentData);
+        setTeams(teamsData);
+        setPlayers(playersData);
       } catch (error) {
         console.error("Error fetching tournament data:", error);
+        setTournament(null);
       } finally {
         setIsLoading(false);
       }
@@ -123,18 +123,11 @@ export default function TournamentPage() {
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-screen space-y-6 sm:space-y-4 bg-background animate-fadeIn">
-        {/* Rotating Gradient Spinner */}
-        <div className="relative w-16 h-16 sm:w-12 sm:h-12">
-          <div className="absolute w-full h-full border-4 border-t-purple border-r-darkGray border-b-purple border-l-darkGray rounded-full animate-spin"></div>
-        </div>
-
-        {/* Loading Message - Primary */}
-        <p className="md:text-xl text-md font-bold text-lightGray tracking-wide animate-pulse mb-10">
+        <div className="relative w-16 h-16 sm:w-12 sm:h-12 border-4 border-t-primary border-gray-700 rounded-full animate-spin"></div>
+        <p className="text-lg sm:text-md font-medium text-gray-400 animate-pulse">
           Loading tournament details...
         </p>
-
-        {/* Patience Message - Highlighted */}
-        <h1 className="text-2xl lg:text-4xl font-extrabold text-accent animate-bounce text-center">
+        <h1 className="text-2xl sm:text-xl lg:text-3xl font-bold text-accent animate-bounce">
           PLEASE KEEP PATIENCE !!!
         </h1>
       </div>
@@ -143,13 +136,17 @@ export default function TournamentPage() {
 
   if (!tournament) {
     return (
-      <div className="text-center py-10 text-red-500">Tournament not found</div>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-3xl font-bold text-red-500">
+          Tournament Not Found
+        </h1>
+        <p className="text-lg text-gray-500">Please check back later!</p>
+      </div>
     );
   }
 
   return (
     <div>
-      {/* Tournament Details */}
       <TournamentDetails
         tourTitle={tournament.tourTitle}
         tourLogo={tournament.tourLogo}
@@ -159,23 +156,17 @@ export default function TournamentPage() {
         tourBG={tournament.tourBG}
       />
 
-      {/* Tabs for Teams, Matches, and Leaderboards */}
       <div className="w-full py-3 bg-background">
         <div className="max-w-4xl px-4 mx-auto">
           <TournamentTabs defaultTab="teams">
-            {/* Matches Tab */}
             <TabsContent value="matches">
               <h1 className="text-center text-lg text-muted-foreground">
                 Matches will be shown here!
               </h1>
             </TabsContent>
-
-            {/* Teams Tab */}
             <TabsContent value="teams">
               <TeamList teams={teams} />
             </TabsContent>
-
-            {/* Leaderboards Tab */}
             <TabsContent value="leaderboards">
               <TeamLeaderboard
                 teams={teams}
