@@ -32,12 +32,27 @@ export default function TournamentPage() {
     "ALL MATCHES"
   );
 
+  interface Team {
+    teamName: string;
+    teamLogo: string;
+    playerCount: number;
+    roundWon: number;
+    teamKills: number;
+  }
+
+  interface Player {
+    playerName: string;
+    playerKills: number;
+    teamName: string;
+  }
+
   useEffect(() => {
     const fetchTournamentData = async () => {
       const db = getFirestore(app);
       console.log("Fetching tournamentId:", decodedTournamentId); // Debugging
 
       try {
+        // Fetch Tournament Details
         const tournamentDocRef = doc(db, "tournaments", decodedTournamentId);
         const tournamentSnapshot = await getDoc(tournamentDocRef);
 
@@ -60,7 +75,7 @@ export default function TournamentPage() {
         const matchesSnapshot = await getDocs(matchesRef);
         setMatches(matchesSnapshot.docs.map((doc) => doc.data()));
 
-        // Fetch Teams
+        // Fetch Teams and Players
         const teamsRef = collection(
           db,
           "tournaments",
@@ -68,23 +83,48 @@ export default function TournamentPage() {
           "teams"
         );
         const teamsSnapshot = await getDocs(teamsRef);
-        setTeams(
-          teamsSnapshot.docs.map((doc) => ({
-            teamName: doc.data().teamName,
-            teamLogo: doc.data().teamLogo,
-            playerCount: doc.data().playerCount || 0,
-          }))
-        );
 
-        // Fetch Players
-        const playersRef = collection(
-          db,
-          "tournaments",
-          decodedTournamentId,
-          "players"
-        );
-        const playersSnapshot = await getDocs(playersRef);
-        setPlayers(playersSnapshot.docs.map((doc) => doc.data()));
+        const teamsData: Team[] = [];
+        const playersData: Player[] = [];
+
+        for (const teamDoc of teamsSnapshot.docs) {
+          const teamData = teamDoc.data();
+          const teamName = teamData.teamName || "Unknown Team";
+
+          teamsData.push({
+            teamName: teamData.teamName,
+            teamLogo: teamData.teamLogo,
+            playerCount: teamData.playerCount ?? 0,
+            roundWon: teamData.roundWon ?? 0,
+            teamKills: teamData.teamKills ?? 0,
+          });
+
+          // Fetch Players under each team
+          const playersRef = collection(
+            db,
+            "tournaments",
+            decodedTournamentId,
+            "teams",
+            teamDoc.id, // Access specific team document
+            "players"
+          );
+          const playersSnapshot = await getDocs(playersRef);
+
+          playersSnapshot.docs.forEach((playerDoc) => {
+            const playerData = playerDoc.data();
+            playersData.push({
+              playerName: playerData.playerName || "Unnamed Player",
+              playerKills: playerData.playerKills ?? 0,
+              teamName: teamName, // Attach the current teamName
+            });
+          });
+        }
+
+        console.log("Teams Data:", teamsData);
+        console.log("Players Data:", playersData);
+
+        setTeams(teamsData);
+        setPlayers(playersData);
       } catch (error) {
         console.error("Error fetching tournament:", error);
       }
@@ -130,7 +170,7 @@ export default function TournamentPage() {
               />
               <PlayerLeaderboard
                 players={players}
-                status={tournament.tourStatus}
+                tourStatus={tournament.tourStatus}
               />
             </TabsContent>
           </TournamentTabs>
