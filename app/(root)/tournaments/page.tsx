@@ -1,35 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TournamentCard from "@/components/tournament/TournamentCard";
 import { useRouter } from "next/navigation";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { app } from "@/lib/firebase";
 
 const TournamentsPage = () => {
   const router = useRouter();
-  const [dynamicRoutes, setDynamicRoutes] = useState<{ [key: string]: string }>(
-    {}
-  );
-
-  useEffect(() => {
-    const fetchTournamentIds = async () => {
-      const db = getFirestore(app);
-      const tournamentsRef = collection(db, "tournaments");
-
-      const snapshot = await getDocs(tournamentsRef);
-
-      const routes: { [key: string]: string } = {};
-      snapshot.docs.forEach((doc) => {
-        const data = doc.data();
-        routes[data.tourTitle] = `/tournaments/${doc.id}`;
-      });
-
-      setDynamicRoutes(routes);
-    };
-
-    fetchTournamentIds();
-  }, []);
 
   const tournaments = [
     {
@@ -44,6 +20,7 @@ const TournamentsPage = () => {
         { teamName: "MVP", teamPrize: "500 TK" },
       ],
       colorScheme: "yellow" as const,
+      route: "/tournaments/striker-league-2",
     },
     {
       prizePool: "1000 TK",
@@ -57,6 +34,7 @@ const TournamentsPage = () => {
         { teamName: "MF | SID (MVP)", teamPrize: "0 TK" },
       ],
       colorScheme: "green" as const,
+      route: "/tournaments/friendly-tour-1",
     },
     {
       prizePool: "5000 TK",
@@ -70,6 +48,7 @@ const TournamentsPage = () => {
         { teamName: "ADEUS (MVP)", teamPrize: "500 TK" },
       ],
       colorScheme: "green" as const,
+      route: "/tournaments/striker-league-1",
     },
   ];
 
@@ -85,24 +64,19 @@ const TournamentsPage = () => {
       </div>
 
       <div className="grid items-center justify-center grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 place-items-center">
-        {tournaments.map((tournament, index) => {
-          const route =
-            dynamicRoutes[tournament.tourTitle] || "/tournaments/not-found";
-
-          return (
-            <TournamentCard
-              key={index}
-              prizePool={tournament.prizePool}
-              tourStatus={tournament.tourStatus}
-              tourTitle={tournament.tourTitle}
-              tourMvp={tournament.tourMvp}
-              mvpKills={tournament.mvpKills}
-              tourTop={tournament.tourTop}
-              colorScheme={tournament.colorScheme}
-              onViewDetails={() => router.push(route)}
-            />
-          );
-        })}
+        {tournaments.map((tournament, index) => (
+          <TournamentCard
+            key={index}
+            prizePool={tournament.prizePool}
+            tourStatus={tournament.tourStatus}
+            tourTitle={tournament.tourTitle}
+            tourMvp={tournament.tourMvp}
+            mvpKills={tournament.mvpKills}
+            tourTop={tournament.tourTop}
+            colorScheme={tournament.colorScheme}
+            onViewDetails={() => router.push(tournament.route)}
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,7 +1,5 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import {
   getFirestore,
   doc,
@@ -41,15 +39,13 @@ interface Player {
 }
 
 export default function TournamentPage() {
-  const { tournamentId } = useParams();
-  const router = useRouter();
-
-  const decodedTournamentId = decodeURIComponent(tournamentId as string);
   const [tournament, setTournament] = useState<Tournament | null>(null);
   const [teams, setTeams] = useState<Team[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [notFound, setNotFound] = useState<boolean>(false);
+
+  // Static tournament ID (ST020) for StrikerLeague2.0
+  const staticTournamentId = "ST020";
 
   useEffect(() => {
     const fetchTournamentData = async () => {
@@ -57,16 +53,18 @@ export default function TournamentPage() {
       setIsLoading(true);
 
       try {
-        const tournamentDocRef = doc(db, "tournaments", decodedTournamentId);
+        // Fetch tournament details
+        const tournamentDocRef = doc(db, "tournaments", staticTournamentId);
         const tournamentSnapshot = await getDoc(tournamentDocRef);
 
         if (tournamentSnapshot.exists()) {
           setTournament(tournamentSnapshot.data() as Tournament);
 
+          // Fetch teams data
           const teamsRef = collection(
             db,
             "tournaments",
-            decodedTournamentId,
+            staticTournamentId,
             "teams"
           );
           const teamsSnapshot = await getDocs(teamsRef);
@@ -86,10 +84,11 @@ export default function TournamentPage() {
               teamKills: teamData.teamKills ?? 0,
             });
 
+            // Fetch players for each team
             const playersRef = collection(
               db,
               "tournaments",
-              decodedTournamentId,
+              staticTournamentId,
               "teams",
               teamDoc.id,
               "players"
@@ -109,33 +108,31 @@ export default function TournamentPage() {
           setTeams(teamsData);
           setPlayers(playersData);
         } else {
-          setNotFound(true);
+          console.error("Tournament not found");
         }
       } catch (error) {
-        console.error("Error fetching tournament:", error);
-        setNotFound(true);
+        console.error("Error fetching tournament data:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (decodedTournamentId) fetchTournamentData();
-  }, [decodedTournamentId]);
-
-  useEffect(() => {
-    if (notFound) {
-      router.push("/tournaments/not-found");
-    }
-  }, [notFound, router]);
+    fetchTournamentData();
+  }, []);
 
   if (isLoading) {
     return <div className="text-center py-10">Loading tournament...</div>;
   }
 
-  if (!tournament) return null;
+  if (!tournament) {
+    return (
+      <div className="text-center py-10 text-red-500">Tournament not found</div>
+    );
+  }
 
   return (
     <div>
+      {/* Tournament Details */}
       <TournamentDetails
         tourTitle={tournament.tourTitle}
         tourLogo={tournament.tourLogo}
@@ -145,17 +142,23 @@ export default function TournamentPage() {
         tourBG={tournament.tourBG}
       />
 
+      {/* Tabs for Teams, Matches, and Leaderboards */}
       <div className="w-full py-3 bg-background">
         <div className="max-w-4xl px-4 mx-auto">
           <TournamentTabs defaultTab="teams">
+            {/* Matches Tab */}
             <TabsContent value="matches">
-              <h1>Matches Will be shown here!</h1>
+              <h1 className="text-center text-lg text-muted-foreground">
+                Matches will be shown here!
+              </h1>
             </TabsContent>
 
+            {/* Teams Tab */}
             <TabsContent value="teams">
-              <TeamList teams={teams} tournament={tournament.tourTitle} />
+              <TeamList teams={teams} />
             </TabsContent>
 
+            {/* Leaderboards Tab */}
             <TabsContent value="leaderboards">
               <TeamLeaderboard
                 teams={teams}
