@@ -31,6 +31,8 @@ export default function TournamentPage() {
   const [filter, setFilter] = useState<"ALL MATCHES" | "UPCOMING" | "FINISHED">(
     "ALL MATCHES"
   );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [notFound, setNotFound] = useState<boolean>(false);
 
   interface Team {
     teamName: string;
@@ -49,92 +51,95 @@ export default function TournamentPage() {
   useEffect(() => {
     const fetchTournamentData = async () => {
       const db = getFirestore(app);
-      console.log("Fetching tournamentId:", decodedTournamentId); // Debugging
+      setIsLoading(true);
 
       try {
-        // Fetch Tournament Details
         const tournamentDocRef = doc(db, "tournaments", decodedTournamentId);
         const tournamentSnapshot = await getDoc(tournamentDocRef);
 
         if (tournamentSnapshot.exists()) {
-          console.log("Tournament data:", tournamentSnapshot.data());
           setTournament(tournamentSnapshot.data());
-        } else {
-          console.error("Tournament not found! ID:", decodedTournamentId);
-          router.push("/tournaments/not-found");
-          return;
-        }
 
-        // Fetch Matches
-        const matchesRef = collection(
-          db,
-          "tournaments",
-          decodedTournamentId,
-          "matches"
-        );
-        const matchesSnapshot = await getDocs(matchesRef);
-        setMatches(matchesSnapshot.docs.map((doc) => doc.data()));
-
-        // Fetch Teams and Players
-        const teamsRef = collection(
-          db,
-          "tournaments",
-          decodedTournamentId,
-          "teams"
-        );
-        const teamsSnapshot = await getDocs(teamsRef);
-
-        const teamsData: Team[] = [];
-        const playersData: Player[] = [];
-
-        for (const teamDoc of teamsSnapshot.docs) {
-          const teamData = teamDoc.data();
-          const teamName = teamData.teamName || "Unknown Team";
-
-          teamsData.push({
-            teamName: teamData.teamName,
-            teamLogo: teamData.teamLogo,
-            playerCount: teamData.playerCount ?? 0,
-            roundWon: teamData.roundWon ?? 0,
-            teamKills: teamData.teamKills ?? 0,
-          });
-
-          // Fetch Players under each team
-          const playersRef = collection(
+          const matchesRef = collection(
             db,
             "tournaments",
             decodedTournamentId,
-            "teams",
-            teamDoc.id, // Access specific team document
-            "players"
+            "matches"
           );
-          const playersSnapshot = await getDocs(playersRef);
+          const matchesSnapshot = await getDocs(matchesRef);
+          setMatches(matchesSnapshot.docs.map((doc) => doc.data()));
 
-          playersSnapshot.docs.forEach((playerDoc) => {
-            const playerData = playerDoc.data();
-            playersData.push({
-              playerName: playerData.playerName || "Unnamed Player",
-              playerKills: playerData.playerKills ?? 0,
-              teamName: teamName, // Attach the current teamName
+          const teamsRef = collection(
+            db,
+            "tournaments",
+            decodedTournamentId,
+            "teams"
+          );
+          const teamsSnapshot = await getDocs(teamsRef);
+
+          const teamsData: Team[] = [];
+          const playersData: Player[] = [];
+
+          for (const teamDoc of teamsSnapshot.docs) {
+            const teamData = teamDoc.data();
+            const teamName = teamData.teamName || "Unknown Team";
+
+            teamsData.push({
+              teamName,
+              teamLogo: teamData.teamLogo,
+              playerCount: teamData.playerCount ?? 0,
+              roundWon: teamData.roundWon ?? 0,
+              teamKills: teamData.teamKills ?? 0,
             });
-          });
+
+            const playersRef = collection(
+              db,
+              "tournaments",
+              decodedTournamentId,
+              "teams",
+              teamDoc.id,
+              "players"
+            );
+            const playersSnapshot = await getDocs(playersRef);
+
+            playersSnapshot.docs.forEach((playerDoc) => {
+              const playerData = playerDoc.data();
+              playersData.push({
+                playerName: playerData.playerName || "Unnamed Player",
+                playerKills: playerData.playerKills ?? 0,
+                teamName,
+              });
+            });
+          }
+
+          setTeams(teamsData);
+          setPlayers(playersData);
+        } else {
+          setNotFound(true);
         }
-
-        console.log("Teams Data:", teamsData);
-        console.log("Players Data:", playersData);
-
-        setTeams(teamsData);
-        setPlayers(playersData);
       } catch (error) {
         console.error("Error fetching tournament:", error);
+        setNotFound(true);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (decodedTournamentId) fetchTournamentData();
-  }, [decodedTournamentId, router]);
+  }, [decodedTournamentId]);
 
-  if (!tournament)
+  useEffect(() => {
+    if (notFound) {
+      router.push("/tournaments/not-found");
+    }
+  }, [notFound, router]);
+
+  if (isLoading) {
     return <div className="text-center py-10">Loading tournament...</div>;
+  }
+
+  // Guard against tournament being null
+  if (!tournament) return null;
 
   return (
     <div>
