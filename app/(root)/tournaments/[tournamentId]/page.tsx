@@ -12,41 +12,44 @@ import {
 import { app } from "@/lib/firebase";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TournamentTabs from "@/components/tournament/TournamentTabs";
-import MatchesFilter from "@/components/match/MatchesFilter";
-import MatchesList from "@/components/match/MatchesList";
 import TeamList from "@/components/team/TeamList";
 import TeamLeaderboard from "@/components/team/TeamLeaderboard";
 import PlayerLeaderboard from "@/components/player/PlayerLeaderboard";
 import { TabsContent } from "@/components/ui/tabs";
+
+interface Tournament {
+  tourTitle: string;
+  tourLogo: string;
+  startDate: string;
+  endDate: string;
+  tourStatus: "Ongoing" | "Finalized";
+  tourBG: string;
+}
+
+interface Team {
+  teamName: string;
+  teamLogo: string;
+  playerCount: number;
+  roundWon: number;
+  teamKills: number;
+}
+
+interface Player {
+  playerName: string;
+  playerKills: number;
+  teamName: string;
+}
 
 export default function TournamentPage() {
   const { tournamentId } = useParams();
   const router = useRouter();
 
   const decodedTournamentId = decodeURIComponent(tournamentId as string);
-  const [tournament, setTournament] = useState<any>(null);
-  const [matches, setMatches] = useState<any[]>([]);
-  const [teams, setTeams] = useState<any[]>([]);
-  const [players, setPlayers] = useState<any[]>([]);
-  const [filter, setFilter] = useState<"ALL MATCHES" | "UPCOMING" | "FINISHED">(
-    "ALL MATCHES"
-  );
+  const [tournament, setTournament] = useState<Tournament | null>(null);
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [notFound, setNotFound] = useState<boolean>(false);
-
-  interface Team {
-    teamName: string;
-    teamLogo: string;
-    playerCount: number;
-    roundWon: number;
-    teamKills: number;
-  }
-
-  interface Player {
-    playerName: string;
-    playerKills: number;
-    teamName: string;
-  }
 
   useEffect(() => {
     const fetchTournamentData = async () => {
@@ -58,16 +61,7 @@ export default function TournamentPage() {
         const tournamentSnapshot = await getDoc(tournamentDocRef);
 
         if (tournamentSnapshot.exists()) {
-          setTournament(tournamentSnapshot.data());
-
-          const matchesRef = collection(
-            db,
-            "tournaments",
-            decodedTournamentId,
-            "matches"
-          );
-          const matchesSnapshot = await getDocs(matchesRef);
-          setMatches(matchesSnapshot.docs.map((doc) => doc.data()));
+          setTournament(tournamentSnapshot.data() as Tournament);
 
           const teamsRef = collection(
             db,
@@ -138,7 +132,6 @@ export default function TournamentPage() {
     return <div className="text-center py-10">Loading tournament...</div>;
   }
 
-  // Guard against tournament being null
   if (!tournament) return null;
 
   return (
@@ -156,12 +149,7 @@ export default function TournamentPage() {
         <div className="max-w-4xl px-4 mx-auto">
           <TournamentTabs defaultTab="teams">
             <TabsContent value="matches">
-              <MatchesFilter
-                options={["ALL MATCHES", "UPCOMING", "FINISHED"]}
-                defaultFilter="ALL MATCHES"
-                onFilterChange={setFilter}
-              />
-              <MatchesList matches={matches} />
+              <h1>Matches Will be shown here!</h1>
             </TabsContent>
 
             <TabsContent value="teams">
