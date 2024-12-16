@@ -17,8 +17,8 @@ import {
 
 interface Team {
   teamName: string;
-  roundWon: number;
-  teamKills: number;
+  roundWon: number | null | undefined;
+  teamKills: number | null | undefined;
 }
 
 interface TeamLeaderboardProps {
@@ -39,9 +39,14 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({
 
   // Sort teams dynamically based on the selected criteria
   useEffect(() => {
-    const sorted = [...teams].sort((a, b) =>
-      sortBy === "kills" ? b.teamKills - a.teamKills : b.roundWon - a.roundWon
-    );
+    const sorted = [...teams].sort((a, b) => {
+      const aKills = a.teamKills ?? 0; // Default to 0 if undefined/null
+      const bKills = b.teamKills ?? 0;
+      const aRounds = a.roundWon ?? 0;
+      const bRounds = b.roundWon ?? 0;
+
+      return sortBy === "kills" ? bKills - aKills : bRounds - aRounds;
+    });
 
     setSortedTeams(sorted);
   }, [sortBy, teams]);
@@ -101,10 +106,10 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({
                 <div className="flex items-center gap-3">{team.teamName}</div>
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.roundWon}
+                {team.roundWon ?? 0} {/* Default to 0 */}
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.teamKills}
+                {team.teamKills ?? 0} {/* Default to 0 */}
               </TableCell>
             </TableRow>
           ))}
