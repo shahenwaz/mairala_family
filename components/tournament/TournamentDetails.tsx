@@ -3,25 +3,25 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 interface TournamentDetailsProps {
-  title: string;
-  logo: string;
+  tourTitle: string;
+  tourLogo: string;
   startDate: string;
   endDate: string;
-  status: string;
-  background: string;
+  tourStatus: string;
+  tourBG: string;
 }
 
 const TournamentDetails: React.FC<TournamentDetailsProps> = ({
-  title,
-  logo,
+  tourTitle,
+  tourLogo,
   startDate,
   endDate,
-  status,
-  background,
+  tourStatus,
+  tourBG,
 }) => {
   // Determine the color scheme based on the tournament status
   const badgeColor =
-    status === "Ongoing"
+    tourStatus === "Ongoing"
       ? "bg-yellow-400 text-primary-foreground"
       : "bg-primary text-primary-foreground";
 
@@ -31,7 +31,7 @@ const TournamentDetails: React.FC<TournamentDetailsProps> = ({
       <div className="relative h-[15rem] bg-black border-b border-muted">
         {/* Background Image */}
         <Image
-          src={background}
+          src={tourBG}
           alt="Tournament Background"
           fill
           className="object-cover object-center opacity-90 blur-sm"
@@ -42,8 +42,8 @@ const TournamentDetails: React.FC<TournamentDetailsProps> = ({
         <div className="absolute inset-0 flex flex-col justify-center items-center space-y-3 px-4 text-center">
           {/* Logo */}
           <Image
-            src={logo}
-            alt={title}
+            src={tourLogo}
+            alt={tourTitle}
             width={96} // Explicitly set width (adjust as necessary)
             height={96} // Explicitly set height (adjust as necessary)
             className="object-contain rounded-md"
@@ -51,14 +51,14 @@ const TournamentDetails: React.FC<TournamentDetailsProps> = ({
 
           {/* Title */}
           <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-            {title}
+            {tourTitle}
           </h1>
 
           {/* Dates and Status */}
           <div className="flex flex-wrap justify-center items-center gap-2 text-secondary-foreground text-xs md:text-sm">
             <span>Start: {startDate}</span>
             <Badge className={`font-bold px-3 py-1 rounded-md ${badgeColor}`}>
-              {status}
+              {tourStatus}
             </Badge>
             <span>End: {endDate}</span>
           </div>
