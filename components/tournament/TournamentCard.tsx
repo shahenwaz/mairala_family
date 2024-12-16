@@ -5,28 +5,28 @@ import { Banknote } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 interface Team {
-  name: string;
-  prize: string;
+  teamName: string;
+  teamPrize: string;
 }
 
 interface TournamentCardProps {
   prizePool: string;
-  status: "Finalized" | "Ongoing";
-  title: string;
-  mvp: string;
+  tourStatus: "Finalized" | "Ongoing";
+  tourTitle: string;
+  tourMvp: string;
   mvpKills: number;
-  teams: Team[];
+  tourTop: Team[];
   colorScheme: "green" | "yellow";
   onViewDetails: () => void;
 }
 
 const TournamentCard: React.FC<TournamentCardProps> = ({
   prizePool,
-  status,
-  title,
-  mvp,
+  tourStatus,
+  tourTitle,
+  tourMvp,
   mvpKills,
-  teams,
+  tourTop,
   colorScheme,
   onViewDetails,
 }) => {
@@ -55,38 +55,39 @@ const TournamentCard: React.FC<TournamentCardProps> = ({
 
       {/* Title */}
       <h3 className={`text-xl font-extrabold ${titleColor} text-center`}>
-        {title}
+        {tourTitle}
       </h3>
 
       {/* Badge */}
       <div className="flex justify-center">
         <Badge className={`rounded-md font-bold px-3 py-1 ${badgeColor}`}>
-          {status}
+          {tourStatus}
         </Badge>
       </div>
 
       {/* MVP */}
       <div className="p-4 text-center rounded-md bg-background">
         <p className="text-sm font-bold text-muted-foreground">
-          MVP: <span className="text-foreground">{mvp}</span> ({mvpKills} kills)
+          MVP: <span className="text-foreground">{tourMvp}</span> ({mvpKills}{" "}
+          kills)
         </p>
       </div>
 
       {/* Top Teams */}
       <div className="space-y-2">
-        {teams.map((team, index) => (
+        {tourTop.map((team, index) => (
           <div
             key={index}
             className="flex items-center justify-between text-sm"
           >
             <div className="flex items-center space-x-3">
               <Avatar>
-                <AvatarImage src={defaultLogos[index]} alt={team.name} />
+                <AvatarImage src={defaultLogos[index]} alt={team.teamName} />
               </Avatar>
-              <span className="font-bold text-foreground">{team.name}</span>
+              <span className="font-bold text-foreground">{team.teamName}</span>
             </div>
             <span className="font-bold text-muted-foreground">
-              {team.prize}
+              {team.teamPrize}
             </span>
           </div>
         ))}

@@ -16,28 +16,31 @@ import {
 } from "@/components/ui/select";
 
 interface Team {
-  name: string;
-  rw: number; // Rounds Won
-  kills: number; // Total Kills
+  teamName: string;
+  roundWon: number;
+  teamKills: number;
 }
 
 interface TeamLeaderboardProps {
   teams: Team[];
-  status: "Ongoing" | "Finalized";
+  tourStatus: "Ongoing" | "Finalized";
 }
 
-const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
+const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({
+  teams,
+  tourStatus,
+}) => {
   const [sortBy, setSortBy] = useState<"rw" | "kills">("kills");
   const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
 
   // Determine the table header color based on the tournament status
   const tableHeaderColor =
-    status === "Ongoing" ? "bg-yellow-400" : "bg-primary";
+    tourStatus === "Ongoing" ? "bg-yellow-400" : "bg-primary";
 
   // Sort teams dynamically based on the selected criteria
   useEffect(() => {
     const sorted = [...teams].sort((a, b) =>
-      sortBy === "kills" ? b.kills - a.kills : b.rw - a.rw
+      sortBy === "kills" ? b.teamKills - a.teamKills : b.roundWon - a.roundWon
     );
 
     setSortedTeams(sorted);
@@ -86,7 +89,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
         <TableBody>
           {sortedTeams.map((team, index) => (
             <TableRow
-              key={team.name}
+              key={team.teamName}
               className={`${
                 index % 2 === 0 ? "bg-muted/20" : "bg-background"
               } hover:bg-muted/50 transition-all rounded-md shadow-sm my-2`}
@@ -95,13 +98,13 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({ teams, status }) => {
                 {index + 1}
               </TableCell>
               <TableCell className="px-4 py-3 font-semibold text-xs md:text-sm lg:text-base">
-                <div className="flex items-center gap-3">{team.name}</div>
+                <div className="flex items-center gap-3">{team.teamName}</div>
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.rw}
+                {team.roundWon}
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.kills}
+                {team.teamKills}
               </TableCell>
             </TableRow>
           ))}

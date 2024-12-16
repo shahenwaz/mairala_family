@@ -11,12 +11,12 @@ import { Team } from "@/types/Team";
 
 export default function StrikerLeague1() {
   const tournament = {
-    title: "STRIKER LEAGUE 1.0",
-    logo: "/images/SND_SLS1_LOGO.png",
+    tourTitle: "STRIKER LEAGUE 1.0",
+    tourLogo: "/images/SND_SLS1_LOGO.png",
     startDate: "15/03/2024",
     endDate: "01/04/2024",
-    status: "Finalized" as "Ongoing" | "Finalized", // Ensure the status matches the required type
-    background: "/images/CODM_BG1.jpg",
+    tourStatus: "Finalized" as "Ongoing" | "Finalized", // Ensure the status matches the required type
+    tourBG: "/images/CODM_BG1.jpg",
   };
 
   // Add dummy matches data
@@ -214,7 +214,10 @@ export default function StrikerLeague1() {
               <TeamList teams={teams} tournament="STRIKERLEAGUE1.0" />
             </TabsContent>
             <TabsContent value="leaderboards">
-              <PlayerLeaderboard players={players} status={tournament.status} />
+              <PlayerLeaderboard
+                players={players}
+                status={tournament.tourStatus}
+              />
             </TabsContent>
           </TournamentTabs>
         </div>
