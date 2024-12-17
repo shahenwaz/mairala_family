@@ -7,14 +7,13 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { app } from "@/lib/firebase";
-import { Tournament, Team, Player } from "@/types/tournament"; // Shared types
+import { Tournament, Team, Player } from "@/types/tournament";
 
 export async function GET() {
   const db = getFirestore(app);
   const staticTournamentId = "ST020"; // Static document ID
 
   try {
-    // Fetch tournament details
     const tournamentRef = doc(db, "tournaments", staticTournamentId);
     const tournamentSnap = await getDoc(tournamentRef);
 
@@ -27,7 +26,6 @@ export async function GET() {
 
     const tournamentData = tournamentSnap.data() as Tournament;
 
-    // Fetch teams and players
     const teamsRef = collection(db, "tournaments", staticTournamentId, "teams");
     const teamsSnap = await getDocs(teamsRef);
 
@@ -73,9 +71,14 @@ export async function GET() {
       players,
     });
   } catch (error) {
-    console.error("Error fetching tournament data:", error);
+    console.error("Firestore error:", error);
+
+    // Properly cast 'error' to the Error type
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
+
     return NextResponse.json(
-      { success: false, message: "Internal Server Error" },
+      { success: false, message: "Internal Server Error", error: errorMessage },
       { status: 500 }
     );
   }
