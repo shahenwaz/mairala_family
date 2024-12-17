@@ -1,42 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-} from "firebase/firestore";
-import { app } from "@/lib/firebase";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TournamentTabs from "@/components/tournament/TournamentTabs";
 import TeamList from "@/components/team/TeamList";
 import TeamLeaderboard from "@/components/team/TeamLeaderboard";
 import PlayerLeaderboard from "@/components/player/PlayerLeaderboard";
 import { TabsContent } from "@/components/ui/tabs";
-
-interface Tournament {
-  tourTitle: string;
-  tourLogo: string;
-  startDate: string;
-  endDate: string;
-  tourStatus: "Ongoing" | "Finalized";
-  tourBG: string;
-}
-
-interface Team {
-  teamName: string;
-  teamLogo: string;
-  playerCount: number;
-  roundWon: number;
-  teamKills: number;
-}
-
-interface Player {
-  playerName: string;
-  playerKills: number;
-  teamName: string;
-}
+import { Tournament, Team, Player } from "@/types/tournament"; // Shared types
 
 export default function Tournament2Page() {
   const [tournament, setTournament] = useState<Tournament | null>(null);
@@ -44,71 +14,21 @@ export default function Tournament2Page() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const staticTournamentId = "ST020";
-
   useEffect(() => {
-    const fetchTournamentData = async () => {
-      const db = getFirestore(app);
+    const fetchData = async () => {
       setIsLoading(true);
-
       try {
-        const tournamentRef = doc(db, "tournaments", staticTournamentId);
-        const tournamentSnap = await getDoc(tournamentRef);
+        const response = await fetch("/api/ST020");
+        const data = await response.json();
 
-        if (!tournamentSnap.exists()) {
-          console.error("Tournament not found");
+        if (!data.success) {
+          console.error(data.message);
           setTournament(null);
-          return;
+        } else {
+          setTournament(data.tournament);
+          setTeams(data.teams);
+          setPlayers(data.players);
         }
-
-        const tournamentData = tournamentSnap.data() as Tournament;
-
-        const teamsRef = collection(
-          db,
-          "tournaments",
-          staticTournamentId,
-          "teams"
-        );
-        const teamsSnapshot = await getDocs(teamsRef);
-
-        const teamsData: Team[] = [];
-        const playersData: Player[] = [];
-
-        for (const teamDoc of teamsSnapshot.docs) {
-          const teamData = teamDoc.data();
-          const teamName = teamData.teamName || "Unknown Team";
-
-          teamsData.push({
-            teamName,
-            teamLogo: teamData.teamLogo || "",
-            playerCount: teamData.playerCount ?? 0,
-            roundWon: teamData.roundWon ?? 0,
-            teamKills: teamData.teamKills ?? 0,
-          });
-
-          const playersRef = collection(
-            db,
-            "tournaments",
-            staticTournamentId,
-            "teams",
-            teamDoc.id,
-            "players"
-          );
-          const playersSnapshot = await getDocs(playersRef);
-
-          playersSnapshot.docs.forEach((playerDoc) => {
-            const playerData = playerDoc.data();
-            playersData.push({
-              playerName: playerData.playerName || "Unnamed Player",
-              playerKills: playerData.playerKills ?? 0,
-              teamName,
-            });
-          });
-        }
-
-        setTournament(tournamentData);
-        setTeams(teamsData);
-        setPlayers(playersData);
       } catch (error) {
         console.error("Error fetching tournament data:", error);
         setTournament(null);
@@ -117,17 +37,17 @@ export default function Tournament2Page() {
       }
     };
 
-    fetchTournamentData();
+    fetchData();
   }, []);
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-6 sm:space-y-4 bg-background animate-fadeIn">
-        <div className="relative w-16 h-16 sm:w-12 sm:h-12 border-4 border-t-primary border-gray-700 rounded-full animate-spin"></div>
-        <p className="text-lg sm:text-md font-medium text-gray-400 animate-pulse">
+      <div className="flex flex-col items-center justify-center h-screen space-y-6 bg-background animate-fadeIn">
+        <div className="w-16 h-16 border-4 border-t-primary border-gray-700 rounded-full animate-spin"></div>
+        <p className="text-lg font-medium text-gray-400 animate-pulse">
           Loading tournament details...
         </p>
-        <h1 className="text-2xl sm:text-xl lg:text-3xl font-bold text-accent animate-bounce">
+        <h1 className="text-2xl font-bold text-accent animate-bounce">
           PLEASE KEEP PATIENCE !!!
         </h1>
       </div>
@@ -140,7 +60,6 @@ export default function Tournament2Page() {
         <h1 className="text-3xl font-bold text-red-500">
           Tournament Not Found
         </h1>
-        <p className="text-lg text-gray-500">Please check back later!</p>
       </div>
     );
   }
@@ -155,7 +74,6 @@ export default function Tournament2Page() {
         tourStatus={tournament.tourStatus}
         tourBG={tournament.tourBG}
       />
-
       <div className="w-full py-3 bg-background">
         <div className="max-w-4xl px-4 mx-auto">
           <TournamentTabs defaultTab="teams">
