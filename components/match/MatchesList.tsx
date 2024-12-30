@@ -4,8 +4,8 @@ import MatchCard from "./MatchCard";
 interface Match {
   team1: string;
   team2: string;
-  team1Logo: string;
-  team2Logo: string;
+  team1logo: string;
+  team2logo: string;
   score: string;
   round: string;
   date: string;

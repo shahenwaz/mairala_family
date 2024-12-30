@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/table";
 
 interface Player {
-  playerName: string;
-  teamName: string;
-  playerKills: number | null | undefined;
+  playername: string;
+  teamname: string;
+  playerkills: number | null | undefined;
 }
 
 interface PlayerLeaderboardProps {
@@ -29,7 +29,7 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
   // Sort players by kills on component load
   useEffect(() => {
     const sorted = [...players].sort(
-      (a, b) => (b.playerKills ?? 0) - (a.playerKills ?? 0)
+      (a, b) => (b.playerkills ?? 0) - (a.playerkills ?? 0)
     ); // Default to 0 for null/undefined
     setSortedPlayers(sorted);
   }, [players]);
@@ -39,7 +39,7 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
     tourStatus === "Ongoing" ? "bg-yellow-400" : "bg-primary";
 
   // Determine the team name color based on the status
-  const teamNameColor =
+  const teamnameColor =
     tourStatus === "Ongoing" ? "text-yellow-400" : "text-primary";
 
   return (
@@ -78,16 +78,16 @@ const PlayerLeaderboard: React.FC<PlayerLeaderboardProps> = ({
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs md:text-sm lg:text-base">
                   <p className="font-extrabold text-foreground">
-                    {player.playerName} {/* Fetch playerName */}
+                    {player.playername} {/* Fetch playername */}
                   </p>
                   <p
-                    className={`font-semibold italic ${teamNameColor} text-[10px] md:text-xs`}
+                    className={`font-semibold italic ${teamnameColor} text-[10px] md:text-xs`}
                   >
-                    {player.teamName} {/* Team Name */}
+                    {player.teamname} {/* Team Name */}
                   </p>
                 </TableCell>
                 <TableCell className="px-4 py-3 text-xs font-bold text-center md:text-sm lg:text-base">
-                  {player.playerKills ?? 0} {/* Show 0 if undefined */}
+                  {player.playerkills ?? 0} {/* Show 0 if undefined */}
                 </TableCell>
               </TableRow>
             ) : null

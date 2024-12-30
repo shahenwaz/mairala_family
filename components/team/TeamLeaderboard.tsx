@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/select";
 
 interface Team {
-  teamName: string;
-  roundWon: number | null | undefined;
-  teamKills: number | null | undefined;
+  teamname: string;
+  roundwon: number | null | undefined;
+  teamkills: number | null | undefined;
 }
 
 interface TeamLeaderboardProps {
@@ -40,10 +40,10 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({
   // Sort teams dynamically based on the selected criteria
   useEffect(() => {
     const sorted = [...teams].sort((a, b) => {
-      const aKills = a.teamKills ?? 0; // Default to 0 if undefined/null
-      const bKills = b.teamKills ?? 0;
-      const aRounds = a.roundWon ?? 0;
-      const bRounds = b.roundWon ?? 0;
+      const aKills = a.teamkills ?? 0; // Default to 0 if undefined/null
+      const bKills = b.teamkills ?? 0;
+      const aRounds = a.roundwon ?? 0;
+      const bRounds = b.roundwon ?? 0;
 
       return sortBy === "kills" ? bKills - aKills : bRounds - aRounds;
     });
@@ -94,7 +94,7 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({
         <TableBody>
           {sortedTeams.map((team, index) => (
             <TableRow
-              key={team.teamName}
+              key={team.teamname}
               className={`${
                 index % 2 === 0 ? "bg-muted/20" : "bg-background"
               } hover:bg-muted/50 transition-all rounded-md shadow-sm my-2`}
@@ -103,13 +103,13 @@ const TeamLeaderboard: React.FC<TeamLeaderboardProps> = ({
                 {index + 1}
               </TableCell>
               <TableCell className="px-4 py-3 font-semibold text-xs md:text-sm lg:text-base">
-                <div className="flex items-center gap-3">{team.teamName}</div>
+                <div className="flex items-center gap-3">{team.teamname}</div>
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.roundWon ?? 0} {/* Default to 0 */}
+                {team.roundwon ?? 0} {/* Default to 0 */}
               </TableCell>
               <TableCell className="px-4 py-3 font-bold text-center text-xs md:text-sm lg:text-base">
-                {team.teamKills ?? 0} {/* Default to 0 */}
+                {team.teamkills ?? 0} {/* Default to 0 */}
               </TableCell>
             </TableRow>
           ))}

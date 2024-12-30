@@ -3,15 +3,15 @@ import React from "react";
 import Image from "next/image";
 
 interface TeamCardProps {
-  teamName: string;
-  teamLogo: string;
-  playerCount: number;
+  teamname: string;
+  teamlogo: string;
+  playercount: number;
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
-  teamName,
-  teamLogo,
-  playerCount,
+  teamname,
+  teamlogo,
+  playercount,
 }) => {
   return (
     <div className="relative overflow-hidden border-t-2 rounded-lg group bg-card card-hover border-darkGray">
@@ -32,8 +32,8 @@ const TeamCard: React.FC<TeamCardProps> = ({
         <div className="absolute inset-0 z-20 flex items-center justify-center">
           <div className="flex items-center justify-center w-16 h-16">
             <Image
-              src={teamLogo}
-              alt={`${teamName} logo`}
+              src={teamlogo}
+              alt={`${teamname} logo`}
               width={64}
               height={64}
               className="object-cover rounded-full"
@@ -45,10 +45,10 @@ const TeamCard: React.FC<TeamCardProps> = ({
       {/* Team Name and Player Count */}
       <div className="p-4 text-center">
         <h3 className="text-base font-semibold transition-colors duration-200 lg:text-sm text-purple group-hover:text-lightGrayGray">
-          {teamName}
+          {teamname}
         </h3>
         <p className="text-sm lg:text-xs text-muted-foreground">
-          {playerCount} Players
+          {playercount} Players
         </p>
       </div>
     </div>

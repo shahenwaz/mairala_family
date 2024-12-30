@@ -18,8 +18,9 @@ export default function Tournament2Page() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("/api/ST020");
+        const response = await fetch("/api/tournaments/ST020");
         const data = await response.json();
+        console.log("API Response:", data);
 
         if (!data.success) {
           console.error(data.message);
@@ -67,12 +68,12 @@ export default function Tournament2Page() {
   return (
     <div>
       <TournamentDetails
-        tourTitle={tournament.tourTitle}
-        tourLogo={tournament.tourLogo}
-        startDate={tournament.startDate}
-        endDate={tournament.endDate}
-        tourStatus={tournament.tourStatus}
-        tourBG={tournament.tourBG}
+        tourTitle={tournament.tourtitle}
+        tourLogo={tournament.tourlogo}
+        startDate={tournament.startdate}
+        endDate={tournament.enddate}
+        tourStatus={tournament.tourstatus}
+        tourBG={tournament.tourbg}
       />
       <div className="w-full py-3 bg-background">
         <div className="max-w-4xl px-4 mx-auto">
@@ -88,11 +89,11 @@ export default function Tournament2Page() {
             <TabsContent value="leaderboards">
               <TeamLeaderboard
                 teams={teams}
-                tourStatus={tournament.tourStatus}
+                tourStatus={tournament.tourstatus}
               />
               <PlayerLeaderboard
                 players={players}
-                tourStatus={tournament.tourStatus}
+                tourStatus={tournament.tourstatus}
               />
             </TabsContent>
           </TournamentTabs>

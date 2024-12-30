@@ -5,8 +5,8 @@ export default function Home() {
   interface Match {
     team1: string;
     team2: string;
-    team1Logo: string;
-    team2Logo: string;
+    team1logo: string;
+    team2logo: string;
     score: string;
     round: string;
     date: string;
@@ -18,8 +18,8 @@ export default function Home() {
     {
       team1: "SHURIKEN THE HUNTERS",
       team2: "DRAGONS ON THE GO",
-      team1Logo: "/images/CODM_LOGO.png",
-      team2Logo: "/images/CODM_LOGO.png",
+      team1logo: "/images/CODM_LOGO.png",
+      team2logo: "/images/CODM_LOGO.png",
       score: "0 : 0",
       round: "Round Robin",
       date: "5 OCTOBER 2024, 10:00 PM BST",
@@ -28,8 +28,8 @@ export default function Home() {
     {
       team1: "DISCIPLES OF MAYHEM",
       team2: "GRUMBLING GANGSTERS 2.0",
-      team1Logo: "/images/CODM_LOGO.png",
-      team2Logo: "/images/CODM_LOGO.png",
+      team1logo: "/images/CODM_LOGO.png",
+      team2logo: "/images/CODM_LOGO.png",
       score: "0 : 0",
       round: "Semi-Final",
       date: "6 OCTOBER 2024, 8:00 PM BST",

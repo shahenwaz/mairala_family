@@ -6,8 +6,8 @@ import Image from "next/image";
 interface MatchProps {
   team1: string;
   team2: string;
-  team1Logo: string;
-  team2Logo: string;
+  team1logo: string;
+  team2logo: string;
   score: string;
   round: string;
   date: string;
@@ -16,8 +16,8 @@ interface MatchProps {
 const MatchCard: React.FC<MatchProps> = ({
   team1,
   team2,
-  team1Logo,
-  team2Logo,
+  team1logo,
+  team2logo,
   score,
   round,
   date,
@@ -36,7 +36,7 @@ const MatchCard: React.FC<MatchProps> = ({
           {/* Team 1 */}
           <div className="flex flex-col items-center">
             <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
-              <Image src={team1Logo} alt={team1} width={50} height={50} />
+              <Image src={team1logo} alt={team1} width={50} height={50} />
             </div>
           </div>
 
@@ -48,7 +48,7 @@ const MatchCard: React.FC<MatchProps> = ({
           {/* Team 2 */}
           <div className="flex flex-col items-center">
             <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
-              <Image src={team2Logo} alt={team2} width={50} height={50} />
+              <Image src={team2logo} alt={team2} width={50} height={50} />
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@ const MatchCard: React.FC<MatchProps> = ({
         {/* Team 1 */}
         <div className="flex items-center justify-start w-2/5 gap-3">
           <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
-            <Image src={team1Logo} alt={team1} width={60} height={60} />
+            <Image src={team1logo} alt={team1} width={60} height={60} />
           </div>
           <h3 className="flex-grow text-sm font-bold text-left text-foreground">
             {team1}
@@ -92,7 +92,7 @@ const MatchCard: React.FC<MatchProps> = ({
             {team2}
           </h3>
           <div className="p-2 border-2 rounded-md border-darkGray bg-zinc-900">
-            <Image src={team2Logo} alt={team2} width={60} height={60} />
+            <Image src={team2logo} alt={team2} width={60} height={60} />
           </div>
         </div>
 

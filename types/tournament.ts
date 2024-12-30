@@ -1,22 +1,22 @@
 export interface Tournament {
-  tourTitle: string;
-  tourLogo: string;
-  startDate: string;
-  endDate: string;
-  tourStatus: "Ongoing" | "Finalized";
-  tourBG: string;
+  tourtitle: string;
+  tourlogo: string;
+  startdate: string;
+  enddate: string;
+  tourstatus: "Ongoing" | "Finalized";
+  tourbg: string;
 }
 
 export interface Team {
-  teamName: string;
-  teamLogo: string;
-  playerCount: number;
-  roundWon: number;
-  teamKills: number;
+  teamname: string;
+  teamlogo: string;
+  playercount: number;
+  roundwon: number;
+  teamkills: number;
 }
 
 export interface Player {
-  playerName: string;
-  playerKills: number;
-  teamName: string;
+  playername: string;
+  playerkills: number;
+  teamname: string;
 }
