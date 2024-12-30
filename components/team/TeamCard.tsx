@@ -36,7 +36,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
               alt={`${teamname} logo`}
               width={64}
               height={64}
-              className="object-cover rounded-full"
+              className="object-cover rounded-3xl"
             />
           </div>
         </div>

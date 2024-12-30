@@ -31,7 +31,7 @@ const TournamentsPage = () => {
       tourTop: [
         { teamName: "BITCHES", teamPrize: "1000 TK" },
         { teamName: "AVENGERS", teamPrize: "0 TK" },
-        { teamName: "MF | SID (MVP)", teamPrize: "0 TK" },
+        { teamName: "MF | SID", teamPrize: "0 TK" },
       ],
       colorScheme: "green" as const,
       route: "/tournaments/friendly-tour-1",
@@ -45,7 +45,7 @@ const TournamentsPage = () => {
       tourTop: [
         { teamName: "DISCIPLES OF MAYHEM", teamPrize: "3500 TK" },
         { teamName: "QUITE ONE ELITE", teamPrize: "1500 TK" },
-        { teamName: "ADEUS (MVP)", teamPrize: "500 TK" },
+        { teamName: "ADEUS", teamPrize: "500 TK" },
       ],
       colorScheme: "green" as const,
       route: "/tournaments/striker-league-1",
