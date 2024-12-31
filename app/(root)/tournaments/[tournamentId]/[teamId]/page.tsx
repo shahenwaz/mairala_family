@@ -3,12 +3,20 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TeamHeader from "@/components/team/TeamHeader";
 import PlayerList from "@/components/player/PlayerList";
+import BackToTeamsButton from "@/components/team/BackToTeamsButton";
 import { supabaseClient } from "@/lib/supabaseClient";
 import { Team } from "@/types/tournament";
 import { CrosshairIcon } from "lucide-react";
 
 const TeamInfoPage = () => {
-  const { teamId, tournamentId } = useParams(); // Get teamId and tournamentId from the dynamic route
+  const params = useParams();
+  const teamId = Array.isArray(params.teamId)
+    ? params.teamId[0]
+    : params.teamId; // Ensure teamId is a string
+  const tournamentId = Array.isArray(params.tournamentId)
+    ? params.tournamentId[0]
+    : params.tournamentId; // Ensure tournamentId is a string
+
   const [teamData, setTeamData] = useState<Team | null>(null); // Explicit type for teamData
   const [loading, setLoading] = useState(true);
 
@@ -45,7 +53,9 @@ const TeamInfoPage = () => {
       }
     };
 
-    fetchTeamData();
+    if (teamId && tournamentId) {
+      fetchTeamData();
+    }
   }, [teamId, tournamentId]); // Refetch data when teamId or tournamentId changes
 
   if (loading) {
@@ -70,6 +80,9 @@ const TeamInfoPage = () => {
   return (
     <div className="w-full max-w-3xl min-h-screen mx-auto bg-background text-foreground">
       <div className="container px-4 py-2">
+        {/* Back to Teams Button */}
+        <BackToTeamsButton tournamentId={tournamentId!} />
+
         {/* Team Header */}
         <TeamHeader teamname={teamData.teamname} teamlogo={teamData.teamlogo} />
 
@@ -80,7 +93,7 @@ const TeamInfoPage = () => {
         <div className="flex items-center justify-between p-4 mt-4 text-lg font-semibold rounded-lg bg-card card-hover">
           <div className="flex items-center gap-2">
             <CrosshairIcon className="text-primary" />
-            <span>Total Team Kills:</span>
+            <span className="text-destructive">Total Team Kills:</span>
           </div>
           <span className="text-purple">{teamData.teamkills}</span>
         </div>

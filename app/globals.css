@@ -25,7 +25,7 @@ body {
     --muted-foreground: 134 91% 62%; /* Light Green for muted text */
     --accent: 134 91% 62%; /* Light Green */
     --accent-foreground: 0 0% 10%; /* Very dark gray for contrast */
-    --destructive: 0 70% 50%; /* Red for warnings or errors */
+    --destructive: 0 84.2% 60.2%; /* Red for warnings or errors */
     --destructive-foreground: 0 0% 100%; /* Pure white */
     --border: 134 25% 15%; /* Subtle greenish borders */
     --input: 134 15% 15%; /* Input field background */
@@ -37,7 +37,15 @@ body {
     --dark-gray: 216.9 19.1% 26.7%;
     --purple: 270 95.2% 75.3%; /* Purple - 400 */
     --white: 0 0% 100%; /* Pure white */
-    --transparent: 0 0% 0% / 0%; /* Fully transparent */ --sidebar-background: 240 5.9% 10%; --sidebar-foreground: 240 4.8% 95.9%; --sidebar-primary: 224.3 76.3% 48%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 240 3.7% 15.9%; --sidebar-accent-foreground: 240 4.8% 95.9%; --sidebar-border: 240 3.7% 15.9%; --sidebar-ring: 217.2 91.2% 59.8%;
+    --transparent: 0 0% 0% / 0%; /* Fully transparent */
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   * {
