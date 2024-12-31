@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import TeamHeader from "@/components/team/TeamHeader";
 import PlayerList from "@/components/player/PlayerList";
 import BackToTeamsButton from "@/components/team/BackToTeamsButton";
+import TeamLoadingState from "@/components/team/TeamLoadingState";
 import { supabaseClient } from "@/lib/supabaseClient";
 import { Team } from "@/types/tournament";
 import { CrosshairIcon } from "lucide-react";
@@ -59,14 +60,7 @@ const TeamInfoPage = () => {
   }, [teamId, tournamentId]); // Refetch data when teamId or tournamentId changes
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-6 bg-background animate-fadeIn">
-        <div className="w-16 h-16 border-4 border-t-primary border-gray-700 rounded-full animate-spin"></div>
-        <p className="text-lg font-medium text-gray-400 animate-pulse">
-          Loading team details...
-        </p>
-      </div>
-    );
+    return <TeamLoadingState />;
   }
 
   if (!teamData) {
