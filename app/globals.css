@@ -93,4 +93,8 @@ body {
   .card-hover {
     @apply shadow-md hover:shadow-lg hover:scale-[1.02] transition-transform duration-200;
   }
+
+  .shadow-lg {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
 }

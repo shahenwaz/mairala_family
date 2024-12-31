@@ -84,7 +84,7 @@ const TeamInfoPage = () => {
         <PlayerList players={teamData.players} />
 
         {/* Total Team Kills */}
-        <div className="flex items-center justify-between p-4 mt-4 text-lg font-semibold rounded-lg bg-card card-hover">
+        <div className="flex items-center justify-between p-4 mt-4 mb-6 text-lg font-semibold rounded-lg bg-card card-hover">
           <div className="flex items-center gap-2">
             <CrosshairIcon className="text-primary" />
             <span className="text-destructive">Total Team Kills:</span>
