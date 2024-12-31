@@ -72,7 +72,7 @@ const TeamInfoPage = () => {
   }
 
   return (
-    <div className="w-full max-w-3xl min-h-screen mx-auto bg-background text-foreground">
+    <div className="w-full max-w-3xl mx-auto bg-background text-foreground">
       <div className="container px-4 py-2">
         {/* Back to Teams Button */}
         <BackToTeamsButton tournamentId={tournamentId!} />
