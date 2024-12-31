@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import TournamentCard from "@/components/tournament/TournamentCard";
 import { useRouter } from "next/navigation";
@@ -20,7 +19,7 @@ const TournamentsPage = () => {
         { teamName: "MVP", teamPrize: "500 TK" },
       ],
       colorScheme: "yellow" as const,
-      route: "/tournaments/striker-league-2",
+      tournamentId: "ST020", // Dynamic ID from database
     },
     {
       prizePool: "1000 TK",
@@ -34,7 +33,7 @@ const TournamentsPage = () => {
         { teamName: "MF | SID", teamPrize: "0 TK" },
       ],
       colorScheme: "green" as const,
-      route: "/tournaments/friendly-tour-1",
+      tournamentId: "FT010", // Dynamic ID from database
     },
     {
       prizePool: "5000 TK",
@@ -48,7 +47,7 @@ const TournamentsPage = () => {
         { teamName: "ADEUS", teamPrize: "500 TK" },
       ],
       colorScheme: "green" as const,
-      route: "/tournaments/striker-league-1",
+      tournamentId: "ST010", // Dynamic ID from database
     },
   ];
 
@@ -74,7 +73,10 @@ const TournamentsPage = () => {
             mvpKills={tournament.mvpKills}
             tourTop={tournament.tourTop}
             colorScheme={tournament.colorScheme}
-            onViewDetails={() => router.push(tournament.route)}
+            tournamentId={tournament.tournamentId}
+            onViewDetails={() =>
+              router.push(`/tournaments/${tournament.tournamentId}`)
+            }
           />
         ))}
       </div>

@@ -1,15 +1,17 @@
+import { UserIcon } from "lucide-react";
+
 interface Player {
-  name: string;
-  kills: number;
+  playername: string;
+  playerkills: number;
 }
 
 interface PlayerListProps {
   players: Player[];
 }
 
-const PlayerList = ({ players }: PlayerListProps) => {
-  const sortedPlayers = players.sort((a, b) => b.kills - a.kills);
-  const totalKills = players.reduce((sum, player) => sum + player.kills, 0);
+const PlayerList: React.FC<PlayerListProps> = ({ players }) => {
+  // Sort players by kills in descending order
+  const sortedPlayers = players.sort((a, b) => b.playerkills - a.playerkills);
 
   return (
     <div>
@@ -22,17 +24,16 @@ const PlayerList = ({ players }: PlayerListProps) => {
             key={index}
             className="flex items-center justify-between p-4 overflow-hidden rounded-lg bg-card card-hover"
           >
-            <span className="text-lg font-semibold">{player.name}</span>
+            <div className="flex items-center gap-2">
+              <UserIcon className="text-primary" />
+              <span className="text-lg font-semibold">{player.playername}</span>
+            </div>
             <span className="text-primary">
-              Kills: <span className="text-white">{player.kills}</span>
+              Kills: <span className="text-white">{player.playerkills}</span>
             </span>
           </li>
         ))}
       </ul>
-      <div className="flex items-center justify-between p-4 mt-4 text-lg font-semibold rounded-lg bg-card card-hover">
-        <span className="text-accent">Total Team Kills:</span>
-        <span className="text-purple">{totalKills}</span>
-      </div>
     </div>
   );
 };

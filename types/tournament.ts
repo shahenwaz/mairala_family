@@ -8,11 +8,13 @@ export interface Tournament {
 }
 
 export interface Team {
+  id: string;
   teamname: string;
   teamlogo: string;
   playercount: number;
   roundwon: number;
   teamkills: number;
+  players: Player[];
 }
 
 export interface Player {

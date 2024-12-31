@@ -17,6 +17,7 @@ interface TournamentCardProps {
   mvpKills: number;
   tourTop: Team[];
   colorScheme: "green" | "yellow";
+  tournamentId: string; // Pass the dynamic ID
   onViewDetails: () => void;
 }
 

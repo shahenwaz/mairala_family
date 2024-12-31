@@ -1,13 +1,26 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabaseClient";
 
-export async function GET() {
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ tournamentId: string }> }
+) {
   try {
-    // Fetch tournament details for ST020
+    // Await params from context
+    const { tournamentId } = await context.params;
+
+    if (!tournamentId) {
+      return NextResponse.json({
+        success: false,
+        message: "Tournament ID is required.",
+      });
+    }
+
+    // Fetch tournament details
     const { data: tournament, error: tournamentError } = await supabaseServer
       .from("tournaments")
       .select("*")
-      .eq("id", "FT010")
+      .eq("id", tournamentId)
       .single();
 
     if (tournamentError || !tournament) {
@@ -17,11 +30,11 @@ export async function GET() {
       });
     }
 
-    // Fetch teams associated with the tournament
+    // Fetch teams for the tournament
     const { data: teams, error: teamsError } = await supabaseServer
       .from("teams")
       .select("*")
-      .eq("tournament_id", "FT010");
+      .eq("tournament_id", tournamentId);
 
     if (teamsError) {
       return NextResponse.json({
@@ -30,7 +43,7 @@ export async function GET() {
       });
     }
 
-    // Fetch players and include teamname
+    // Fetch players and include team names
     const { data: players, error: playersError } = await supabaseServer
       .from("players")
       .select("*, teams(teamname)")
@@ -46,10 +59,10 @@ export async function GET() {
       });
     }
 
-    // Map `players` to include `teamname` directly
+    // Enrich players with team names
     const enrichedPlayers = players.map((player) => ({
       ...player,
-      teamname: player.teams.teamname,
+      teamname: player.teams?.teamname || "Unknown Team",
     }));
 
     return NextResponse.json({

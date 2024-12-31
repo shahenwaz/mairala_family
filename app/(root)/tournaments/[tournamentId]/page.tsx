@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import TournamentDetails from "@/components/tournament/TournamentDetails";
 import TournamentTabs from "@/components/tournament/TournamentTabs";
 import TeamList from "@/components/team/TeamList";
@@ -8,27 +9,30 @@ import PlayerLeaderboard from "@/components/player/PlayerLeaderboard";
 import { TabsContent } from "@/components/ui/tabs";
 import { Tournament, Team, Player } from "@/types/tournament"; // Shared types
 
-export default function Tournament2Page() {
+const TournamentPage = () => {
+  const params = useParams();
+  const tournamentId = params.tournamentId as string; // Explicitly cast tournamentId to string
+
   const [tournament, setTournament] = useState<Tournament | null>(null);
   const [teams, setTeams] = useState<Team[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchTournamentData = async () => {
+      if (!tournamentId) return; // Ensure tournamentId is defined
       setIsLoading(true);
       try {
-        const response = await fetch("/api/tournaments/ST020");
+        const response = await fetch(`/api/tournaments/${tournamentId}`); // Fetch data dynamically
         const data = await response.json();
-        console.log("API Response:", data);
 
-        if (!data.success) {
-          console.error(data.message);
-          setTournament(null);
-        } else {
+        if (data.success) {
           setTournament(data.tournament);
           setTeams(data.teams);
           setPlayers(data.players);
+        } else {
+          console.error(data.message);
+          setTournament(null);
         }
       } catch (error) {
         console.error("Error fetching tournament data:", error);
@@ -38,8 +42,8 @@ export default function Tournament2Page() {
       }
     };
 
-    fetchData();
-  }, []);
+    fetchTournamentData();
+  }, [tournamentId]); // Refetch data when the `tournamentId` changes
 
   if (isLoading) {
     return (
@@ -67,6 +71,7 @@ export default function Tournament2Page() {
 
   return (
     <div>
+      {/* Tournament Header Section */}
       <TournamentDetails
         tourTitle={tournament.tourtitle}
         tourLogo={tournament.tourlogo}
@@ -75,17 +80,24 @@ export default function Tournament2Page() {
         tourStatus={tournament.tourstatus}
         tourBG={tournament.tourbg}
       />
+
+      {/* Tournament Tabs Section */}
       <div className="w-full py-3 bg-background">
         <div className="max-w-4xl px-4 mx-auto">
           <TournamentTabs defaultTab="teams">
+            {/* Matches Tab */}
             <TabsContent value="matches">
               <h1 className="text-center text-lg text-muted-foreground">
                 Matches will be shown here!
               </h1>
             </TabsContent>
+
+            {/* Teams Tab */}
             <TabsContent value="teams">
-              <TeamList teams={teams} />
+              <TeamList teams={teams} tournamentId={tournamentId} />
             </TabsContent>
+
+            {/* Leaderboards Tab */}
             <TabsContent value="leaderboards">
               <TeamLeaderboard
                 teams={teams}
@@ -101,4 +113,6 @@ export default function Tournament2Page() {
       </div>
     </div>
   );
-}
+};
+
+export default TournamentPage;
