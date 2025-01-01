@@ -9,22 +9,6 @@ const Footer = () => {
   return (
     <footer className="bg-card text-foreground">
       <div className="container px-4 py-5 mx-auto">
-        {/* Copyright Info */}
-        <div className="text-center mb-4">
-          <p className="text-sm">
-            &copy; {currentYear} By{" "}
-            <a
-              href="https://shahenwazmuzahid.netlify.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary font-semibold hover:underline"
-            >
-              Shahenwaz Muzahid
-            </a>
-            . All Rights Reserved.
-          </p>
-        </div>
-
         {/* Social Media Links */}
         <div className="flex justify-center gap-3 mb-4">
           {[
@@ -50,7 +34,7 @@ const Footer = () => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center hover:text-purple justify-center w-12 h-12 rounded-md bg-background shadow-lg transition-transform transform hover:scale-105"
+              className="flex items-center hover:text-purple justify-center w-10 h-10 rounded-md bg-background shadow-lg transition-transform transform hover:scale-105"
             >
               {React.cloneElement(icon, {
                 size: 20,
@@ -58,6 +42,23 @@ const Footer = () => {
               })}
             </a>
           ))}
+        </div>
+
+        {/* Copyright Info */}
+        <div className="text-center mb-4 text-sm md:text-base">
+          <div>
+            &copy; {currentYear} By{" "}
+            <a
+              href="https://shahenwazmuzahid.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary font-semibold hover:underline"
+            >
+              Shahenwaz Muzahid
+            </a>
+            .
+          </div>
+          <div>All Rights Reserved.</div>
         </div>
 
         {/* Scroll-to-Top Button */}
