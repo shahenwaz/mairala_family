@@ -11,7 +11,7 @@ const familyMembers: FamilyCardProps[] = [
       facebook: "https://facebook.com",
       discord: "https://discord.com",
     },
-    image: "/images/male.png",
+    image: "/images/FAMILY/MemboBrand.png",
   },
   {
     name: "Shahriyar Nasir Bishal",
@@ -22,7 +22,7 @@ const familyMembers: FamilyCardProps[] = [
       facebook: "https://facebook.com",
       discord: "https://discord.com",
     },
-    image: "/images/male.png",
+    image: "/images/FAMILY/Bishal.png",
   },
   {
     name: "Adiba Binte Azad",
@@ -33,7 +33,7 @@ const familyMembers: FamilyCardProps[] = [
       facebook: "https://facebook.com",
       discord: "https://discord.com",
     },
-    image: "/images/female.png",
+    image: "/images/FAMILY/female.png",
   },
   {
     name: "Shahenwaz Muzahid",
@@ -44,7 +44,7 @@ const familyMembers: FamilyCardProps[] = [
       facebook: "https://facebook.com",
       discord: "https://discord.com",
     },
-    image: "/images/male.png",
+    image: "/images/FAMILY/Shahenwaz.jpg",
   },
 ];
 
@@ -60,13 +60,13 @@ const FamilyPage = () => {
         </h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full px-6 md:px-16">
+      <div className="grid w-full grid-cols-1 gap-6 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:px-16">
         {familyMembers.map((member, index) => (
           <FamilyCard key={index} {...member} />
         ))}
       </div>
 
-      <div className="text-sm text-center text-muted-foreground mt-8">
+      {/* <div className="mt-8 text-sm text-center text-muted-foreground">
         <p>
           <a
             href="https://www.freepik.com/free-vector/smiling-redhaired-boy-illustration_395229298.htm#fromView=keyword&page=1&position=2&uuid=8f42d2a1-0dbf-47c9-8c7b-18fed356bc55&new_detail=true"
@@ -87,7 +87,17 @@ const FamilyPage = () => {
             Female avatar by brgfx on Freepik
           </a>
         </p>
-      </div>
+        <p>
+          <a
+            href="https://simsvip.com/wp-content/uploads/2018/06/ezgif-3-68d8b65f4a.gif"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-primary"
+          >
+            Snowfall gif by https://simsvip.com
+          </a>
+        </p>
+      </div> */}
     </div>
   );
 };

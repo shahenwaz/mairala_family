@@ -22,52 +22,69 @@ const FamilyCard: React.FC<FamilyCardProps> = ({
   image,
 }) => {
   return (
-    <div className="flex mx-auto flex-col items-center bg-card rounded-md p-6 max-w-xs w-full card-hover">
-      <div className="w-32 h-32 overflow-hidden rounded-full mb-4">
+    <div className="relative flex flex-col items-center w-full max-w-xs mx-auto overflow-hidden border-2 rounded-md bg-card border-card card-hover">
+      {/* Card Top Background */}
+      <div className="relative w-full h-20">
+        <Image
+          src="/images/FAMILY/FamilyCover.webp"
+          alt="Card top background"
+          layout="fill"
+          objectFit="cover"
+          className="rounded-t-md"
+          unoptimized
+        />
+      </div>
+
+      {/* Avatar Section */}
+      <div className="relative w-24 h-24 -mt-10 overflow-hidden border-2 rounded-full shadow-md border-card bg-card">
         <Image
           src={image}
           alt={`${name}'s photo`}
-          width={128}
-          height={128}
+          width={96}
+          height={96}
           className="object-cover"
         />
       </div>
-      <h2 className="text-lg font-semibold">{name}</h2>
-      <div className="flex flex-col">
+
+      {/* Card Content */}
+      <div className="flex flex-col items-center px-6 py-4">
+        <h2 className="text-base font-semibold">{name}</h2>
         <h3 className="text-xs font-semibold text-lightGray">{nickname}</h3>
-      </div>
-      <p className="text-sm text-purple mt-3 mb-5">{role}</p>
-      <div className="flex space-x-4">
-        {social?.instagram && (
-          <a
-            href={social.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:text-purple"
-          >
-            <FaInstagram size={20} />
-          </a>
-        )}
-        {social?.facebook && (
-          <a
-            href={social.facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:text-purple"
-          >
-            <FaFacebookF size={20} />
-          </a>
-        )}
-        {social?.discord && (
-          <a
-            href={social.discord}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:text-purple"
-          >
-            <FaDiscord size={20} />
-          </a>
-        )}
+        <p className="mt-2 text-sm font-semibold text-purple">{role}</p>
+
+        {/* Social Icons */}
+        <div className="flex mt-3 space-x-4">
+          {social?.instagram && (
+            <a
+              href={social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:text-purple"
+            >
+              <FaInstagram size={20} />
+            </a>
+          )}
+          {social?.facebook && (
+            <a
+              href={social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:text-purple"
+            >
+              <FaFacebookF size={20} />
+            </a>
+          )}
+          {social?.discord && (
+            <a
+              href={social.discord}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:text-purple"
+            >
+              <FaDiscord size={20} />
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
