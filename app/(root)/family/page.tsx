@@ -46,6 +46,17 @@ const familyMembers: FamilyCardProps[] = [
     },
     image: "/images/FAMILY/Shahenwaz.jpg",
   },
+  {
+    name: "Shahenwaz Muzahid",
+    nickname: "@! Cupid",
+    role: "Operation Manager",
+    social: {
+      instagram: "https://instagram.com",
+      facebook: "https://facebook.com",
+      discord: "https://discord.com",
+    },
+    image: "/images/FAMILY/Shahenwaz.jpg",
+  },
 ];
 
 const FamilyPage = () => {
@@ -60,7 +71,8 @@ const FamilyPage = () => {
         </h1>
       </div>
 
-      <div className="grid w-full grid-cols-1 gap-6 px-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:px-16">
+      {/* Grid Container */}
+      <div className="grid mx-auto w-full max-w-screen-lg gap-6 px-6 md:px-16 grid-cols-[repeat(auto-fit,minmax(250px,1fr))] justify-items-center">
         {familyMembers.map((member, index) => (
           <FamilyCard key={index} {...member} />
         ))}
