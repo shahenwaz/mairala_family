@@ -43,6 +43,7 @@ const FamilyCard: React.FC<FamilyCardProps> = ({
           width={96}
           height={96}
           className="object-cover"
+          unoptimized
         />
       </div>
 
